@@ -8,3 +8,15 @@ export const client = createClient({
   perspective: 'raw',
   useCdn: !dev
 })
+
+export function resolve(doc) {
+  switch (doc._type) {
+    case 'cover':
+    case 'settings':
+      return '/'
+    case 'chapter':
+      return `/chapters/${doc.slug.current}`
+    case 'page':
+      return doc.slug.current
+  }
+}

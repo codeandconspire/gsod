@@ -8,7 +8,8 @@ export async function load({ params }) {
       ...,
       "cover": *[_type == "cover" && references(^._id)][0]{
         type,
-        slug
+        slug,
+        menu
       }
     }`,
     { slug: params.chapter }

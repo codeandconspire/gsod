@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400;1,8..60,700&display=swap');
+
+@import url('modern-normalize');
+
+:root {
+  --serif: 'Source Serif 4', serif;
+  --sans-serif: 'Aileron', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+
+  --sans-serif-heavy: 900;
+  --sans-serif-bold: 700;
+  --sans-serif-normal: 400;
+  --sans-serif-light: 300;
+
+  --current-background: #fff;
+  --current-color: #000;
+  --current-line-height: 1.5;
+}
+
+@font-face {
+  font-family: 'Aileron';
+  src: url('$lib/assets/Aileron-Heavy-webfont.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aileron';
+  src: url('$lib/assets/Aileron-HeavyItalic-webfont.woff') format('woff');
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Aileron';
+  src: url('$lib/assets/Aileron-Bold-webfont.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aileron';
+  src: url('$lib/assets/Aileron-BoldItalic-webfont.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Aileron';
+  src: url('$lib/assets/Aileron-Italic-webfont.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Aileron';
+  src: url('$lib/assets/Aileron-Regular-webfont.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aileron';
+  src: url('$lib/assets/Aileron-Light-webfont.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aileron';
+  src: url('$lib/assets/Aileron-LightItalic-webfont.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+}
+
+/**
+ * Document styles
+ * 1. Global box sizing
+ * 2. Support sticky footer
+ * 3. Simply feels better then global text cursor
+ * 4. Fabulous text rendering
+ * 5. Fabulous svg text sizing
+ */
+
+:root {
+  width: 100%; /* 2 */
+  height: 100%; /* 2 */
+  cursor: default; /* 3 */
+  font-family: var(--serif);
+  background-color: var(--document-background);
+  color: var(--document-color);
+  font-size: 100%;
+  line-height: var(--document-line-height);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased; /* 4 */
+  -moz-osx-font-smoothing: grayscale; /* 4 */
+  text-rendering: geometricPrecision; /* 5 */
+
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* @media (min-width: 1600px) {
+  :root {
+    font-size: 110%;
+  }
+}
+
+@media (min-width: 1800px) {
+  :root {
+    font-size: 120%;
+  }
+} */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* 1 */
+}
+
+/**
+ * Media elements
+ */
+
+svg,
+img,
+video,
+iframe {
+  vertical-align: bottom;
+}
+
+/**
+ * Pretty alt text rendering for broken images
+ */
+
+img {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/**
+ * Inline elements
+ */
+
+strong {
+  font-weight: 600;
+}
+
+/*
+ * Clickable elements
+ * 1. Remove the gray background on active links in IE 10.
+ * 2. Remove the tapping delay
+ */
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover,
+a:active {
+  background-color: transparent; /* 1 */
+}
+
+a,
+area,
+button,
+input,
+label,
+select,
+summary,
+textarea,
+[tabindex] {
+  -ms-touch-action: manipulation; /* 2 */
+  touch-action: manipulation; /* 2 */
+}
+
+/**
+ * Reset a few styles
+ */
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+figure,
+iframe,
+address,
+blockquote {
+  font: inherit;
+  border: 0;
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+
+/**
+ * Clean out browser button styles
+ */
+
+button {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  border-radius: 0;
+  background: transparent;
+  cursor: default;
+}
+
+/**
+ * Provide enhanced focus styles for keyboard focus
+ */
+
+:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+:not(input):not(select):focus-visible {
+  outline: 5px auto Highlight;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+/**
+ * Set sensible default ruler styles
+ */
+
+hr {
+  display: block;
+  width: 100%;
+  height: 1px;
+  border: 0;
+  margin: 4.5rem 0 3.9rem;
+  background-color: rgb(196, 196, 196);
+}
+
+@media (min-width: 800px) {
+  hr {
+    margin: 6.5rem 0 5.9rem;
+  }
+}
+
+/**
+ * Print styles
+ */
+
+@page {
+  margin: 2cm;
+}
+
+@media print {
+  a {
+    page-break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  img {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+
+  ul,
+  ol,
+  img {
+    page-break-before: avoid;
+  }
+
+  iframe {
+    display: none;
+  }
+
+  a,
+  a:link,
+  a:visited {
+    background: transparent;
+    text-decoration: underline;
+  }
+}

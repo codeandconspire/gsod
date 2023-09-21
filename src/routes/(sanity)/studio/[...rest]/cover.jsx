@@ -1,3 +1,7 @@
+import { LinkIcon } from '@sanity/icons'
+
+import Color from './components/Color.jsx'
+
 export default {
   name: 'cover',
   type: 'document',
@@ -6,6 +10,10 @@ export default {
     {
       name: 'main',
       title: 'Main'
+    },
+    {
+      name: 'menu',
+      title: 'Menu'
     },
     {
       name: 'chapters',
@@ -28,15 +36,43 @@ export default {
     },
     {
       name: 'title',
-      type: 'string',
+      type: 'array',
       title: 'Title',
-      group: 'main'
+      group: 'main',
+      of: [
+        {
+          type: 'block',
+          styles: [],
+          lists: [],
+          marks: {
+            annotations: [],
+            decorators: [
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' }
+            ]
+          }
+        }
+      ]
     },
     {
       name: 'subheading',
-      type: 'string',
+      type: 'array',
       title: 'Subheading',
-      group: 'main'
+      group: 'main',
+      of: [
+        {
+          type: 'block',
+          styles: [],
+          lists: [],
+          marks: {
+            annotations: [],
+            decorators: [
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' }
+            ]
+          }
+        }
+      ]
     },
     {
       name: 'description',
@@ -59,6 +95,24 @@ export default {
       ]
     },
     {
+      name: 'primaryColor',
+      type: 'string',
+      title: 'Primary Color',
+      group: 'main',
+      components: {
+        input: Color
+      }
+    },
+    {
+      name: 'secondaryColor',
+      type: 'string',
+      title: 'Secondary Color',
+      group: 'main',
+      components: {
+        input: Color
+      }
+    },
+    {
       name: 'chapters',
       title: 'Chapters',
       type: 'array',
@@ -67,6 +121,62 @@ export default {
         {
           type: 'reference',
           to: [{ type: 'chapter' }]
+        }
+      ]
+    },
+    {
+      name: 'menu',
+      type: 'array',
+      title: 'Menu',
+      group: 'menu',
+      of: [
+        {
+          name: 'item',
+          type: 'object',
+          title: 'Item',
+          icon: LinkIcon,
+          fields: [
+            {
+              name: 'label',
+              type: 'string',
+              title: 'Label'
+            },
+            {
+              name: 'link',
+              type: 'reference',
+              title: 'Link',
+              to: [{ type: 'page' }, { type: 'cover' }, { type: 'chapter' }]
+            },
+            {
+              name: 'children',
+              type: 'array',
+              title: 'Children',
+              of: [
+                {
+                  name: 'item',
+                  type: 'object',
+                  title: 'Item',
+                  fields: [
+                    {
+                      name: 'label',
+                      type: 'string',
+                      title: 'Label'
+                    },
+                    {
+                      name: 'link',
+                      type: 'reference',
+                      title: 'Link',
+                      to: [
+                        { type: 'page' },
+                        { type: 'cover' },
+                        { type: 'chapter' }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     },

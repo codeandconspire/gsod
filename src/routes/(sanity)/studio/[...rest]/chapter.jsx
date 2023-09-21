@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   CommentIcon,
   OlistIcon,
@@ -8,7 +7,7 @@ import {
   BlockContentIcon
 } from '@sanity/icons'
 
-import styles from './styles.module.css'
+import Color from './components/Color.jsx'
 
 export default {
   name: 'chapter',
@@ -78,31 +77,21 @@ export default {
       ]
     },
     {
-      name: 'color',
+      name: 'primaryColor',
       type: 'string',
-      title: 'Theme Color',
+      title: 'Primary Color',
       group: 'main',
       components: {
-        input({ elementProps }) {
-          const onblur = (event) => {
-            if (!event.currentTarget.checkValidity()) {
-              event.currentTarget.reportValidity()
-            }
-          }
-          return (
-            <fieldset className={styles['color-group']}>
-              <input {...elementProps} type="color" />
-              <input
-                {...elementProps}
-                type="text"
-                onBlur={onblur}
-                placeholder="#abc123"
-                pattern="#[0-9a-fA-Z]{6}"
-                className={styles.colorinput}
-              />
-            </fieldset>
-          )
-        }
+        input: Color
+      }
+    },
+    {
+      name: 'secondaryColor',
+      type: 'string',
+      title: 'Secondary Color',
+      group: 'main',
+      components: {
+        input: Color
       }
     },
     {
