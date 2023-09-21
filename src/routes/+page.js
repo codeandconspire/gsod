@@ -5,7 +5,22 @@ import { client } from '$lib/sanity.js'
 export async function load() {
   const cover = await client.fetch(
     `*[_type == "cover" && slug.current == $slug][0]{
-      ..., chapters[]->{ slug, shortname, title }
+      ...,
+      chapters[]->{ slug, shortname, title },
+      menu[]{
+        label,
+        link->{
+          _type,
+          slug
+        },
+        children[]{
+          label,
+          link->{
+            _type,
+            slug
+          }
+        }
+      }
     }`,
     { slug: 'the-new-checks-and-balances' }
   )

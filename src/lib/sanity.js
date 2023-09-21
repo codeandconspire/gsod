@@ -10,13 +10,15 @@ export const client = createClient({
 })
 
 export function resolve(doc) {
-  switch (doc._type) {
+  switch (doc?._type) {
     case 'cover':
     case 'settings':
       return '/'
     case 'chapter':
       return `/chapters/${doc.slug.current}`
     case 'page':
-      return doc.slug.current
+      return `/${doc.slug.current}`
+    default:
+      return null
   }
 }

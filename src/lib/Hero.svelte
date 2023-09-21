@@ -27,44 +27,47 @@
 <header
   class="hero"
   class:fill
+  class:has-menu={$$slots.menu}
   style:--text-color={textColor}
   style:--primary-color={primaryColor}
   style:--secondary-color={secondaryColor}>
   {#if fill}
-    <a
-      href="#hero-bottom"
-      class="skip"
-      on:click|preventDefault={() =>
-        bottom.scrollIntoView({ block: 'start', behavior: 'smooth' })}>
-      <span class="label">Skip to content</span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="64"
-        height="27"
-        fill="none"
-        class="chevron">
-        <path
-          stroke="#fff"
-          stroke-linecap="round"
-          stroke-width="3"
-          d="M62 2 32 25 2 2" />
-      </svg>
-    </a>
+    <div class="skip">
+      <a
+        href="#hero-bottom"
+        on:click|preventDefault={() =>
+          bottom.scrollIntoView({ block: 'start', behavior: 'smooth' })}>
+        <span class="u-hidden">Skip to content</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 64 27"
+          fill="none"
+          class="chevron">
+          <path
+            stroke="#fff"
+            stroke-linecap="round"
+            stroke-width="3"
+            d="M62 2 32 25 2 2" />
+        </svg>
+      </a>
+    </div>
   {/if}
   {#if $$slots.menu}
     <div class="menu">
       <slot name="menu" />
     </div>
   {/if}
-  {#if back}<a href={back} class="back">Back</a>{/if}
-  <h1 class="heading"><slot name="heading" /></h1>
-  {#if $$slots.subheading}
-    <p class="subheading">
-      <slot name="subheading" />
-    </p>
-  {/if}
-  <div id="hero-bottom" class="bottom" bind:this={bottom} />
+  <div class="body">
+    {#if back}<a href={back} class="back">Back</a>{/if}
+    <h1 class="heading"><slot name="heading" /></h1>
+    {#if $$slots.subheading}
+      <p class="subheading">
+        <slot name="subheading" />
+      </p>
+    {/if}
+  </div>
 </header>
+<div id="hero-bottom" class="bottom" bind:this={bottom} />
 
 <style>
   .hero {
@@ -72,13 +75,16 @@
     --primary-color: #62a3bf;
     --secondary-color: #326593;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: min(5vh, 2rem) var(--page-gutter);
     font-family: var(--sans-serif);
     color: var(--text-color);
     background-color: var(--primary-color);
+  }
+
+  .hero.has-menu {
+    grid-template-rows: auto 1fr auto;
   }
 
   .hero.fill {
@@ -86,13 +92,16 @@
     width: 100svw;
   }
 
-  .menu {
-    position: absolute;
-    inset: 0 0 auto;
+  .body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
   }
 
   .heading {
-    font-size: 7rem;
+    font-size: clamp(3rem, 8vw, 7rem);
     text-align: center;
     line-height: 1;
     font-weight: var(--sans-serif-light);
@@ -109,18 +118,13 @@
   }
 
   .skip {
-    position: absolute;
-    bottom: min(5vh, 2rem);
-    left: 50%;
-    transform: translate(-50%);
+    grid-row: 3;
+    display: flex;
+    justify-content: center;
   }
 
-  .label {
-    clip: rect(1px, 1px, 1px, 1px);
-    height: 1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
+  .chevron {
+    width: min(10vw, 3.5rem);
+    height: auto;
   }
 </style>

@@ -33,8 +33,8 @@
         <blockquote><svelte:self content={block.children} /></blockquote>
       {:else if _type === 'span'}
         {@html block.marks.reduce(
-          (acc, mark) => `<${mark}>${acc}</${mark}>`,
-          block.text
+          (acc, mark) => `<${mark}>${acc.replace(/\n/g, '<br />')}</${mark}>`,
+          block.text.replace(/\n/g, '<br />')
         )}
       {/if}
     </slot>
