@@ -6,7 +6,31 @@ export async function load() {
   const cover = await client.fetch(
     `*[_type == "cover" && slug.current == $slug][0]{
       ...,
-      chapters[]->{ slug, shortname, title },
+      featuredChapter{
+        ...,
+        link->{
+          _type,
+          slug
+        },
+        image{
+          ...,
+          image{
+            asset->{
+              url
+            }
+          }
+        }
+      },
+      chapters[]->{
+        _type,
+        slug,
+        title,
+        category,
+        shortname,
+        primaryColor,
+        secondaryColor,
+        featuredImage
+      },
       menu[]{
         label,
         link->{

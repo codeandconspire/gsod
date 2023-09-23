@@ -1,5 +1,5 @@
 <script>
-  import { CogIcon, DocumentsIcon, DocumentIcon, BookIcon } from '@sanity/icons'
+  import { CogIcon, DocumentsIcon, DocumentIcon, HomeIcon } from '@sanity/icons'
   import { StudioLayout, StudioProvider, defineConfig } from 'sanity'
   import { visionTool } from '@sanity/vision'
   import ReactDOM from 'react-dom/client'
@@ -31,10 +31,15 @@
                 S.document().schemaType('settings').documentId('settings')
               ),
               S.divider(),
-              // Report document types
-              S.documentTypeListItem('cover')
-                .title('Cover Pages')
-                .icon(BookIcon),
+              S.listItem()
+                .title('Cover Page')
+                .icon(HomeIcon)
+                .id('cover')
+                .child(
+                  S.document()
+                    .schemaType('cover')
+                    .documentId('4248bf6e-9400-4aff-a87d-2842ca25a305')
+                ),
               S.documentTypeListItem('chapter')
                 .title('Chapters')
                 .icon(DocumentsIcon),

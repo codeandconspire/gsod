@@ -6,6 +6,13 @@ export default {
   name: 'cover',
   type: 'document',
   title: 'Cover',
+  preview: {
+    prepare() {
+      return {
+        title: 'Cover Page'
+      }
+    }
+  },
   groups: [
     {
       name: 'main',
@@ -111,6 +118,81 @@ export default {
       components: {
         input: Color
       }
+    },
+    {
+      name: 'featuredChapter',
+      type: 'object',
+      title: 'Featured Chapter',
+      group: 'chapters',
+      fields: [
+        {
+          name: 'link',
+          type: 'reference',
+          title: 'Chapter',
+          to: [{ type: 'chapter' }]
+        },
+        {
+          name: 'image',
+          type: 'object',
+          title: 'Image',
+          fields: [
+            {
+              name: 'image',
+              type: 'image',
+              title: 'Image'
+            },
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alt text'
+            }
+          ]
+        },
+        {
+          name: 'heading',
+          type: 'array',
+          title: 'Heading',
+          of: [
+            {
+              type: 'block',
+              styles: [],
+              lists: [],
+              marks: {
+                annotations: [],
+                decorators: [
+                  { title: 'Strong', value: 'strong' },
+                  { title: 'Emphasis', value: 'em' }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          name: 'subheading',
+          type: 'array',
+          title: 'Subheading',
+          of: [
+            {
+              type: 'block',
+              styles: [],
+              lists: [],
+              marks: {
+                annotations: [],
+                decorators: [
+                  { title: 'Strong', value: 'strong' },
+                  { title: 'Emphasis', value: 'em' }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          name: 'label',
+          type: 'string',
+          title: 'Link label',
+          description: 'Text shown in the link to the chapter'
+        }
+      ]
     },
     {
       name: 'chapters',

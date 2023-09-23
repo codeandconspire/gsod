@@ -1,16 +1,19 @@
-<script>
-  export let content = null
-  export let plain = false
-
-  const asPlainText = () =>
-    content
+<script context="module">
+  export function asText(content) {
+    return content
       .filter((block) => block._type === 'block')
       .flatMap((block) => block.children.map((child) => child.text))
       .join(' ')
+  }
+</script>
+
+<script>
+  export let content = null
+  export let plain = false
 </script>
 
 {#if plain}
-  {asPlainText()}
+  {asText(content)}
 {:else if content}
   {#each content as block (block._key)}
     {@const { style, _type } = block}

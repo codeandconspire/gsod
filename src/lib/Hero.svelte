@@ -78,6 +78,7 @@
     display: grid;
     grid-template-rows: 1fr auto;
     padding: min(5vh, 2rem) var(--page-gutter);
+    line-height: var(--sans-serif-line-height);
     font-family: var(--sans-serif);
     color: var(--text-color);
     background-color: var(--primary-color);
@@ -103,7 +104,6 @@
   .heading {
     font-size: clamp(3rem, 8vw, 7rem);
     text-align: center;
-    line-height: 1;
     font-weight: var(--sans-serif-light);
   }
 

@@ -89,6 +89,12 @@
   text-underline-offset: 0.2em;
 }
 
+@media (min-width: 1300px) {
+  :root {
+    font-size: 112.5%;
+  }
+}
+
 *,
 *::before,
 *::after {

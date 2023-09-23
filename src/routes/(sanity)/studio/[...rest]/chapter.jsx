@@ -38,10 +38,20 @@ export default {
       validation: (Rule) => Rule.required()
     },
     {
+      name: 'category',
+      type: 'string',
+      title: 'Category',
+      group: 'main',
+      options: {
+        list: ['Chapter', 'Foreword', 'Region'],
+        layout: 'dropdown'
+      }
+    },
+    {
       name: 'shortname',
       type: 'string',
       title: 'Shortname',
-      group: 'meta',
+      group: 'main',
       description: 'Short name used for summaries and references'
     },
     {
