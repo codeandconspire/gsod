@@ -51,25 +51,21 @@
             src={feature.image.image.asset.url} />
         {/if}
         <div class="body">
-          <Tilt foreground>
-            <div class="content">
-              <h3 class="heading">
-                <Text content={feature.heading} let:block>
-                  {#if block.style === 'normal'}
-                    <Text content={block.children} />
-                  {/if}
-                </Text>
-              </h3>
-              {#if feature.subheading}
-                <div class="subheading">
-                  <Text content={feature.subheading} />
-                </div>
+          <h3 class="heading">
+            <Text content={feature.heading} let:block>
+              {#if block.style === 'normal'}
+                <Text content={block.children} />
               {/if}
-              {#if href}
-                <a {href} class="link">{feature.label}</a>
-              {/if}
+            </Text>
+          </h3>
+          {#if feature.subheading}
+            <div class="subheading">
+              <Text content={feature.subheading} />
             </div>
-          </Tilt>
+          {/if}
+          {#if href}
+            <a {href} class="link">{feature.label}</a>
+          {/if}
         </div>
       </article>
     </Tilt>
@@ -111,6 +107,8 @@
     position: relative;
     overflow: hidden;
     border-radius: var(--border-radius);
+    box-shadow: var(--tilt-box-shadow);
+    transition: var(--tilt-box-shadow-transition);
   }
 
   .feature::after {
@@ -141,12 +139,6 @@
   }
 
   .body {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .content {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -158,6 +150,9 @@
     color: #fff;
     line-height: var(--sans-serif-line-height);
     font-family: var(--sans-serif);
+    text-shadow: 0 0 0.8em rgba(0, 0, 0, 0.2);
+    transform: var(--tilt-foreground-transform);
+    transition: var(--tilt-transform-transition);
   }
 
   .heading {
@@ -180,12 +175,15 @@
     top: 0;
     left: 0;
     z-index: -1;
+    transform: var(--tilt-background-transform);
+    transition: var(--tilt-transform-transition);
   }
 
   .link {
     padding: 1rem 1.6rem;
-    border: 2px solid currentColor;
+    border: 2px solid #fff;
     border-radius: var(--border-radius);
+    text-shadow: none;
     transition: background-color var(--tilt-duration) var(--tilt-delay)
         cubic-bezier(0.33, 1, 0.68, 1),
       color var(--tilt-duration) var(--tilt-delay)

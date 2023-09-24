@@ -54,6 +54,8 @@
     border-radius: var(--border-radius);
     background-color: #f8f8f8;
     font-family: var(--sans-serif);
+    box-shadow: var(--tilt-box-shadow);
+    transition: var(--tilt-box-shadow-transition);
   }
 
   .graphic {

@@ -12,7 +12,6 @@
   export let reverse = false
   export let glare = true
   export let depth = 1.75
-  export let foreground = false
 
   $: tiltDepth = depth + depth * (1 - width / Math.min(1350, innerWidth))
 
@@ -34,6 +33,7 @@
     duration = '100ms'
     timeout = setTimeout(() => {
       active = true
+      duration = '0ms'
     }, 100)
   }
 
@@ -49,70 +49,59 @@
 
 <svelte:window bind:innerWidth />
 
-{#if foreground}
-  <div class="tilt" class:foreground>
-    <div class="content" class:active class:reverse>
-      <slot />
-    </div>
+<div
+  class="tilt"
+  class:active
+  class:reverse
+  style:--tilt-y={tiltY}
+  style:--tilt-x={tiltX}
+  style:--tilt-delay={delay}
+  style:--tilt-depth={tiltDepth.toFixed(2)}
+  style:--tilt-duration={duration}
+  bind:offsetWidth={width}
+  bind:offsetHeight={height}
+  on:mousemove={onmousemove}
+  on:mouseenter={onmouseenter}
+  on:mouseleave={onmouseleave}>
+  <div class="content" class:glare>
+    <slot />
   </div>
-{:else}
-  <div
-    class="tilt"
-    class:active
-    class:reverse
-    style:--tilt-y={tiltY}
-    style:--tilt-x={tiltX}
-    style:--tilt-delay={delay}
-    style:--tilt-depth={tiltDepth.toFixed(2)}
-    style:--tilt-duration={duration}
-    bind:offsetWidth={width}
-    bind:offsetHeight={height}
-    on:mousemove={onmousemove}
-    on:mouseenter={onmouseenter}
-    on:mouseleave={onmouseleave}>
-    <div class="content" class:glare>
-      <slot />
-    </div>
-  </div>
-{/if}
+</div>
 
 <style>
   .tilt {
-    display: grid; /* Force content to cover self */
-    transform-style: preserve-3d;
-    transform: perspective(100rem);
-  }
-
-  .tilt:not(.foreground) {
     --tilt-x: 0;
     --tilt-y: 0;
     --tilt-depth: 0;
     --tilt-delay: 50ms;
     --tilt-duration: 300ms;
-    --tilt-lift: 0;
+    --tilt-easing-function: cubic-bezier(0.33, 1, 0.68, 1);
+    --tilt-transform: rotateX(calc(var(--tilt-x) * 1deg))
+      rotateY(calc(var(--tilt-y) * 1deg));
+    --tilt-transform-transition: transform var(--tilt-duration)
+      var(--tilt-delay) var(--tilt-easing-function);
+    --tilt-foreground-transform: var(--tilt-transform)
+      translateZ(calc(var(--tilt-depth) * 2.5em));
+    --tilt-background-transform: scale(1.05) var(--tilt-transform)
+      translateZ(calc(var(--tilt-depth) * -2.5em));
+    --tilt-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.025),
+      calc(var(--tilt-y) * -0.8rem) calc(var(--tilt-x) * 0.8rem + 0.8rem) 1.2rem
+        rgba(0, 0, 0, 0.035);
+    --tilt-box-shadow-transition: box-shadow var(--tilt-duration)
+      var(--tilt-delay) var(--tilt-easing-function);
+
+    transform-style: preserve-3d;
+    transform: perspective(100rem);
   }
 
-  .tilt.foreground {
-    --tilt-lift: calc(var(--tilt-depth) * 2.8em);
-    transform: scale(calc((var(--tilt-depth) * 2.8em) / 5));
-    transform-origin: 0 0;
-    transition: text-shadow var(--tilt-duration) var(--tilt-delay);
-  }
-
-  :global(.tilt:hover) .tilt.foreground {
-    text-shadow: 0 0 0.8em rgba(0, 0, 0, 0.2);
+  .tilt.active {
+    --tilt-transform-transition: initial;
   }
 
   .content {
     display: grid; /* Force slot to cover content */
-    transform: rotateX(calc(var(--tilt-x) * 1deg))
-      rotateY(calc(var(--tilt-y) * 1deg)) translateZ(var(--tilt-lift));
-    transition: transform var(--tilt-duration) var(--tilt-delay)
-      cubic-bezier(0.33, 1, 0.68, 1);
-  }
-
-  .tilt.active .content {
-    transition: none;
+    transform: var(--tilt-transform);
+    transition: var(--tilt-transform-transition);
   }
 
   .glare::after {
@@ -123,7 +112,7 @@
     pointer-events: none;
     background: radial-gradient(
       circle,
-      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.15) 0%,
       rgba(255, 255, 255, 0.01) 70%,
       rgba(255, 255, 255, 0) 80%
     );
