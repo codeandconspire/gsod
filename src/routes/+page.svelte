@@ -127,7 +127,7 @@
     );
   }
 
-  @media (min-width: 800px) {
+  @media (min-width: 50rem) {
     .feature::before {
       content: '';
       display: block;

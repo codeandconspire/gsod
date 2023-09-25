@@ -134,13 +134,13 @@
     font-size: 0.83rem;
   }
 
-  @media (max-width: 1299px) {
+  @media (max-width: 80rem) {
     .menu:is(.open, :target) {
       position: fixed;
       inset: 0;
       overflow: auto;
-      background-color: var(--current-background);
-      color: var(--current-color);
+      background-color: var(--background);
+      color: var(--color);
     }
   }
 
@@ -156,7 +156,7 @@
     font-family: var(--sans-serif);
   }
 
-  @media (max-width: 1299px) {
+  @media (max-width: 80rem) {
     .menu:is(.open, :target) .content {
       flex-wrap: wrap;
       padding: 2rem var(--page-gutter);
@@ -189,7 +189,7 @@
     margin-right: -5rem; /* 1 */
   }
 
-  @media (min-width: 600px) {
+  @media (min-width: 40rem) {
     .mesh {
       display: initial;
     }
@@ -212,7 +212,7 @@
     display: block;
   }
 
-  @media (min-width: 1300px) {
+  @media (min-width: 80rem) {
     .menu:is(:is(.open, :target), :not(:is(.open, :target)))
       .toggle:is(.open, .close) {
       display: none;
@@ -225,7 +225,7 @@
     gap: 1.5rem;
   }
 
-  @media (max-width: 1299px) {
+  @media (max-width: 80rem) {
     .items {
       flex-direction: column;
       gap: 1.25rem;
@@ -239,7 +239,7 @@
     }
   }
 
-  @media (min-width: 1300px) {
+  @media (min-width: 80rem) {
     .items {
       flex-direction: row;
     }
@@ -262,7 +262,7 @@
     text-decoration-thickness: 1px;
   }
 
-  @media (min-width: 1300px) {
+  @media (min-width: 80rem) {
     .anchor {
       gap: 0.5rem;
       white-space: nowrap;
@@ -277,7 +277,7 @@
     position: relative;
   }
 
-  @media (min-width: 1300px) {
+  @media (min-width: 80rem) {
     .chevron {
       width: 1em;
       height: auto;
@@ -288,7 +288,7 @@
     padding: 1rem 0 0 1.5rem;
   }
 
-  @media (min-width: 1300px) {
+  @media (min-width: 80rem) {
     .children {
       display: none;
       min-width: 100%;
@@ -297,7 +297,7 @@
       left: 0;
       top: calc(100% + 1rem);
       border-radius: var(--border-radius);
-      background: var(--current-background);
+      background: var(--background);
       box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.1);
       transform-origin: center;
       animation: slide-in 175ms forwards cubic-bezier(0.4, 0, 0.2, 1);
@@ -311,7 +311,7 @@
     }
 
     .children .anchor {
-      color: var(--current-color);
+      color: var(--color);
     }
 
     .item:hover > .children {
