@@ -2,10 +2,18 @@
   import Level from '$lib/Level.svelte'
   import { luma } from '$lib/utils.js'
 
-  export let back = null
-  export let fill = false
   export let image = null
+
+  /** {('small'|'fill')?} */
+  export let size = null
+
+  /** @type {string?} */
+  export let back = null
+
+  /** @type {string?} */
   export let primaryColor = null
+
+  /** @type {string?} */
   export let secondaryColor = null
 
   let bottom
@@ -19,7 +27,8 @@
 
 <header
   class="hero"
-  class:fill
+  class:fill={size === 'fill'}
+  class:small={size === 'small'}
   class:has-menu={$$slots.menu}
   style:--text-color={textColor}
   style:--primary-color={primaryColor}
@@ -36,7 +45,7 @@
       <Level />
     </div>
   {/if}
-  {#if fill}
+  {#if size === 'fill'}
     <div class="skip">
       <a
         href="#hero-bottom"
@@ -63,13 +72,22 @@
     </div>
   {/if}
   <div class="body">
-    {#if back}<a href={back} class="back">Back</a>{/if}
-    <h1 class="heading"><slot name="heading" /></h1>
-    {#if $$slots.subheading}
-      <p class="subheading">
-        <slot name="subheading" />
-      </p>
-    {/if}
+    <div class="content">
+      {#if back}
+        <a href={back} class="back">
+          <svg class="chevron" viewBox="0 -960 960 960">
+            <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
+          </svg>
+          Back
+        </a>
+      {/if}
+      <h1 class="heading"><slot name="heading" /></h1>
+      {#if $$slots.subheading}
+        <p class="subheading">
+          <slot name="subheading" />
+        </p>
+      {/if}
+    </div>
   </div>
 </header>
 <div id="hero-bottom" class="bottom" bind:this={bottom} />
@@ -118,12 +136,45 @@
   }
 
   .body {
+    display: flex;
     height: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  .hero.small .body {
+    max-width: var(--page-max-width);
+    padding: clamp(2rem, 8vh, 5rem) 0;
+    margin: 0 auto;
+  }
+
+  .content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 1.5rem;
-    position: relative;
+    width: 100%;
+  }
+
+  .hero.small .content {
+    max-width: var(--content-max-width);
+    margin-left: auto;
+  }
+
+  .back {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .chevron {
+    width: 1.2em;
+    height: auto;
+    will-change: transform;
+    transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .back:hover .chevron {
+    transform: translateX(-0.15em);
   }
 
   .heading {
@@ -137,20 +188,29 @@
     font-weight: var(--sans-serif-heavy);
   }
 
+  .hero.small .heading {
+    max-width: var(--text-max-width);
+    text-align: left;
+    font-weight: var(--sans-serif-heavy);
+    font-size: clamp(2rem, 6vw, 3.8rem);
+  }
+
   .subheading {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: var(--sans-serif-bold);
     text-align: center;
+  }
+
+  .hero.small .subheading {
+    max-width: var(--text-max-width);
+    text-align: left;
+    font-weight: var(--sans-serif-normal);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
   }
 
   .skip {
     grid-row: 3;
     display: flex;
     justify-content: center;
-  }
-
-  .chevron {
-    width: min(10vw, 3.5rem);
-    height: auto;
   }
 </style>

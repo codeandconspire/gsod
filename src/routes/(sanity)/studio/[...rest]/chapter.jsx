@@ -56,7 +56,7 @@ export default {
     },
     {
       name: 'title',
-      type: 'string',
+      type: 'text',
       title: 'Title',
       group: 'main'
     },

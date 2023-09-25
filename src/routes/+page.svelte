@@ -1,8 +1,8 @@
 <script>
   import { page } from '$app/stores'
 
-  import Text, { asText } from '$lib/Text.svelte'
   import { resolve } from '$lib/sanity.js'
+  import Text from '$lib/Text.svelte'
   import Menu from '$lib/Menu.svelte'
   import Hero from '$lib/Hero.svelte'
   import Card from '$lib/Card.svelte'
@@ -23,7 +23,7 @@
 </script>
 
 <Hero
-  fill
+  size="fill"
   primaryColor={cover.primaryColor}
   secondaryColor={cover.secondaryColor}>
   <Menu slot="menu" items={menu} />
