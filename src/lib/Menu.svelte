@@ -1,10 +1,17 @@
 <script>
   export let items = []
-
+  let menu
   let open = false
+
+  function resize() {
+    let narrow = getComputedStyle(menu).getPropertyValue('--narrow')
+    if (narrow) open = false
+  }
 </script>
 
-<nav class="menu" class:open id="menu">
+<svelte:window on:resize={resize} />
+
+<nav class="menu" class:open bind:this={menu} id="menu">
   <div class="content">
     <a href="/" class="home" rel="home">
       <svg width="46" height="46" fill="none" class="logo idea">
@@ -70,6 +77,7 @@
     <a
       href="#"
       class="toggle close"
+      aria-controls="menu"
       on:click|preventDefault={() => {
         open = false
       }}>
@@ -89,13 +97,16 @@
             {href}
             class="anchor"
             class:active
+            tabindex="0"
             class:parent={children?.length}>
             {label}
-            <svg class="chevron" viewBox="0 -960 960 960">
-              <path
-                fill="currentcolor"
-                d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z" />
-            </svg>
+            {#if children}
+              <svg class="chevron" viewBox="0 -960 960 960">
+                <path
+                  fill="currentcolor"
+                  d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z" />
+              </svg>
+            {/if}
           </svelte:element>
           {#if children?.length}
             <ol class="children">
@@ -131,16 +142,22 @@
 <style>
   .menu {
     position: relative;
-    font-size: 0.83rem;
+    font-size: clamp(0.875rem, 1.1vw, 1rem);
+    --narrow: 1;
   }
 
   @media (max-width: 80rem) {
+    .menu {
+      --narrow: 0;
+    }
+
     .menu:is(.open, :target) {
       position: fixed;
       inset: 0;
       overflow: auto;
       background-color: var(--background);
       color: var(--color);
+      z-index: 1;
     }
   }
 
@@ -160,7 +177,7 @@
     .menu:is(.open, :target) .content {
       flex-wrap: wrap;
       padding: 2rem var(--page-gutter);
-      font-size: 1.5rem;
+      font-size: 1rem;
     }
   }
 
@@ -168,7 +185,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.25rem;
+    gap: min(1.6rem, 4vw);
     margin-right: auto;
   }
 
@@ -181,11 +198,10 @@
     display: none;
   }
 
-  /**
-   * 1. Pull in menu close button
-   */
   .gsdi {
-    transform: translateX(-36%);
+    transform: translateX(-38.5%);
+
+    /* Pull in menu close button */
     margin-right: -5rem; /* 1 */
   }
 
@@ -264,7 +280,7 @@
 
   @media (min-width: 80rem) {
     .anchor {
-      gap: 0.5rem;
+      gap: 0.15em;
       white-space: nowrap;
     }
   }
@@ -279,7 +295,8 @@
 
   @media (min-width: 80rem) {
     .chevron {
-      width: 1em;
+      width: 1.2em;
+      margin-right: -0.2em;
       height: auto;
     }
   }
@@ -314,7 +331,8 @@
       color: var(--color);
     }
 
-    .item:hover > .children {
+    .item:hover > .children,
+    .item:focus-within > .children {
       display: block;
     }
   }

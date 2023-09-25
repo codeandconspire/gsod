@@ -123,12 +123,14 @@
     gap: 2rem;
     font-size: clamp(1.25rem, 3vw, 2rem);
     font-weight: var(--sans-serif-heavy);
+    text-wrap: balance;
   }
 
   .subheading {
     margin-bottom: auto;
     font-size: 1rem;
     font-weight: var(--sans-serif-normal);
+    text-wrap: balance;
   }
 
   .link {

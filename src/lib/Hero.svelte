@@ -49,6 +49,8 @@
     <div class="skip">
       <a
         href="#hero-bottom"
+        tabindex="-1"
+        aria-hidden="true"
         on:click|preventDefault={() =>
           bottom.scrollIntoView({ block: 'start', behavior: 'smooth' })}>
         <span class="u-hidden">Skip to content</span>
@@ -67,9 +69,7 @@
     </div>
   {/if}
   {#if $$slots.menu}
-    <div class="menu">
-      <slot name="menu" />
-    </div>
+    <slot name="menu" />
   {/if}
   <div class="body">
     <div class="content">
@@ -101,7 +101,7 @@
     display: grid;
     position: relative;
     grid-template-rows: 1fr auto;
-    padding: min(5vh, 2rem) var(--page-gutter);
+    padding: min(5vh, var(--page-gutter)) var(--page-gutter);
     line-height: var(--sans-serif-line-height);
     font-family: var(--sans-serif);
     color: var(--text-color);
@@ -182,6 +182,7 @@
     text-align: center;
     line-height: 1;
     font-weight: var(--sans-serif-light);
+    text-wrap: balance;
   }
 
   .heading :global(strong) {
@@ -199,6 +200,7 @@
     font-size: 1.5rem;
     font-weight: var(--sans-serif-bold);
     text-align: center;
+    text-wrap: balance;
   }
 
   .hero.small .subheading {

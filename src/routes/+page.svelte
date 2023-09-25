@@ -161,6 +161,7 @@
     margin-bottom: auto;
     font-weight: var(--sans-serif-bold);
     font-size: clamp(1.25rem, 4vw, 2.375rem);
+    text-wrap: balance;
   }
 
   .subheading {
