@@ -64,11 +64,8 @@
       // @ts-ignore
       React.createElement(
         StudioProvider,
-        {
-          children: null,
-          basePath: '/studio',
-          config
-        },
+        // @ts-ignore
+        { basePath: '/studio', config },
         React.createElement(StudioLayout)
       )
     )

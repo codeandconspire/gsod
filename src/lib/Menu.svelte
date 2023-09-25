@@ -1,7 +1,4 @@
 <script>
-  import idea from '$lib/assets/idea.svg'
-  import gsdi from '$lib/assets/gsdi.svg'
-
   export let items = []
 
   let open = false
