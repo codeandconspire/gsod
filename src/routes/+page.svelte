@@ -42,8 +42,8 @@
   {#if cover.featuredChapter}
     {@const { featuredChapter: feature } = cover}
     {@const href = resolve(feature.link)}
-    <Tilt>
-      <article class="feature">
+    <Tilt {href} let:hover>
+      <article class="feature" class:hover>
         {#if feature.image.image}
           <img
             class="image"
@@ -64,7 +64,7 @@
             </div>
           {/if}
           {#if href}
-            <a {href} class="link">{feature.label}</a>
+            <span class="link">{feature.label}</span>
           {/if}
         </div>
       </article>
@@ -73,13 +73,14 @@
   <div class="items">
     {#each cover.chapters as chapter}
       {@const href = resolve(chapter)}
-      <Tilt>
+      <Tilt {href} let:hover>
         <Card
+          {hover}
           primaryColor={chapter.primaryColor || cover.primaryColor}
           secondaryColor={chapter.secondaryColor || cover.secondaryColor}
           heading={chapter.shortname || chapter.title}
           subheading={chapter.category}
-          link={href ? { href, label: 'Explore chapter' } : null} />
+          link={href ? { label: 'Explore chapter' } : null} />
       </Tilt>
     {/each}
   </div>
@@ -190,15 +191,10 @@
         cubic-bezier(0.33, 1, 0.68, 1);
   }
 
-  .link:hover {
+  .link:hover,
+  .feature.hover .link {
     color: #000;
     background: #fff;
-  }
-
-  .link::after {
-    content: '';
-    position: absolute;
-    inset: 0;
   }
 
   .items {

@@ -1,6 +1,10 @@
 <script>
+  import Level from '$lib/Level.svelte'
+  import { luma } from '$lib/utils.js'
+
   export let back = null
   export let fill = false
+  export let image = null
   export let primaryColor = null
   export let secondaryColor = null
 
@@ -11,17 +15,6 @@
       ? '#000'
       : '#fff'
     : null
-
-  function luma(str) {
-    var hex = str.replace(/^#/, '')
-    var rgb = parseInt(hex, 16)
-    var r = (rgb >> 16) & 0xff
-    var g = (rgb >> 8) & 0xff
-    var b = (rgb >> 0) & 0xff
-
-    // per ITU-R BT.709
-    return 0.2126 * r + 0.7152 * g + 0.0722 * b
-  }
 </script>
 
 <header
@@ -31,6 +24,18 @@
   style:--text-color={textColor}
   style:--primary-color={primaryColor}
   style:--secondary-color={secondaryColor}>
+  {#if image}
+    <div class="graphic">
+      <img alt="" {...image} class="image" />
+    </div>
+  {:else if primaryColor}
+    <div
+      class="graphic"
+      style:--primary-color={primaryColor}
+      style:--secondary-color={secondaryColor}>
+      <Level />
+    </div>
+  {/if}
   {#if fill}
     <div class="skip">
       <a
@@ -76,6 +81,7 @@
     --secondary-color: #326593;
 
     display: grid;
+    position: relative;
     grid-template-rows: 1fr auto;
     padding: min(5vh, 2rem) var(--page-gutter);
     line-height: var(--sans-serif-line-height);
@@ -93,12 +99,31 @@
     width: 100svw;
   }
 
+  .graphic {
+    display: grid;
+    position: absolute;
+    inset: 0;
+    background-color: var(--primary-color);
+    transform: var(--tilt-background-transform);
+    transition: var(--tilt-transform-transition);
+  }
+
+  .image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
   .body {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 1.5rem;
+    position: relative;
   }
 
   .heading {

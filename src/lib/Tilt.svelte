@@ -1,4 +1,5 @@
 <script>
+  let mouseover = false
   let active = false
   let innerWidth
   let duration
@@ -12,6 +13,9 @@
   export let reverse = false
   export let glare = true
   export let depth = 1.75
+
+  /** @type {string?} */
+  export let href = null
 
   $: tiltDepth = depth + depth * (1 - width / Math.min(1350, innerWidth))
 
@@ -31,6 +35,7 @@
   function onmouseenter() {
     delay = '0ms'
     duration = '100ms'
+    mouseover = true
     timeout = setTimeout(() => {
       active = true
       duration = '0ms'
@@ -39,6 +44,7 @@
 
   function onmouseleave() {
     clearTimeout(timeout)
+    mouseover = false
     active = false
     duration = null
     delay = null
@@ -49,7 +55,9 @@
 
 <svelte:window bind:innerWidth />
 
-<div
+<svelte:element
+  this={href ? 'a' : 'div'}
+  {href}
   class="tilt"
   class:active
   class:reverse
@@ -64,9 +72,9 @@
   on:mouseenter={onmouseenter}
   on:mouseleave={onmouseleave}>
   <div class="content" class:glare>
-    <slot />
+    <slot hover={mouseover} />
   </div>
-</div>
+</svelte:element>
 
 <style>
   .tilt {
@@ -104,6 +112,10 @@
     transition: var(--tilt-transform-transition);
   }
 
+  .content + :global(iframe) {
+    transform: translateZ(0px);
+  }
+
   .glare::after {
     content: '';
     position: absolute;
@@ -126,7 +138,7 @@
         cubic-bezier(0.33, 1, 0.68, 1);
   }
 
-  .glare:hover::after {
+  .tilt:hover .glare::after {
     opacity: 1;
   }
 

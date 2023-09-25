@@ -1,4 +1,9 @@
 <script>
+  import Level from '$lib/Level.svelte'
+  import { luma } from '$lib/utils.js'
+
+  export let hover = false
+
   /** @type {string?}*/
   export let primaryColor = null
 
@@ -8,7 +13,7 @@
   /** @type {({ src: string } & { [key: string]: string })?} */
   export let image = null
 
-  /** @type {{ href: string, label: string }?}*/
+  /** @type {{ href?: string, label: string }?}*/
   export let link = null
 
   /** @type {string?}*/
@@ -18,7 +23,10 @@
   export let subheading = null
 </script>
 
-<article class="card">
+<article
+  class="card"
+  class:hover
+  class:inverse={image || (primaryColor && luma(primaryColor) < 165)}>
   {#if image}
     <div class="graphic">
       <img alt="" {...image} class="image" />
@@ -27,28 +35,34 @@
     <div
       class="graphic"
       style:--primary-color={primaryColor}
-      style:--secondary-color={secondaryColor} />
+      style:--secondary-color={secondaryColor}>
+      <Level />
+    </div>
   {/if}
-  {#if heading || subheading}
-    <h3 class="heading">
-      {#if subheading}
-        <span class="subheading">{subheading}</span>
-        <br />
-      {/if}
-      {heading}
-    </h3>
-  {/if}
-  {#if link}
-    <a href={link.href} class="link">
-      {link.label}
-    </a>
-  {/if}
+  <div class="body" class:overlay={image}>
+    {#if heading || subheading}
+      <h3 class="heading">
+        {#if subheading}
+          <span class="subheading">{subheading}</span>
+          <br />
+        {/if}
+        {heading}
+      </h3>
+    {/if}
+    {#if link}
+      <svelte:element
+        this={link.href ? 'a' : 'span'}
+        href={link.href}
+        class="link">
+        {link.label}
+      </svelte:element>
+    {/if}
+  </div>
 </article>
 
 <style>
   .card {
     display: flex;
-    flex-direction: column;
     overflow: hidden;
     position: relative;
     border-radius: var(--border-radius);
@@ -56,12 +70,26 @@
     font-family: var(--sans-serif);
     box-shadow: var(--tilt-box-shadow);
     transition: var(--tilt-box-shadow-transition);
+    color: #000;
+  }
+
+  .card.inverse {
+    color: #fff;
+  }
+
+  .card::before {
+    content: '';
+    display: block;
+    padding-top: 65%;
   }
 
   .graphic {
-    aspect-ratio: 1.8;
-    position: relative;
+    display: grid;
+    position: absolute;
+    inset: 0;
     background-color: var(--primary-color);
+    transform: var(--tilt-background-transform);
+    transition: var(--tilt-transform-transition);
   }
 
   .image {
@@ -73,27 +101,48 @@
     top: 0;
   }
 
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.3rem, 0.8vw, 1.2rem);
+    padding: clamp(1.2rem, 2.5vw, 2rem);
+    width: 100%;
+    position: relative;
+    transform: var(--tilt-foreground-transform);
+    transition: var(--tilt-transform-transition);
+  }
+
+  .overlay {
+    text-shadow: 0 0 0.8em rgba(0, 0, 0, 0.2);
+  }
+
   .heading {
-    padding: 1.2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
     font-size: clamp(1.25rem, 3vw, 2rem);
     font-weight: var(--sans-serif-heavy);
   }
 
   .subheading {
+    margin-bottom: auto;
     font-size: 1rem;
     font-weight: var(--sans-serif-normal);
   }
 
   .link {
-    padding: 1.2rem;
-    font-weight: var(--sans-serif-bold);
+    opacity: 0.2;
+    transition: opacity var(--tilt-duration, 200ms) var(--tilt-delay, 0)
+      var(--tilt-easing-function, ease-out);
   }
 
-  .link:not(:first-child) {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  .link:hover,
+  .card.hover .link {
+    opacity: 1;
   }
 
-  .link::after {
+  a.link::after {
     content: '';
     position: absolute;
     inset: 0;
