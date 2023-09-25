@@ -282,7 +282,11 @@ export default {
               title: 'Size',
               initialValue: 'Medium',
               options: {
-                list: ['Small', 'Medium', 'Large']
+                list: [
+                  { title: 'Small', value: 'small' },
+                  { title: 'Medium', value: 'medium' },
+                  { title: 'Large', value: 'large' }
+                ]
               }
             },
             {

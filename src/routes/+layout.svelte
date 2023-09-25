@@ -18,7 +18,7 @@
 </script>
 
 <div class="layout">
-  <slot />
+  <div class="content"><slot /></div>
   <Footer form={form?.signup} {groups} />
 </div>
 
@@ -28,7 +28,10 @@
   .layout {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     min-height: 100svh;
+  }
+
+  .content {
+    margin-bottom: auto;
   }
 </style>
