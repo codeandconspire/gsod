@@ -1,5 +1,6 @@
 <script context="module">
   export function asText(content) {
+    if (!Array.isArray(content)) return String(content)
     return content
       .filter((block) => block._type === 'block')
       .flatMap((block) => block.children.map((child) => child.text))
@@ -13,7 +14,7 @@
 </script>
 
 {#if plain}
-  {asText(content)}
+  {@html asText(content).replace(/\n/g, '<br />')}
 {:else if content}
   {#each content as block (block._key)}
     {@const { style, _type } = block}
