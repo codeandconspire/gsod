@@ -1,8 +1,5 @@
 <script>
-  import { luma } from '$lib/utils.js'
-
   export let items = []
-  export let primaryColor
 
   let open = false
 </script>
