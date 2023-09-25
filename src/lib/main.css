@@ -84,7 +84,7 @@
 }
 
 /* Scale the entire page for wide viewports */
-@media (min-width: 80rem) {
+@media (width > 100rem) {
   :root {
     font-size: 105%;
   }

@@ -74,12 +74,14 @@
   <div class="body">
     <div class="content">
       {#if back}
-        <a href={back} class="back">
-          <svg class="chevron" viewBox="0 -960 960 960">
-            <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
-          </svg>
-          Back
-        </a>
+        <div>
+          <a href={back} class="back">
+            <svg class="chevron" viewBox="0 -960 960 960">
+              <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
+            </svg>
+            Back
+          </a>
+        </div>
       {/if}
       <h1 class="heading"><slot name="heading" /></h1>
       {#if $$slots.subheading}
@@ -101,8 +103,8 @@
     display: grid;
     position: relative;
     grid-template-rows: 1fr auto;
-    padding: min(5vh, var(--page-gutter)) var(--page-gutter);
-    line-height: var(--sans-serif-line-height);
+    padding: clamp(1rem, var(--page-gutter), 2.25rem) var(--page-gutter);
+    line-height: 1.25;
     font-family: var(--sans-serif);
     color: var(--text-color);
     background-color: var(--primary-color);
@@ -144,7 +146,7 @@
 
   .hero.small .body {
     max-width: var(--page-max-width);
-    padding: clamp(2rem, 8vh, 5rem) 0;
+    padding: clamp(3rem, 17vh, 6rem) 0;
     margin: 0 auto;
   }
 
@@ -152,22 +154,30 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 1.25em;
     width: 100%;
+    margin-top: -0.5rem;
   }
 
-  .hero.small .content {
-    max-width: var(--content-max-width);
-    margin-left: auto;
+  @media (width > 70rem) {
+    .hero.small .content {
+      max-width: var(--text-max-width);
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
   .back {
-    display: flex;
+    font-size: var(--framework-font-size);
+    display: inline-flex;
     align-items: flex-end;
+    padding: 0.5rem;
+    margin: -0.5rem;
+    margin-left: -0.85rem
   }
 
   .chevron {
-    width: 1.2em;
+    width: 1.35em;
     height: auto;
     will-change: transform;
     transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -180,9 +190,10 @@
   .heading {
     font-size: clamp(3rem, 8vw, 7rem);
     text-align: center;
-    line-height: 1;
+    line-height: 1.05;
     font-weight: var(--sans-serif-light);
     text-wrap: balance;
+    margin-left: -0.02em;
   }
 
   .heading :global(strong) {
@@ -193,7 +204,8 @@
     max-width: var(--text-max-width);
     text-align: left;
     font-weight: var(--sans-serif-heavy);
-    font-size: clamp(2rem, 6vw, 3.8rem);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    letter-spacing: -0.005em;
   }
 
   .subheading {

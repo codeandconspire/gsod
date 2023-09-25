@@ -142,11 +142,12 @@
 <style>
   .menu {
     position: relative;
-    font-size: clamp(0.875rem, 1.1vw, 1rem);
+    font-size: var(--framework-font-size);
+    z-index: 1;
     --narrow: 1;
   }
 
-  @media (max-width: 80rem) {
+  @media (width <= 80rem) {
     .menu {
       --narrow: 0;
     }
@@ -157,7 +158,6 @@
       overflow: auto;
       background-color: var(--background);
       color: var(--color);
-      z-index: 1;
     }
   }
 
@@ -173,7 +173,7 @@
     font-family: var(--sans-serif);
   }
 
-  @media (max-width: 80rem) {
+  @media (width <= 80rem) {
     .menu:is(.open, :target) .content {
       flex-wrap: wrap;
       padding: 2rem var(--page-gutter);
@@ -205,7 +205,7 @@
     margin-right: -5rem; /* 1 */
   }
 
-  @media (min-width: 40rem) {
+  @media (width > 30rem) {
     .mesh {
       display: initial;
     }
@@ -228,7 +228,14 @@
     display: block;
   }
 
-  @media (min-width: 80rem) {
+  .icon {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.5rem;
+    margin: -0.5rem;
+  }
+
+  @media (width > 80rem) {
     .menu:is(:is(.open, :target), :not(:is(.open, :target)))
       .toggle:is(.open, .close) {
       display: none;
@@ -238,10 +245,10 @@
   .items {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: clamp(1.3rem, 2vw, 2rem);
   }
 
-  @media (max-width: 80rem) {
+  @media (width <= 80rem) {
     .items {
       flex-direction: column;
       gap: 1.25rem;
@@ -255,7 +262,7 @@
     }
   }
 
-  @media (min-width: 80rem) {
+  @media (width > 80rem) {
     .items {
       flex-direction: row;
     }
@@ -278,7 +285,7 @@
     text-decoration-thickness: 1px;
   }
 
-  @media (min-width: 80rem) {
+  @media (width > 80rem) {
     .anchor {
       gap: 0.15em;
       white-space: nowrap;
@@ -293,7 +300,7 @@
     position: relative;
   }
 
-  @media (min-width: 80rem) {
+  @media (width > 80rem) {
     .chevron {
       width: 1.2em;
       margin-right: -0.2em;
@@ -303,9 +310,11 @@
 
   .children {
     padding: 1rem 0 0 1.5rem;
+    position: relative;
+    z-index: 1;
   }
 
-  @media (min-width: 80rem) {
+  @media (width > 80rem) {
     .children {
       display: none;
       min-width: 100%;

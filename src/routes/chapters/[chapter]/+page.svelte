@@ -32,7 +32,7 @@
 </Hero>
 
 <div class="content">
-  <nav class="toc">
+  <nav class="aside toc">
     <ol class="items">
       {#each chapter.modules as module}
         {#if module._type === 'richText'}
@@ -67,15 +67,21 @@
       {/if}
     {/each}
   </div>
+  <div class="aside share" />
 </div>
 
 <style>
   .content {
-    display: grid;
-    grid-template-columns: auto var(--content-max-width);
-    gap: clamp(1.5rem, 3vw, 4.5rem);
     max-width: min(calc(100vw - var(--page-gutter) * 2), var(--page-max-width));
     margin: clamp(3rem, 10vh, 7rem) auto;
+  }
+
+  @media (width > 70rem) {
+    .content {
+      display: grid;
+      grid-template-columns: 1fr var(--text-max-width) 1fr;
+      gap: clamp(1.5rem, 3vw, 4.5rem);
+    }
   }
 
   .items {
