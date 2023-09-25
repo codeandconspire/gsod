@@ -100,27 +100,27 @@
     </a>
     <ol class="items">
       {#each items as item}
-        {@const { href, label, selected, children } = item}
-        <li class="item" class:selected>
-          {#if item.href && !selected}
+        {@const { href, label, active, children } = item}
+        <li class="item" class:active>
+          {#if item.href && !active}
             <a
               {href}
               class="anchor"
-              class:selected
+              class:active
               class:parent={children?.length}>
               {label}
             </a>
           {:else}
-            <span class="anchor" class:selected class:parent={children?.length}>
+            <span class="anchor" class:active class:parent={children?.length}>
               {label}
             </span>
           {/if}
           {#if children?.length}
             <ol class="children">
               {#each children as child}
-                {@const { href, label, selected } = child}
-                <li class="child" class:selected>
-                  <a {href} class="anchor" class:selected>
+                {@const { href, label, active } = child}
+                <li class="child" class:active>
+                  <a {href} class="anchor" class:active>
                     {label}
                   </a>
                 </li>
@@ -292,7 +292,7 @@
     }
   }
 
-  .anchor.selected {
+  .anchor.active {
     font-weight: var(--sans-serif-bold);
   }
 

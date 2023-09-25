@@ -15,10 +15,10 @@
     const { link, label } = item
     const href = resolve(link)
     const children = item.children?.map(each)
-    const selected =
+    const active =
       $page.url.pathname === href ||
       children?.some((child) => $page.url.pathname === child.href)
-    return { href, label, selected, children }
+    return { href, label, active, children }
   })
 </script>
 
