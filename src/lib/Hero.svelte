@@ -129,6 +129,7 @@
   .heading {
     font-size: clamp(3rem, 8vw, 7rem);
     text-align: center;
+    line-height: 1;
     font-weight: var(--sans-serif-light);
   }
 
