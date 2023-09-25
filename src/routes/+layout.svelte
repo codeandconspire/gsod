@@ -17,10 +17,18 @@
   })
 </script>
 
-<slot />
-
-<Footer form={form?.signup} {groups} />
+<div class="layout">
+  <slot />
+  <Footer form={form?.signup} {groups} />
+</div>
 
 <style>
   @import url('$lib/main.css');
+
+  .layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100svh;
+  }
 </style>

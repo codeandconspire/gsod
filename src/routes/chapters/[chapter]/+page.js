@@ -7,9 +7,22 @@ export async function load({ params }) {
     `*[_type == "chapter" && slug.current == $slug][0]{
       ...,
       "cover": *[_type == "cover" && references(^._id)][0]{
-        type,
+        _type,
         slug,
-        menu
+        menu[]{
+          label,
+          link->{
+            _type,
+            slug
+          },
+          children[]{
+            label,
+            link->{
+              _type,
+              slug
+            }
+          }
+        }
       }
     }`,
     { slug: params.chapter }
