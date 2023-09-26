@@ -1,17 +1,9 @@
 <script>
   export let items = []
-  let menu
   let open = false
-
-  function resize() {
-    let narrow = getComputedStyle(menu).getPropertyValue('--narrow')
-    if (narrow) open = false
-  }
 </script>
 
-<svelte:window on:resize={resize} />
-
-<nav class="menu" class:open bind:this={menu} id="menu">
+<nav class="menu" class:open id="menu">
   <div class="content">
     <a href="/" class="home" rel="home">
       <svg width="46" height="46" fill="none" class="logo idea">
@@ -148,10 +140,6 @@
   }
 
   @media (width <= 80rem) {
-    .menu {
-      --narrow: 0;
-    }
-
     .menu:is(.open, :target) {
       position: fixed;
       inset: 0;
@@ -159,10 +147,10 @@
       background-color: var(--background);
       color: var(--color);
     }
-  }
 
-  :root:has(.menu:is(.open, :target)) {
-    overflow: hidden;
+    :root:has(.menu:is(.open, :target)) {
+      overflow: hidden;
+    }
   }
 
   .content {

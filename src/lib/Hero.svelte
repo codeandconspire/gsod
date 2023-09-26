@@ -5,7 +5,7 @@
   export let image = null
 
   /** {('small'|'fill')?} */
-  export let size = null
+  export let size = ''
 
   /** @type {string?} */
   export let back = null

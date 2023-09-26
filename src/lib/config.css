@@ -13,7 +13,7 @@
 
   --page-max-width: 90rem;
   --content-max-width: 70rem;
-  --text-max-width: clamp(40rem, 60vw, 45rem);
+  --text-max-width: clamp(35rem, 50vw, 45rem);
   --page-gutter: min(5vw, 5rem);
 
   --background: #fff;

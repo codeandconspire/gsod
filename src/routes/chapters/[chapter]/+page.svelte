@@ -8,6 +8,7 @@
   import Menu from '$lib/Menu.svelte'
 
   export let data
+  let open = false
 
   $: chapter = data.chapter
   $: menu = chapter.cover.menu.map(function each(item) {
@@ -32,7 +33,35 @@
 </Hero>
 
 <div class="content">
-  <nav class="aside toc">
+  <nav class="aside toc" class:open id="toc">
+    <!-- svelte-ignore a11y-invalid-attribute -->
+    <a
+      href="#"
+      class="toggle close"
+      aria-controls="toc"
+      on:click|preventDefault={() => {
+        open = false
+      }}>
+      <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
+        <path
+          fill="currentcolor"
+          d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+      </svg>
+      <span>Close table of contents</span>
+    </a>
+    <a
+      href="#toc"
+      class="toggle open"
+      on:click|preventDefault={() => {
+        open = true
+      }}>
+      <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
+        <path
+          fill="currentcolor"
+          d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+      </svg>
+      <span>Open table of contents</span>
+    </a>
     <ol class="items">
       {#each chapter.modules as module}
         {#if module._type === 'richText'}
@@ -40,7 +69,7 @@
             (block) => block.style === 'h2'
           )}
           {#if heading}
-            <li class="heading">
+            <li class="item">
               <a href="{resolve(chapter)}#{heading._key}">
                 {asText([heading])}
               </a>
@@ -63,6 +92,15 @@
           <Html>
             <Text content={module.content} />
           </Html>
+          <Html>
+            <Text content={module.content} />
+          </Html>
+          <Html>
+            <Text content={module.content} />
+          </Html>
+          <Html>
+            <Text content={module.content} />
+          </Html>
         </div>
       {/if}
     {/each}
@@ -72,23 +110,120 @@
 
 <style>
   .content {
+    position: relative;
     max-width: min(calc(100vw - var(--page-gutter) * 2), var(--page-max-width));
-    margin: clamp(3rem, 10vh, 7rem) auto;
+    margin: var(--margin) auto;
+
+    --margin: clamp(3rem, 10vh, 7rem);
   }
 
   @media (width > 70rem) {
     .content {
       display: grid;
       grid-template-columns: 1fr var(--text-max-width) 1fr;
-      gap: clamp(1.5rem, 3vw, 4.5rem);
+      gap: clamp(2.5rem, 3vw, 4.5rem);
+      align-items: flex-start;
     }
   }
 
+  @media (width < 70rem) {
+    .content:has(.items) {
+      margin-top: 0;
+    }
+  }
+
+  .icon {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 0.5rem 0 -0.1rem;
+  }
+
   .items {
+    font-family: var(--sans-serif);
+    font-size: var(--framework-font-size);
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
+
+  @media (width <= 70rem) {
+    .toc {
+      position: sticky;
+      top: 0;
+      width: calc(100% + (var(--page-gutter) * 2));
+      margin-left: calc(var(--page-gutter) * -1);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05);
+      margin-bottom: var(--margin);
+
+      --narrow: 0;
+    }
+
+    .toc:not(:is(.open, :target)) .items {
+      display: none;
+    }
+
+    .toc:is(.open, :target) {
+      position: fixed;
+      inset: 0;
+      overflow: auto;
+      width: 100%;
+      margin: 0;
+      z-index: 1;
+    }
+
+    .items {
+      padding: var(--page-gutter);
+      width: 100%;
+      font-size: 1.25rem;
+    }
+
+    .item {
+      padding-top: 1rem;
+      border-top: 1px solid rgba(0, 0, 0);
+    }
+
+    .toggle {
+      font-family: var(--sans-serif);
+      font-size: var(--framework-font-size);
+      display: block;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem var(--page-gutter);
+    }
+
+    .toggle.close {
+      display: none;
+    }
+
+    .toc:is(.open, :target) .toggle.open {
+      display: none;
+    }
+
+    .toc:is(.open, :target) .toggle.close {
+      display: flex;
+    }
+
+    :root:has(.toc:is(.open, :target)) {
+      overflow: hidden;
+    }
+  }
+
+  @media (width > 70rem) {
+    .toc {
+      position: sticky;
+      top: var(--page-gutter);
+      margin-bottom: var(--margin);
+    }
+
+    .toggle {
+      display: none;
+    }
+  }
+
+  /* Divider */
 
   .divider,
   .divider.medium {
