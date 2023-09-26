@@ -3,11 +3,14 @@
 
   export const FOOTNOTES = Symbol('footnotes')
 
+  export function anchor(key) {
+    return `footnote-${key}`
+  }
+
   export function reset() {
     setContext(FOOTNOTES, [])
   }
 
-  /** @type {function(): any[]} */
   export function collect() {
     return getContext(FOOTNOTES)
   }
@@ -22,6 +25,10 @@
 </script>
 
 <script>
+  import { page } from '$app/stores'
+
+  import Footnotes from '$lib/Footnotes.svelte'
+
   export let plain = false
 
   /** @type {any?}*/
@@ -31,6 +38,19 @@
   export let defs = null
 
   if (!hasContext(FOOTNOTES)) reset()
+
+  const footnotes = getContext(FOOTNOTES)
+
+  let selected = null
+
+  const onopen = (def) => (event) => {
+    selected = def
+    event.preventDefault()
+  }
+  const onclose = (event) => {
+    selected = null
+    event.preventDefault()
+  }
 
   $: blocks = Array.isArray(content)
     ? content.reduce(function compile(acc, block) {
@@ -90,34 +110,51 @@
       {:else if _type === '$li'}
         <li><svelte:self content={block.children} /></li>
       {:else if _type === 'span'}
-        {@html block.marks
-          .reduce((acc, mark) => {
-            switch (mark) {
-              case 'strong':
-                return `<strong>${acc}</strong>`
-              case 'em':
-                return `<em>${acc}</em>`
-              case 'code':
-                return `<code>${acc}</code>`
-              case 'underline':
-                return `<u>${acc}</u>`
-              case 'strike-through':
-                return `<s>${acc}</s>`
-              default:
-                const def = defs?.find((def) => def._key === mark)
-                switch (def?._type) {
-                  case 'footnote': {
-                    const footnotes = getContext(FOOTNOTES)
-                    const index = footnotes.push(def)
-                    return `<a href="#footnote-${def._key}">${acc}<sup>[${index}]</sup></a>`
-                  }
-                  default:
-                    return acc
-                }
-            }
-          }, block.text)
-          .replace(/\n/g, '<br />')}
+        {@const [mark, ...marks] = block.marks}
+        {#if mark}
+          {#if mark === 'strong'}
+            <strong>
+              <svelte:self content={[{ ...block, marks }]} {defs} />
+            </strong>
+          {:else if mark === 'em'}
+            <em>
+              <svelte:self content={[{ ...block, marks }]} {defs} />
+            </em>
+          {:else}
+            {@const def = defs?.find((def) => def._key === mark)}
+            {#if def?._type === 'footnote'}
+              {@const index = footnotes.push(def)}
+              <a
+                class="anchor"
+                id="anchor-{def._key}"
+                href="#{anchor(def._key)}"
+                on:click={onopen(def)}>
+                <svelte:self content={[{ ...block, marks }]} {defs} />
+                <sup>[{index}]</sup>
+              </a>
+            {/if}
+          {/if}
+        {:else}
+          {@html block.text.replace(/\n/g, '<br />')}
+        {/if}
       {/if}
     </slot>
   {/each}
 {/if}
+
+{#if selected}
+  <Footnotes
+    selected
+    items={[selected]}
+    on:click={onclose}
+    share={$page.url.href.replace(/(#.+)|$/, `#anchor-${selected._key}`)} />
+{/if}
+
+<style>
+  .anchor:target {
+    background: var(--theme-primary-color);
+    color: var(--theme-text-color);
+    border-radius: 2px;
+    box-shadow: 0 0 0 0.1em var(--theme-primary-color);
+  }
+</style>
