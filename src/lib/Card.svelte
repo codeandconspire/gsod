@@ -121,17 +121,6 @@
     text-wrap: balance;
   }
 
-  .link {
-    opacity: 0.2;
-    transition: opacity var(--tilt-duration, 200ms) var(--tilt-delay, 0)
-      var(--tilt-easing-function, ease-out);
-  }
-
-  .link:hover,
-  .card.hover .link {
-    opacity: 1;
-  }
-
   a.link::after {
     content: '';
     position: absolute;
