@@ -41,7 +41,7 @@
     font-weight: var(--sans-serif-heavy);
     font-family: var(--sans-serif);
     font-size: clamp(1.25rem, 10vw, 2.3rem);
-    line-height: var(--sans-serif-line-height);
+    line-height: 1.25;
   }
 
   .items {

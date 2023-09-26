@@ -76,7 +76,7 @@
       {#if back}
         <div>
           <a href={back} class="back">
-            <svg class="chevron" viewBox="0 -960 960 960">
+            <svg class="chevron" fill="currentColor" viewBox="0 -960 960 960">
               <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
             </svg>
             Back
@@ -168,16 +168,18 @@
   }
 
   .back {
+    font-weight: bold;
     font-size: var(--framework-font-size);
     display: inline-flex;
     align-items: flex-end;
     padding: 0.5rem;
     margin: -0.5rem;
-    margin-left: -0.85rem
+    margin-left: -0.85rem;
   }
 
   .chevron {
     width: 1.35em;
+    margin: 0 -0.1em 0 -0.2em;
     height: auto;
     will-change: transform;
     transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
