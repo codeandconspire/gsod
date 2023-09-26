@@ -58,7 +58,7 @@
     font-family: var(--sans-serif);
     box-shadow: var(--tilt-box-shadow);
     transition: var(--tilt-box-shadow-transition);
-    color: #000;
+    color: var(--theme-text-color);
   }
 
   .card.inverse {
