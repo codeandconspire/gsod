@@ -4,12 +4,6 @@
 
   export let hover = false
 
-  /** @type {string?}*/
-  export let primaryColor = null
-
-  /** @type {string?}*/
-  export let secondaryColor = null
-
   /** @type {({ src: string } & { [key: string]: string })?} */
   export let image = null
 
@@ -23,19 +17,13 @@
   export let subheading = null
 </script>
 
-<article
-  class="card"
-  class:hover
-  class:inverse={image || (primaryColor && luma(primaryColor) < 165)}>
+<article class="card" class:hover>
   {#if image}
     <div class="graphic">
       <img alt="" {...image} class="image" />
     </div>
-  {:else if primaryColor}
-    <div
-      class="graphic"
-      style:--primary-color={primaryColor}
-      style:--secondary-color={secondaryColor}>
+  {:else}
+    <div class="graphic">
       <Level />
     </div>
   {/if}
@@ -87,7 +75,7 @@
     display: grid;
     position: absolute;
     inset: 0;
-    background-color: var(--primary-color);
+    background-color: var(--theme-primary-color);
     transform: var(--tilt-background-transform);
     transition: var(--tilt-transform-transition);
   }

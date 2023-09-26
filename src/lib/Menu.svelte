@@ -144,8 +144,8 @@
       position: fixed;
       inset: 0;
       overflow: auto;
-      background-color: var(--background);
-      color: var(--color);
+      background-color: var(--background-color);
+      color: var(--text-color);
     }
 
     :root:has(.menu:is(.open, :target)) {
@@ -311,7 +311,7 @@
       left: 0;
       top: calc(100% + 1rem);
       border-radius: var(--border-radius);
-      background: var(--background);
+      background: var(--background-color);
       box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.1);
       transform-origin: center;
       animation: slide-in 175ms forwards cubic-bezier(0.4, 0, 0.2, 1);
@@ -325,7 +325,7 @@
     }
 
     .children .anchor {
-      color: var(--color);
+      color: var(--text-color);
     }
 
     .item:hover > .children,

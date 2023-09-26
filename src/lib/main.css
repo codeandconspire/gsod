@@ -62,8 +62,8 @@
 
 :root {
   font-family: var(--serif);
-  background-color: var(--background);
-  color: var(--color);
+  background-color: var(--background-color);
+  color: var(--text-color);
   font-size: 100%;
   line-height: var(--line-height);
 

@@ -4,6 +4,7 @@
   import Text, { asText, reset } from '$lib/Text.svelte'
   import Footnotes from '$lib/Footnotes.svelte'
   import { resolve } from '$lib/sanity.js'
+  import Theme from '$lib/Theme.svelte'
   import Html from '$lib/Html.svelte'
   import Hero from '$lib/Hero.svelte'
   import Menu from '$lib/Menu.svelte'
@@ -25,93 +26,84 @@
   })
 </script>
 
-<Hero
-  size="small"
-  back={resolve(chapter.cover)}
-  primaryColor={chapter.primaryColor}
-  secondaryColor={chapter.secondaryColor}>
-  <Menu slot="menu" items={menu} />
-  <Text slot="heading" content={chapter.title} plain />
-  <Text slot="subheading" content={chapter.subheading} plain />
-</Hero>
+<Theme primary={chapter.primaryColor} secondary={chapter.secondaryColor}>
+  <Hero size="small" back={resolve(chapter.cover)}>
+    <Menu slot="menu" items={menu} />
+    <Text slot="heading" content={chapter.title} plain />
+    <Text slot="subheading" content={chapter.subheading} plain />
+  </Hero>
 
-<div class="content">
-  <nav class="aside toc" class:open id="toc">
-    <!-- svelte-ignore a11y-invalid-attribute -->
-    <a
-      href="#"
-      class="toggle close"
-      aria-controls="toc"
-      on:click|preventDefault={() => {
-        open = false
-      }}>
-      <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
-        <path
-          fill="currentcolor"
-          d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-      </svg>
-      <span>Close table of contents</span>
-    </a>
-    <a
-      href="#toc"
-      class="toggle open"
-      on:click|preventDefault={() => {
-        open = true
-      }}>
-      <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
-        <path
-          fill="currentcolor"
-          d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
-      </svg>
-      <span>Open table of contents</span>
-    </a>
-    <ol class="items">
-      {#each chapter.modules as module}
-        {#if module._type === 'richText'}
-          {@const heading = module.content.find(
-            (block) => block.style === 'h2'
-          )}
-          {#if heading}
-            <li class="item">
-              <a href="{resolve(chapter)}#{heading._key}">
-                {asText([heading])}
-              </a>
-            </li>
+  <div class="content">
+    <nav class="aside toc" class:open id="toc">
+      <!-- svelte-ignore a11y-invalid-attribute -->
+      <a
+        href="#"
+        class="toggle close"
+        aria-controls="toc"
+        on:click|preventDefault={() => {
+          open = false
+        }}>
+        <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            fill="currentcolor"
+            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+        </svg>
+        <span>Close table of contents</span>
+      </a>
+      <a
+        href="#toc"
+        class="toggle open"
+        on:click|preventDefault={() => {
+          open = true
+        }}>
+        <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            fill="currentcolor"
+            d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+        </svg>
+        <span>Open table of contents</span>
+      </a>
+      <ol class="items">
+        {#each chapter.modules as module}
+          {#if module._type === 'richText'}
+            {@const heading = module.content.find(
+              (block) => block.style === 'h2'
+            )}
+            {#if heading}
+              <li class="item">
+                <a href="{resolve(chapter)}#{heading._key}">
+                  {asText([heading])}
+                </a>
+              </li>
+            {/if}
           {/if}
+        {/each}
+      </ol>
+    </nav>
+    <div class="body">
+      {#each chapter.modules as module}
+        {#if module._type === 'divider'}
+          <div
+            class="divider"
+            class:small={module.size === 'small'}
+            class:medium={module.size === 'medium'}
+            class:large={module.size === 'large'} />
+        {:else if module._type === 'richText'}
+          <div class="module">
+            <Html>
+              <Text content={module.content} />
+            </Html>
+          </div>
         {/if}
       {/each}
-    </ol>
-  </nav>
-  <div class="body">
-    {#each chapter.modules as module}
-      {#if module._type === 'divider'}
-        <div
-          class="divider"
-          class:small={module.size === 'small'}
-          class:medium={module.size === 'medium'}
-          class:large={module.size === 'large'} />
-      {:else if module._type === 'richText'}
-        <div class="module">
-          <Html>
-            <Text content={module.content} />
-          </Html>
-          <Html>
-            <Text content={module.content} />
-          </Html>
-          <Html>
-            <Text content={module.content} />
-          </Html>
-          <Html>
-            <Text content={module.content} />
-          </Html>
-        </div>
-      {/if}
-    {/each}
-
-    <Footnotes />
+      <div class="divider large" />
+      <Html>
+        <Footnotes />
+      </Html>
+    </div>
+    <div class="aside share" />
   </div>
-  <div class="aside share" />
-</div>
+</Theme>
 
 <style>
   .content {

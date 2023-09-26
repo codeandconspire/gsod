@@ -4,8 +4,8 @@
   import { intersection } from '$lib/intersection.js'
 
   let inview = !browser
-  let light
-  let dark
+  let alternate
+  let secondary
 
   let delay = '0ms'
   let level = 6 + 10 * Math.random()
@@ -34,8 +34,8 @@
     const direction = Math.random() > 0.5 ? 0 : 1
 
     delay = '250ms'
-    tilt(light, directions.at(direction))
-    tilt(dark, directions.at(direction - 1))
+    tilt(alternate, directions.at(direction))
+    tilt(secondary, directions.at(direction - 1))
   }
 </script>
 
@@ -46,8 +46,8 @@
   style:--level={level.toFixed(2)}
   use:intersection={onintersect}>
   <div class="parts">
-    <div class="board light" bind:this={light} />
-    <div class="board dark" bind:this={dark} />
+    <div class="board alternate" bind:this={alternate} />
+    <div class="board secondary" bind:this={secondary} />
     <div class="bend" on:animationend|once={onanimationend} />
   </div>
 </div>
@@ -59,7 +59,7 @@
 
     position: relative;
     overflow: hidden;
-    background: var(--primary-color);
+    background: var(--theme-primary-color);
   }
 
   .parts {
@@ -85,7 +85,7 @@
     left: 50%;
     top: 0;
     transform: translateX(-50%) scaleY(1);
-    background: var(--primary-color);
+    background: var(--theme-primary-color);
     border-radius: 100%;
   }
 
@@ -120,12 +120,12 @@
     transform: translateX(-50%) rotate(calc(var(--level) * -1deg));
   }
 
-  .light {
+  .alternate {
     opacity: 0.15;
     background-color: #fff;
   }
 
-  .dark {
-    background: var(--secondary-color);
+  .secondary {
+    background: var(--theme-secondary-color);
   }
 </style>

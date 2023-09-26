@@ -80,7 +80,7 @@
     top: 0.5em;
     left: 1px;
     border-radius: 50%;
-    background: var(--primary-color, currentColor);
+    background: var(--theme-primary-color, currentColor);
   }
 
   .html :global(ol li::before) {
@@ -90,7 +90,7 @@
     top: 0;
     left: 0;
     font-weight: bold;
-    color: var(--primary-color, currentColor);
+    color: var(--theme-primary-color, currentColor);
   }
 
   .html :global(a) {

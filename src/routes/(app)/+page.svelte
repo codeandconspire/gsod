@@ -2,6 +2,7 @@
   import { page } from '$app/stores'
 
   import { resolve } from '$lib/sanity.js'
+  import Theme from '$lib/Theme.svelte'
   import Text from '$lib/Text.svelte'
   import Menu from '$lib/Menu.svelte'
   import Hero from '$lib/Hero.svelte'
@@ -22,69 +23,70 @@
   })
 </script>
 
-<Hero
-  size="fill"
-  primaryColor={cover.primaryColor}
-  secondaryColor={cover.secondaryColor}>
-  <Menu slot="menu" items={menu} />
-  <span slot="heading">
-    <Text content={cover.title} let:block>
-      {#if block.style === 'normal'}
-        <Text content={block.children} />
-      {/if}
-    </Text>
-  </span>
-  <Text slot="subheading" content={cover.subheading} plain />
-</Hero>
-
-<div class="chapters u-container">
-  <h2 class="title">Report Chapters</h2>
-  {#if cover.featuredChapter}
-    {@const { featuredChapter: feature } = cover}
-    {@const href = resolve(feature.link)}
-    <Tilt {href} let:hover>
-      <article class="feature" class:hover>
-        {#if feature.image.image}
-          <img
-            class="image"
-            alt={feature.image.alt || ''}
-            src={feature.image.image.asset.url} />
+<Theme primary={cover.primaryColor} secondary={cover.secondaryColor}>
+  <Hero size="fill">
+    <Menu slot="menu" items={menu} />
+    <span slot="heading">
+      <Text content={cover.title} let:block>
+        {#if block.style === 'normal'}
+          <Text content={block.children} />
         {/if}
-        <div class="body">
-          <h3 class="heading">
-            <Text content={feature.heading} let:block>
-              {#if block.style === 'normal'}
-                <Text content={block.children} />
-              {/if}
-            </Text>
-          </h3>
-          {#if feature.subheading}
-            <div class="subheading">
-              <Text content={feature.subheading} />
-            </div>
-          {/if}
-          {#if href}
-            <span class="link">{feature.label}</span>
-          {/if}
-        </div>
-      </article>
-    </Tilt>
-  {/if}
-  <div class="items">
-    {#each cover.chapters as chapter}
-      {@const href = resolve(chapter)}
+      </Text>
+    </span>
+    <Text slot="subheading" content={cover.subheading} plain />
+  </Hero>
+
+  <div class="chapters u-container">
+    <h2 class="title">Report Chapters</h2>
+    {#if cover.featuredChapter}
+      {@const { featuredChapter: feature } = cover}
+      {@const href = resolve(feature.link)}
       <Tilt {href} let:hover>
-        <Card
-          {hover}
-          primaryColor={chapter.primaryColor || cover.primaryColor}
-          secondaryColor={chapter.secondaryColor || cover.secondaryColor}
-          heading={chapter.shortname || chapter.title}
-          subheading={chapter.category}
-          link={href ? { label: 'Explore chapter' } : null} />
+        <article class="feature" class:hover>
+          {#if feature.image.image}
+            <img
+              class="image"
+              alt={feature.image.alt || ''}
+              src={feature.image.image.asset.url} />
+          {/if}
+          <div class="body">
+            <h3 class="heading">
+              <Text content={feature.heading} let:block>
+                {#if block.style === 'normal'}
+                  <Text content={block.children} />
+                {/if}
+              </Text>
+            </h3>
+            {#if feature.subheading}
+              <div class="subheading">
+                <Text content={feature.subheading} />
+              </div>
+            {/if}
+            {#if href}
+              <span class="link">{feature.label}</span>
+            {/if}
+          </div>
+        </article>
       </Tilt>
-    {/each}
+    {/if}
+    <div class="items">
+      {#each cover.chapters as chapter}
+        {@const href = resolve(chapter)}
+        <Tilt {href} let:hover>
+          <Theme
+            primary={chapter.primaryColor || cover.primaryColor}
+            secondary={chapter.secondaryColor || cover.secondaryColor}>
+            <Card
+              {hover}
+              heading={chapter.shortname || chapter.title}
+              subheading={chapter.category}
+              link={href ? { label: 'Explore chapter' } : null} />
+          </Theme>
+        </Tilt>
+      {/each}
+    </div>
   </div>
-</div>
+</Theme>
 
 <style>
   .chapters {

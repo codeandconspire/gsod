@@ -1,6 +1,5 @@
 <script>
   import Level from '$lib/Level.svelte'
-  import { luma } from '$lib/utils.js'
 
   export let image = null
 
@@ -10,38 +9,20 @@
   /** @type {string?} */
   export let back = null
 
-  /** @type {string?} */
-  export let primaryColor = null
-
-  /** @type {string?} */
-  export let secondaryColor = null
-
   let bottom
-
-  $: textColor = primaryColor
-    ? luma(primaryColor) > 165
-      ? '#000'
-      : '#fff'
-    : null
 </script>
 
 <header
   class="hero"
   class:fill={size === 'fill'}
   class:small={size === 'small'}
-  class:has-menu={$$slots.menu}
-  style:--text-color={textColor}
-  style:--primary-color={primaryColor}
-  style:--secondary-color={secondaryColor}>
+  class:has-menu={$$slots.menu}>
   {#if image}
     <div class="graphic">
       <img alt="" {...image} class="image" />
     </div>
-  {:else if primaryColor}
-    <div
-      class="graphic"
-      style:--primary-color={primaryColor}
-      style:--secondary-color={secondaryColor}>
+  {:else}
+    <div class="graphic">
       <Level />
     </div>
   {/if}
@@ -96,18 +77,14 @@
 
 <style>
   .hero {
-    --text-color: #fff;
-    --primary-color: #62a3bf;
-    --secondary-color: #326593;
-
     display: grid;
     position: relative;
     grid-template-rows: 1fr auto;
     padding: clamp(1rem, var(--page-gutter), 2.25rem) var(--page-gutter);
     line-height: 1.25;
     font-family: var(--sans-serif);
-    color: var(--text-color);
-    background-color: var(--primary-color);
+    color: var(--theme-text-color);
+    background-color: var(--theme-primary-color);
   }
 
   .hero.has-menu {
@@ -123,7 +100,7 @@
     display: grid;
     position: absolute;
     inset: 0;
-    background-color: var(--primary-color);
+    background-color: var(--theme-primary-color);
     transform: var(--tilt-background-transform);
     transition: var(--tilt-transform-transition);
   }
