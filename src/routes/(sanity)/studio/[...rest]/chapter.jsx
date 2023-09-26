@@ -13,6 +13,19 @@ export default {
   name: 'chapter',
   type: 'document',
   title: 'Chapter',
+  preview: {
+    select: {
+      subheading: 'subheading',
+      shortname: 'shortname',
+      title: 'title'
+    },
+    prepare({ shortname, title, subheading }) {
+      return {
+        title: shortname || title,
+        subtitle: subheading
+      }
+    }
+  },
   groups: [
     {
       name: 'main',
