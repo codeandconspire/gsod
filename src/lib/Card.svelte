@@ -17,7 +17,7 @@
   export let subheading = null
 </script>
 
-<article class="card" class:hover>
+<article class="card" class:hover class:has-image={image}>
   {#if image}
     <div class="graphic">
       <img alt="" {...image} class="image" />
@@ -61,7 +61,7 @@
     color: var(--theme-text-color);
   }
 
-  .card.inverse {
+  .card.has-image {
     color: #fff;
   }
 
