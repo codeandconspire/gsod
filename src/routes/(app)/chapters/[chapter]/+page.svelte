@@ -1,7 +1,8 @@
 <script>
   import { page } from '$app/stores'
 
-  import Text, { asText } from '$lib/Text.svelte'
+  import Text, { asText, reset } from '$lib/Text.svelte'
+  import Footnotes from '$lib/Footnotes.svelte'
   import { resolve } from '$lib/sanity.js'
   import Html from '$lib/Html.svelte'
   import Hero from '$lib/Hero.svelte'
@@ -9,6 +10,8 @@
 
   export let data
   let open = false
+
+  reset()
 
   $: chapter = data.chapter
   $: menu = chapter.cover.menu.map(function each(item) {
@@ -104,6 +107,8 @@
         </div>
       {/if}
     {/each}
+
+    <Footnotes />
   </div>
   <div class="aside share" />
 </div>

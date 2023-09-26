@@ -1,4 +1,17 @@
 <script context="module">
+  import { setContext, getContext, hasContext } from 'svelte'
+
+  export const FOOTNOTES = Symbol('footnotes')
+
+  export function reset() {
+    setContext(FOOTNOTES, [])
+  }
+
+  /** @type {function(): any[]} */
+  export function collect() {
+    return getContext(FOOTNOTES)
+  }
+
   export function asText(content) {
     if (!Array.isArray(content)) return String(content)
     return content
@@ -9,32 +22,35 @@
 </script>
 
 <script>
-  export let content = null
   export let plain = false
 
+  /** @type {any?}*/
+  export let content = null
+
+  /** @type {any[]?}*/
+  export let defs = null
+
+  if (!hasContext(FOOTNOTES)) reset()
+
   $: blocks = Array.isArray(content)
-    ? content.reduce(function listify(acc, block) {
-        const last = acc.at(-1)
+    ? content.reduce(function compile(acc, block) {
+        const prev = acc.at(-1)
         if (block.listItem) {
-          const { _key, level } = block
-          const _type = block.listItem === 'bullet' ? '$ul' : '$ol'
-          const children = block.children?.reduce(listify, [])
+          const { _key, children } = block
           const item = { children, _key, _type: '$li' }
-          if (last._type === _type) {
-            last.children.push(item)
+          const _type = block.listItem === 'bullet' ? '$ul' : '$ol'
+          if (prev._type === _type) {
+            prev._key += `-${_key}`
+            prev.children.push(item)
           } else {
-            acc.push({ _key, _type, level, children: [item] })
+            acc.push({ _key, _type, children: [item] })
           }
         } else {
-          if (block.children) {
-            block = { ...block, children: block.children.reduce(listify, []) }
-          }
           acc.push(block)
         }
         return acc
       }, [])
     : []
-  $: console.log(blocks)
 </script>
 
 {#if plain}
@@ -44,7 +60,9 @@
     {@const { style, _type } = block}
     <slot {block}>
       {#if style === 'normal'}
-        <p><svelte:self content={block.children} /></p>
+        <p>
+          <svelte:self content={block.children} defs={block.markDefs} />
+        </p>
       {:else if style === 'h1'}
         <h1><svelte:self content={block.children} /></h1>
       {:else if style === 'h2'}
@@ -58,7 +76,9 @@
       {:else if style === 'h6'}
         <h6><svelte:self content={block.children} /></h6>
       {:else if style === 'blockquote'}
-        <blockquote><svelte:self content={block.children} /></blockquote>
+        <blockquote>
+          <svelte:self content={block.children} />
+        </blockquote>
       {:else if _type === '$ul'}
         <ul>
           <svelte:self content={block.children} />
@@ -70,10 +90,33 @@
       {:else if _type === '$li'}
         <li><svelte:self content={block.children} /></li>
       {:else if _type === 'span'}
-        {@html block.marks.reduce(
-          (acc, mark) => `<${mark}>${acc.replace(/\n/g, '<br />')}</${mark}>`,
-          block.text.replace(/\n/g, '<br />')
-        )}
+        {@html block.marks
+          .reduce((acc, mark) => {
+            switch (mark) {
+              case 'strong':
+                return `<strong>${acc}</strong>`
+              case 'em':
+                return `<em>${acc}</em>`
+              case 'code':
+                return `<code>${acc}</code>`
+              case 'underline':
+                return `<u>${acc}</u>`
+              case 'strike-through':
+                return `<s>${acc}</s>`
+              default:
+                const def = defs?.find((def) => def._key === mark)
+                switch (def?._type) {
+                  case 'footnote': {
+                    const footnotes = getContext(FOOTNOTES)
+                    const index = footnotes.push(def)
+                    return `<a href="#footnote-${def._key}">${acc}<sup>[${index}]</sup></a>`
+                  }
+                  default:
+                    return acc
+                }
+            }
+          }, block.text)
+          .replace(/\n/g, '<br />')}
       {/if}
     </slot>
   {/each}

@@ -92,4 +92,13 @@
     font-weight: bold;
     color: var(--primary-color, currentColor);
   }
+
+  .html :global(a) {
+    color: blue;
+    text-decoration: underline;
+  }
+
+  .html :global(a sup) {
+    display: inline-block; /** Prevent text underline */
+  }
 </style>

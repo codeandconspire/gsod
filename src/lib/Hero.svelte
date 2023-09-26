@@ -4,8 +4,8 @@
 
   export let image = null
 
-  /** {('small'|'fill')?} */
-  export let size = ''
+  /** @type {('small'|'fill')?} */
+  export let size = null
 
   /** @type {string?} */
   export let back = null
