@@ -7,7 +7,7 @@
   /** @type {string?} */
   export let secondary = null
 
-  $: text = luma(primary) > 165 ? '#000' : '#fff'
+  $: text = primary ? (luma(primary) > 165 ? '#000' : '#fff') : null
 </script>
 
 <div
