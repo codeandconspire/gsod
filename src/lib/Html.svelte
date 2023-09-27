@@ -1,4 +1,8 @@
-<div class="html {$$props.class || ''}">
+<script>
+  export let large = false
+</script>
+
+<div class="html {$$props.class || ''}" class:large>
   <slot />
 </div>
 
@@ -10,8 +14,26 @@
     letter-spacing: -0.005em;
   }
 
+  .html.large {
+    font-family: var(--sans-serif);
+    max-width: var(--text-width);
+    font-weight: var(--sans-serif-normal);
+    line-height: 1.3;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+  }
+
+  @media (width > 40rem) {
+    .html.large {
+      line-height: 1.2;
+    }
+  }
+
   .html :global(p) {
     margin: 1em 0;
+  }
+
+  .html.large :global(p) {
+    text-wrap: balance;
   }
 
   .html :global(:first-child) {

@@ -139,13 +139,7 @@ export default {
               of: [
                 {
                   type: 'block',
-                  styles: [
-                    { title: 'H2', value: 'h2' },
-                    { title: 'H3', value: 'h3' },
-                    { title: 'H4', value: 'h4' },
-                    { title: 'H5', value: 'h5' },
-                    { title: 'H6', value: 'h6' }
-                  ],
+                  styles: [{ title: 'Heading', value: 'h2' }],
                   lists: []
                 }
               ]
@@ -167,7 +161,6 @@ export default {
                   type: 'block',
                   styles: [
                     { title: 'Normal', value: 'normal' },
-                    { title: 'H2', value: 'h2' },
                     { title: 'H3', value: 'h3' },
                     { title: 'H4', value: 'h4' },
                     { title: 'H5', value: 'h5' },
@@ -204,20 +197,6 @@ export default {
           preview: {
             select: {
               content: 'content'
-            },
-            prepare({ content }) {
-              return {
-                title: content
-                  .flatMap((field) =>
-                    field.content.flatMap(
-                      (item, index) =>
-                        `${index + 1}. ${item.children.map(
-                          (child) => child.text
-                        )}`
-                    )
-                  )
-                  .join(' ')
-              }
             }
           },
           fields: [
@@ -227,23 +206,8 @@ export default {
               title: 'Content',
               of: [
                 {
-                  name: 'item',
-                  type: 'object',
-                  title: 'Item',
-                  fields: [
-                    {
-                      name: 'content',
-                      type: 'array',
-                      title: 'Content',
-                      of: [
-                        {
-                          type: 'block',
-                          styles: [],
-                          lists: []
-                        }
-                      ]
-                    }
-                  ]
+                  type: 'block',
+                  styles: []
                 }
               ]
             }

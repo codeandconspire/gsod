@@ -27,8 +27,6 @@
       children?.some((child) => $page.url.pathname === child.href)
     return { href, label, active, children }
   })
-
-  console.log(data.chapter.modules[2])
 </script>
 
 <Theme primary={chapter.primaryColor} secondary={chapter.secondaryColor}>
@@ -94,29 +92,31 @@
         consequat eiusmod nulla et.
       </Dialog>
       {#each chapter.modules as module}
-        {#if module._type === 'divider'}
-          <div
-            class="divider"
-            class:small={module.size === 'small'}
-            class:medium={module.size === 'medium'}
-            class:large={module.size === 'large'} />
-        {:else if module._type === 'richText'}
-          <div class="module">
+        <div class="module module-{module._type}">
+          {#if module._type === 'divider'}
+            <div
+              class="divider"
+              class:small={module.size === 'small'}
+              class:medium={module.size === 'medium'}
+              class:large={module.size === 'large'} />
+          {:else if module._type === 'heading'}
+            <Html large>
+              <Text content={module.content} />
+            </Html>
+          {:else if module._type === 'richText'}
             <Html>
               <Text content={module.content} />
             </Html>
-          </div>
-        {:else if module._type === 'megaList'}
-          <div class="module">
+          {:else if module._type === 'megaList'}
             <MegaList items={module.content} let:item>
               <Html>
                 <Text content={item.content} />
               </Html>
             </MegaList>
-          </div>
-        {:else if module._type === 'teaser'}
-          <div class="module">Mega</div>
-        {/if}
+          {:else if module._type === 'teaser'}
+            Teaser
+          {/if}
+        </div>
       {/each}
       <div class="divider large" />
       <Html>
@@ -153,6 +153,11 @@
 
   .body {
     max-width: var(--text-width-max);
+  }
+
+  .module-heading + .module,
+  .module + .module-heading {
+    margin-top: 3rem;
   }
 
   .icon {

@@ -201,6 +201,12 @@
     font-size: clamp(1.25rem, 3vw, 1.75rem);
   }
 
+  @media (width > 40rem) {
+    .hero.small .subheading {
+      line-height: 1.2;
+    }
+  }
+
   .skip {
     grid-row: 3;
     display: flex;

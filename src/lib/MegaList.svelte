@@ -2,7 +2,6 @@
   export let items
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <ol class="megalist">
   {#each items as item}
     <li class="item"><slot {item} /></li>
