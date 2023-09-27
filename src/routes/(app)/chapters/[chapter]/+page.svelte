@@ -157,7 +157,11 @@
 
   .module-heading + .module,
   .module + .module-heading {
-    margin-top: 3rem;
+    margin-top: 4rem;
+  }
+
+  .module + .module-heading {
+    padding-top: 2rem;
   }
 
   .icon {
