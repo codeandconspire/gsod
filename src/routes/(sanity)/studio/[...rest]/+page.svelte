@@ -1,16 +1,26 @@
 <script>
   import { CogIcon, DocumentsIcon, DocumentIcon, HomeIcon } from '@sanity/icons'
-  import { StudioLayout, StudioProvider, defineConfig } from 'sanity'
+  import { StudioProvider, StudioLayout, defineConfig } from 'sanity'
+  import { Iframe } from 'sanity-plugin-iframe-pane'
   import { visionTool } from '@sanity/vision'
   import ReactDOM from 'react-dom/client'
   import { deskTool } from 'sanity/desk'
   import { onMount } from 'svelte'
   import React from 'react'
 
+  import { resolve } from '$lib/sanity.js'
   import settings from './settings.jsx'
   import chapter from './chapter.jsx'
   import cover from './cover.jsx'
   import page from './page.jsx'
+
+  const resolveURL = (doc) => {
+    const pathname = resolve(doc)
+    if (!pathname) throw new Error('Could not resolve preview url')
+    const url = new URL(pathname, window.location.href)
+    url.searchParams.set('preview', doc._rev)
+    return url.href
+  }
 
   const config = defineConfig({
     name: 'default',
@@ -19,6 +29,21 @@
     dataset: 'production',
     plugins: [
       deskTool({
+        defaultDocumentNode(S) {
+          return S.document().views([
+            S.view.form(),
+            S.view
+              .component(Iframe)
+              .options({
+                url: resolveURL,
+                reload: {
+                  button: true,
+                  revision: true
+                }
+              })
+              .title('Preview')
+          ])
+        },
         structure(S) {
           return S.list()
             .title('Website')
@@ -39,6 +64,19 @@
                   S.document()
                     .schemaType('cover')
                     .documentId('4248bf6e-9400-4aff-a87d-2842ca25a305')
+                    .views([
+                      S.view.form(),
+                      S.view
+                        .component(Iframe)
+                        .options({
+                          url: resolveURL,
+                          reload: {
+                            button: true,
+                            revision: true
+                          }
+                        })
+                        .title('Preview')
+                    ])
                 ),
               S.documentTypeListItem('chapter')
                 .title('Chapters')

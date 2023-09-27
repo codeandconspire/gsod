@@ -1,13 +1,18 @@
-import { createClient } from '@sanity/client'
+import { createClient as createSanityClient } from '@sanity/client'
 import { dev } from '$app/environment'
 
-export const client = createClient({
-  apiVersion: '2023-09-19',
-  projectId: '2e5hi812',
-  dataset: 'production',
-  perspective: 'raw',
-  useCdn: !dev
-})
+export function createClient({ request, token }) {
+  const url = new URL(request.url)
+  const preview = dev || url.searchParams.has('preview')
+  return createSanityClient({
+    token,
+    apiVersion: '2023-09-19',
+    projectId: '2e5hi812',
+    dataset: 'production',
+    perspective: preview ? 'previewDrafts' : 'published',
+    useCdn: !preview
+  })
+}
 
 export function resolve(doc) {
   switch (doc?._type) {

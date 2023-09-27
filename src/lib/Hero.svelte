@@ -35,11 +35,7 @@
         on:click|preventDefault={() =>
           bottom.scrollIntoView({ block: 'start', behavior: 'smooth' })}>
         <span class="u-hidden">Skip to content</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 64 27"
-          fill="none"
-          class="chevron">
+        <svg viewBox="0 0 64 27" fill="none" class="chevron">
           <path
             stroke="#fff"
             stroke-linecap="round"

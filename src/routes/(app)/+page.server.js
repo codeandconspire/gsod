@@ -1,8 +1,10 @@
+import { SANITY_API_TOKEN } from '$env/static/private'
 import { error } from '@sveltejs/kit'
 
-import { client } from '$lib/sanity.js'
+import { createClient } from '$lib/sanity.js'
 
-export async function load() {
+export async function load({ request }) {
+  const client = createClient({ request, token: SANITY_API_TOKEN })
   const cover = await client.fetch(
     `*[_type == "cover" && slug.current == $slug][0]{
       ...,
