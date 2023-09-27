@@ -1,5 +1,5 @@
 <script>
-  import { luma } from '$lib/utils.js'
+  import { luma, shade } from '$lib/utils.js'
 
   /** @type {string?} */
   export let primary = null
@@ -7,11 +7,13 @@
   /** @type {string?} */
   export let secondary = null
 
+  $: dark = primary ? shade(primary, -10) : null
   $: text = primary ? (luma(primary) > 165 ? '#000' : '#fff') : null
 </script>
 
 <div
   class="theme"
+  style:--theme-dark-color={dark}
   style:--theme-text-color={text}
   style:--theme-primary-color={primary}
   style:--theme-secondary-color={secondary}>

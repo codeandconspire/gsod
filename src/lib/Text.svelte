@@ -117,9 +117,13 @@
               <svelte:self content={[{ ...block, marks }]} {defs} />
             </strong>
           {:else if mark === 'em'}
-            <em>
-              <svelte:self content={[{ ...block, marks }]} {defs} />
-            </em>
+            <em><svelte:self content={[{ ...block, marks }]} {defs} /></em>
+          {:else if mark === 'code'}
+            <code><svelte:self content={[{ ...block, marks }]} {defs} /></code>
+          {:else if mark === 'underline'}
+            <u><svelte:self content={[{ ...block, marks }]} {defs} /></u>
+          {:else if mark === 'strikethrough'}
+            <s><svelte:self content={[{ ...block, marks }]} {defs} /></s>
           {:else}
             {@const def = defs?.find((def) => def._key === mark)}
             {#if def?._type === 'footnote'}

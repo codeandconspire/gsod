@@ -5,6 +5,7 @@
   import Footnotes from '$lib/Footnotes.svelte'
   import MegaList from '$lib/MegaList.svelte'
   import { resolve } from '$lib/sanity.js'
+  import Teaser from '$lib/Teaser.svelte'
   import Dialog from '$lib/Dialog.svelte'
   import Theme from '$lib/Theme.svelte'
   import Html from '$lib/Html.svelte'
@@ -96,25 +97,54 @@
           {#if module._type === 'divider'}
             <div
               class="divider"
+              class:visible={module.visible}
               class:small={module.size === 'small'}
               class:medium={module.size === 'medium'}
               class:large={module.size === 'large'} />
           {:else if module._type === 'heading'}
-            <Html large>
-              <Text content={module.content} />
-            </Html>
-          {:else if module._type === 'richText'}
-            <Html>
-              <Text content={module.content} />
-            </Html>
-          {:else if module._type === 'megaList'}
-            <MegaList items={module.content} let:item>
-              <Html>
-                <Text content={item.content} />
+            <div class="contain">
+              <Html large>
+                <Text content={module.content} />
               </Html>
-            </MegaList>
+            </div>
+          {:else if module._type === 'richText'}
+            <div class="contain">
+              <Html>
+                <Text content={module.content} />
+              </Html>
+            </div>
+          {:else if module._type === 'megaList'}
+            <div class="contain">
+              <MegaList items={module.content} let:item>
+                <Html>
+                  <Text content={item.content} />
+                </Html>
+              </MegaList>
+            </div>
           {:else if module._type === 'teaser'}
-            Teaser
+            {@const { title, description, flip, image, content, link } = module}
+            {@const href = resolve(link.document)}
+            <Theme
+              primary={link.document.primaryColor}
+              secondary={link.document.secondaryColor}>
+              <Teaser
+                heading={title}
+                {description}
+                {flip}
+                link={href ? { href, label: link.label } : null}>
+                <img
+                  slot="image"
+                  alt={image.alt || ''}
+                  src={image.asset.url}
+                  sizes="(min-width: 40rem) 40rem"
+                  srcset={[300, 500, 600]
+                    .map((size) => `${image.asset.url}?w=${size} ${size}w`)
+                    .join(',')} />
+                <Html>
+                  <Text {content} />
+                </Html>
+              </Teaser>
+            </Theme>
           {/if}
         </div>
       {/each}
@@ -123,7 +153,6 @@
         <Footnotes />
       </Html>
     </div>
-    <div class="aside share" />
   </div>
 </Theme>
 
@@ -152,6 +181,10 @@
   }
 
   .body {
+    grid-column: span 2;
+  }
+
+  .contain {
     max-width: var(--text-width-max);
   }
 
@@ -257,6 +290,10 @@
 
   /* Divider */
 
+  .divider {
+    height: 1px;
+  }
+
   .divider,
   .divider.medium {
     margin: clamp(2rem, 8vh, 4rem) auto;
@@ -268,5 +305,9 @@
 
   .divider.large {
     margin: clamp(4rem, 12vh, 8rem) auto;
+  }
+
+  .divider.visible {
+    border-top: 1px solid currentcolor;
   }
 </style>

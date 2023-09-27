@@ -8,6 +8,26 @@ export async function load({ params, request }) {
   const chapter = await client.fetch(
     `*[_type == "chapter" && slug.current == $slug][0]{
       ...,
+      modules[]{
+        ...,
+        _type == "teaser" => {
+          image{
+            ...,
+            asset->{
+              url
+            }
+          },
+          link{
+            ...,
+            document->{
+              _type,
+              slug,
+              primaryColor,
+              secondaryColor
+            }
+          }
+        }
+      },
       "cover": *[_type == "cover" && references(^._id)][0]{
         _type,
         slug,
