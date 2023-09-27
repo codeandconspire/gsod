@@ -91,7 +91,7 @@
   }
 
   .note:is(:target, .selected) .content {
-    width: min(calc(100vw - var(--page-gutter) * 2), var(--page-max-width));
+    width: min(calc(100vw - var(--page-gutter) * 2), var(--page-width));
     margin: 0 auto;
   }
 

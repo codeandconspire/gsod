@@ -3,6 +3,7 @@
 
   import Text, { asText, reset } from '$lib/Text.svelte'
   import Footnotes from '$lib/Footnotes.svelte'
+  import MegaList from '$lib/MegaList.svelte'
   import { resolve } from '$lib/sanity.js'
   import Dialog from '$lib/Dialog.svelte'
   import Theme from '$lib/Theme.svelte'
@@ -16,8 +17,6 @@
 
   reset()
 
-  console.log(data)
-
   $: chapter = data.chapter
   $: menu = chapter.cover.menu.map(function each(item) {
     const { link, label } = item
@@ -28,6 +27,8 @@
       children?.some((child) => $page.url.pathname === child.href)
     return { href, label, active, children }
   })
+
+  console.log(data.chapter.modules[2])
 </script>
 
 <Theme primary={chapter.primaryColor} secondary={chapter.secondaryColor}>
@@ -106,7 +107,13 @@
             </Html>
           </div>
         {:else if module._type === 'megaList'}
-          <div class="module">Mega</div>
+          <div class="module">
+            <MegaList items={module.content} let:item>
+              <Html>
+                <Text content={item.content} />
+              </Html>
+            </MegaList>
+          </div>
         {:else if module._type === 'teaser'}
           <div class="module">Mega</div>
         {/if}
@@ -123,7 +130,7 @@
 <style>
   .content {
     position: relative;
-    max-width: min(calc(100vw - var(--page-gutter) * 2), var(--page-max-width));
+    max-width: min(calc(100vw - var(--page-gutter) * 2), var(--page-width));
     margin: var(--margin) auto;
 
     --margin: clamp(3rem, 10vh, 7rem);
@@ -132,16 +139,20 @@
   @media (width > 70rem) {
     .content {
       display: grid;
-      grid-template-columns: 1fr var(--text-max-width) 1fr;
+      grid-template-columns: 1fr var(--text-width) 1fr;
       gap: clamp(2.5rem, 3vw, 4.5rem);
       align-items: flex-start;
     }
   }
 
-  @media (width < 70rem) {
+  @media (width <= 70rem) {
     .content:has(.items) {
       margin-top: 0;
     }
+  }
+
+  .body {
+    max-width: var(--text-width-max);
   }
 
   .icon {

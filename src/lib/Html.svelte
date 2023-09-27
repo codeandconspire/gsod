@@ -91,29 +91,29 @@
   }
 
   .html :global(li) {
-    padding-left: 1.75em;
-    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
     margin: 0.75em 0;
   }
 
   .html :global(ul li::before) {
     content: '';
+    display: block;
     width: 0.35em;
     height: 0.35em;
-    position: absolute;
-    top: 0.5em;
-    left: 1px;
     border-radius: 50%;
+    margin: 0.5em 0 0 1px;
+    flex: 0 0 auto;
+    align-self: flex-start;
     background: var(--theme-primary-color, currentColor);
   }
 
   .html :global(ol li::before) {
     counter-increment: list;
     content: counter(list) '. ';
-    position: absolute;
-    top: 0;
-    left: 0;
     font-weight: bold;
+    min-width: 1rem;
     color: var(--theme-primary-color, currentColor);
   }
 

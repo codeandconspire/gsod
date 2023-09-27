@@ -32,7 +32,7 @@
     padding: 2rem;
   }
 
-  @media (width < 40rem) {
+  @media (width <= 40rem) {
     .dialog {
       width: 100%;
       height: 100%;
@@ -54,7 +54,7 @@
     max-width: 53rem;
   }
 
-  @media (width < 40rem) {
+  @media (width <= 40rem) {
     .main {
       height: 100%;
       border-radius: 0;

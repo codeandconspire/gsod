@@ -11,7 +11,7 @@
 .u-container {
   width: min(
     calc(100vw - var(--page-gutter) * 2),
-    var(--page-max-width)
+    var(--page-width)
   ) !important;
   margin-left: auto !important;
   margin-right: auto !important;

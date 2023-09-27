@@ -118,7 +118,7 @@
   }
 
   .hero.small .body {
-    max-width: var(--page-max-width);
+    max-width: var(--page-width);
     padding: clamp(3rem, 17vh, 6rem) 0;
     margin: 0 auto;
   }
@@ -134,7 +134,7 @@
 
   @media (width > 70rem) {
     .hero.small .content {
-      max-width: var(--text-max-width);
+      max-width: var(--text-width);
       margin-left: auto;
       margin-right: auto;
     }
@@ -177,7 +177,7 @@
   }
 
   .hero.small .heading {
-    max-width: var(--text-max-width);
+    max-width: var(--text-width);
     text-align: left;
     font-weight: var(--sans-serif-heavy);
     font-size: clamp(2.5rem, 5vw, 4.5rem);
@@ -194,7 +194,7 @@
   }
 
   .hero.small .subheading {
-    max-width: var(--text-max-width);
+    max-width: var(--text-width);
     text-align: left;
     font-weight: var(--sans-serif-normal);
     line-height: 1.3;
