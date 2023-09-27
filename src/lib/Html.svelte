@@ -80,7 +80,7 @@
   }
 
   .html :global(blockquote::before) {
-    content: "“";
+    content: '“';
   }
 
   /* Lists */

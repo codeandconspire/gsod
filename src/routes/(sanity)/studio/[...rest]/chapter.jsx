@@ -279,8 +279,16 @@ export default {
                         hotspot: true
                       },
                       fields: [
-                        {name: 'alt', title: 'Alt Description', type: 'string'},
-                        {name: 'attribution', title: 'Attribution', type: 'string'}
+                        {
+                          name: 'alt',
+                          title: 'Alt Description',
+                          type: 'string'
+                        },
+                        {
+                          name: 'attribution',
+                          title: 'Attribution',
+                          type: 'string'
+                        }
                       ]
                     },
                     {

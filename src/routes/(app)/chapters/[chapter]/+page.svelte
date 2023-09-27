@@ -86,7 +86,12 @@
     </nav>
     <div class="body">
       <button on:click={() => dialog.showModal()}>Open dialog</button>
-      <Dialog bind:dialog>Qui incididunt veniam fugiat. Ipsum labore sit ullamco esse velit anim. Nulla pariatur duis magna elit ea enim ea nostrud elit velit fugiat fugiat proident commodo. Est amet adipisicing nulla ullamco ad dolor consequat eiusmod nulla et.</Dialog>
+      <Dialog bind:dialog>
+        Qui incididunt veniam fugiat. Ipsum labore sit ullamco esse velit anim.
+        Nulla pariatur duis magna elit ea enim ea nostrud elit velit fugiat
+        fugiat proident commodo. Est amet adipisicing nulla ullamco ad dolor
+        consequat eiusmod nulla et.
+      </Dialog>
       {#each chapter.modules as module}
         {#if module._type === 'divider'}
           <div
@@ -101,14 +106,9 @@
             </Html>
           </div>
         {:else if module._type === 'megaList'}
-          <div class="module">
-            Mega
-          </div>
+          <div class="module">Mega</div>
         {:else if module._type === 'teaser'}
-
-          <div class="module">
-            Mega
-          </div>
+          <div class="module">Mega</div>
         {/if}
       {/each}
       <div class="divider large" />
