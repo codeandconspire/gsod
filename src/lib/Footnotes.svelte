@@ -25,11 +25,11 @@
   }
 </script>
 
-<svelte:element this={selected ? 'div' : 'ol'}>
+<svelte:element this={selected ? 'div' : 'div'}>
   {#each items as item, index}
     {@const id = anchor(item._key)}
     <svelte:element
-      this={selected ? 'div' : 'li'}
+      this={selected ? 'div' : 'p'}
       {id}
       class:selected
       class="note">

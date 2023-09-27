@@ -51,6 +51,7 @@
   .html :global(h3) {
     font-size: clamp(1.75rem, 5vw, 2rem);
     margin: 0.75em 0;
+    line-height: 1.25;
   }
 
   .html :global(h4) {
@@ -61,6 +62,25 @@
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+  }
+
+  /* Quotes */
+
+  .html :global(blockquote) {
+    display: flex;
+    gap: 0.25em;
+    color: var(--theme-secondary-color);
+    font-family: var(--sans-serif);
+    line-height: 1.3;
+    letter-spacing: 0;
+    margin: 1em 0;
+    text-wrap: balance;
+    font-weight: 700;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+  }
+
+  .html :global(blockquote::before) {
+    content: "“";
   }
 
   /* Lists */
@@ -103,6 +123,7 @@
   }
 
   .html :global(a sup) {
-    display: inline-block; /** Prevent text underline */
+    /* Prevent text underline */
+    display: inline-block;
   }
 </style>
