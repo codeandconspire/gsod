@@ -291,7 +291,7 @@
   @media (width > 80rem) {
     .chevron {
       width: 1.2em;
-      margin-right: -0.2em;
+      margin: 0 -0.4em 0 -0.1em;
       height: auto;
     }
   }

@@ -1,6 +1,5 @@
 <script>
   export let dialog
-  import { luma } from '$lib/utils.js'
 
   function click(event) {
     if (event.target === dialog) dialog.close()
@@ -48,8 +47,8 @@
   .main {
     position: relative;
     padding: 5rem var(--page-gutter);
-    background: var(--primary-color, #fff);
-    color: var(--text-color, #000);
+    background: var(--theme-primary-color);
+    color: var(--theme-text-color);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05);
     border-radius: 0.75rem;
     max-width: 53rem;
