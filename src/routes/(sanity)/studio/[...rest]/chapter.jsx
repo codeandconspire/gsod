@@ -4,7 +4,8 @@ import {
   RemoveIcon,
   StringIcon,
   ImageIcon,
-  BlockContentIcon
+  BlockContentIcon,
+  DashboardIcon
 } from '@sanity/icons'
 
 import Color from './components/Color.jsx'
@@ -231,6 +232,74 @@ export default {
                   type: 'object',
                   title: 'Item',
                   fields: [
+                    {
+                      name: 'content',
+                      type: 'array',
+                      title: 'Content',
+                      of: [
+                        {
+                          type: 'block',
+                          styles: [],
+                          lists: []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: 'teaser',
+          type: 'object',
+          title: 'Image & Text',
+          icon: DashboardIcon,
+          preview: {
+            select: {
+              content: 'title'
+            }
+          },
+          fields: [
+            {
+              name: 'content',
+              type: 'array',
+              title: 'Content',
+              of: [
+                {
+                  name: 'item',
+                  type: 'object',
+                  title: 'Item',
+                  fields: [
+                    {
+                      name: 'image',
+                      title: 'Image',
+                      type: 'image',
+                      options: {
+                        hotspot: true
+                      },
+                      fields: [
+                        {name: 'alt', title: 'Alt Description', type: 'string'},
+                        {name: 'attribution', title: 'Attribution', type: 'string'}
+                      ]
+                    },
+                    {
+                      name: 'title',
+                      type: 'string',
+                      title: 'Title'
+                    },
+                    {
+                      name: 'description',
+                      type: 'array',
+                      title: 'Description',
+                      of: [
+                        {
+                          type: 'block',
+                          styles: [],
+                          lists: []
+                        }
+                      ]
+                    },
                     {
                       name: 'content',
                       type: 'array',

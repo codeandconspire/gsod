@@ -9,13 +9,14 @@
   import Html from '$lib/Html.svelte'
   import Hero from '$lib/Hero.svelte'
   import Menu from '$lib/Menu.svelte'
-  import { luma } from '$lib/utils.js'
 
   export let data
   let open = false
   let dialog
 
   reset()
+
+  console.log(data)
 
   $: chapter = data.chapter
   $: menu = chapter.cover.menu.map(function each(item) {
@@ -98,6 +99,15 @@
             <Html>
               <Text content={module.content} />
             </Html>
+          </div>
+        {:else if module._type === 'megaList'}
+          <div class="module">
+            Mega
+          </div>
+        {:else if module._type === 'teaser'}
+
+          <div class="module">
+            Mega
           </div>
         {/if}
       {/each}

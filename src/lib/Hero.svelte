@@ -167,12 +167,13 @@
   }
 
   .heading {
-    font-size: clamp(3rem, 8vw, 7rem);
+    font-size: clamp(3.9rem, 16.5vw, 7rem);
     text-align: center;
-    line-height: 1.05;
+    line-height: 1;
     font-weight: var(--sans-serif-light);
-    text-wrap: balance;
-    margin-left: -0.02em;
+    letter-spacing: -0.01em;
+    max-width: 8em;
+    margin: -0.5em auto 0;
   }
 
   .heading :global(strong) {
@@ -185,6 +186,8 @@
     font-weight: var(--sans-serif-heavy);
     font-size: clamp(2.5rem, 5vw, 4.5rem);
     letter-spacing: -0.005em;
+    margin: 0 0 -0.02em;
+    text-wrap: balance;
   }
 
   .subheading {

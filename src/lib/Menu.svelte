@@ -164,7 +164,7 @@
   @media (width <= 80rem) {
     .menu:is(.open, :target) .content {
       flex-wrap: wrap;
-      padding: 2rem var(--page-gutter);
+      padding: clamp(1rem, var(--page-gutter), 2.25rem) var(--page-gutter);
       font-size: 1rem;
     }
   }
@@ -263,7 +263,7 @@
   .anchor {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.15rem;
     padding: 0.25rem 0.5rem;
     margin: -0.25rem -0.5rem;
   }
@@ -275,7 +275,6 @@
 
   @media (width > 80rem) {
     .anchor {
-      gap: 0.15em;
       white-space: nowrap;
     }
   }
@@ -288,12 +287,10 @@
     position: relative;
   }
 
-  @media (width > 80rem) {
-    .chevron {
-      width: 1.2em;
-      margin: 0 -0.4em 0 -0.1em;
-      height: auto;
-    }
+  .chevron {
+    width: 1.2em;
+    margin: 0 -0.4em 0 -0.1em;
+    height: auto;
   }
 
   .children {
