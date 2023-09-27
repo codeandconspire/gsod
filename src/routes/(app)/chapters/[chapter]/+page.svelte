@@ -4,13 +4,16 @@
   import Text, { asText, reset } from '$lib/Text.svelte'
   import Footnotes from '$lib/Footnotes.svelte'
   import { resolve } from '$lib/sanity.js'
+  import Dialog from '$lib/Dialog.svelte'
   import Theme from '$lib/Theme.svelte'
   import Html from '$lib/Html.svelte'
   import Hero from '$lib/Hero.svelte'
   import Menu from '$lib/Menu.svelte'
+  import { luma } from '$lib/utils.js'
 
   export let data
   let open = false
+  let dialog
 
   reset()
 
@@ -93,6 +96,9 @@
             <Html>
               <Text content={module.content} />
             </Html>
+
+            <button on:click={() => dialog.showModal()}>Open dialog</button>
+            <Dialog bind:dialog>Qui incididunt veniam fugiat. Ipsum labore sit ullamco esse velit anim. Nulla pariatur duis magna elit ea enim ea nostrud elit velit fugiat fugiat proident commodo. Est amet adipisicing nulla ullamco ad dolor consequat eiusmod nulla et.</Dialog>
           </div>
         {/if}
       {/each}
