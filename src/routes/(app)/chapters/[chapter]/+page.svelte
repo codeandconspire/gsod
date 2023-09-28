@@ -5,6 +5,7 @@
   import Footnotes from '$lib/Footnotes.svelte'
   import MegaList from '$lib/MegaList.svelte'
   import { resolve } from '$lib/sanity.js'
+  import Figure from '$lib/Figure.svelte'
   import Teaser from '$lib/Teaser.svelte'
   import Dialog from '$lib/Dialog.svelte'
   import Theme from '$lib/Theme.svelte'
@@ -103,7 +104,7 @@
               class:large={module.size === 'large'} />
           {:else if module._type === 'heading'}
             <div class="contain">
-              <Html large>
+              <Html size="large">
                 <Text content={module.content} />
               </Html>
             </div>
@@ -145,6 +146,19 @@
                 </Html>
               </Teaser>
             </Theme>
+          {:else if module._type === 'figure'}
+            <Figure fill={module.fill}>
+              {#if module.image.image}
+                <img
+                  alt={module.image.alt || ''}
+                  src={module.image.asset.url} />
+              {:else if module.embed.content}
+                {@html module.embed.content}
+              {/if}
+              <Html slot="description">
+                <Text content={module.description} />
+              </Html>
+            </Figure>
           {/if}
         </div>
       {/each}

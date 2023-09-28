@@ -301,28 +301,91 @@ export default {
           ]
         },
         {
-          name: 'graph',
+          name: 'figure',
           type: 'object',
-          title: 'Graph',
+          title: 'Figure',
           icon: ImageIcon,
+          preview: {
+            select: {
+              title: 'description',
+              media: 'image'
+            }
+          },
           fields: [
-            { name: 'image', type: 'image' },
+            {
+              name: 'image',
+              type: 'image',
+              title: 'Image',
+              description: 'Image to display',
+              options: {
+                collapsed: true,
+                collapsible: true
+              },
+              fields: [
+                {
+                  name: 'alt',
+                  title: 'Alt Description',
+                  type: 'string'
+                },
+                {
+                  name: 'attribution',
+                  title: 'Attribution',
+                  type: 'string'
+                }
+              ]
+            },
+            {
+              name: 'embed',
+              type: 'object',
+              title: 'Embed',
+              options: {
+                collapsed: true,
+                collapsible: true
+              },
+              description: 'Embed code to display',
+              fields: [
+                {
+                  name: 'content',
+                  type: 'text',
+                  title: 'Content',
+                  description: 'Be cautious with pasting code from the Internet'
+                }
+              ]
+            },
             {
               name: 'fill',
               type: 'boolean',
               title: 'Fill',
               initialValue: false,
-              description: 'Fill the entire width of the screen'
+              description: 'Grow the figure to cover as much space as possible'
             },
             {
-              name: 'content',
+              name: 'description',
               type: 'array',
-              title: 'Content',
+              title: 'Description',
               of: [
                 {
                   type: 'block',
                   styles: [],
-                  lists: []
+                  lists: [],
+                  marks: {
+                    annotations: [
+                      {
+                        name: 'footnote',
+                        type: 'object',
+                        title: 'Footnote',
+                        icon: CommentIcon,
+                        fields: [
+                          {
+                            title: 'Content',
+                            name: 'content',
+                            type: 'array',
+                            of: [{ type: 'block', styles: [] }]
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 }
               ]
             }

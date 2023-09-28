@@ -35,7 +35,7 @@
       class="note">
       <div class="content">
         <sup>[{index + 1}]</sup>
-        <Html>
+        <Html size="small">
           <Text content={item.content} />
         </Html>
         <div class="actions">

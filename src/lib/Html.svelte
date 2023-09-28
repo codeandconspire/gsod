@@ -1,8 +1,12 @@
 <script>
-  export let large = false
+  /** @type {('small'|'large')?} */
+  export let size = null
 </script>
 
-<div class="html {$$props.class || ''}" class:large>
+<div
+  class="html {$$props.class || ''}"
+  class:large={size === 'large'}
+  class:small={size === 'small'}>
   <slot />
 </div>
 
@@ -12,6 +16,10 @@
     line-height: 1.4;
     letter-spacing: -0.005em;
     letter-spacing: -0.005em;
+  }
+
+  .html.small {
+    font-size: 0.875rem;
   }
 
   .html.large {

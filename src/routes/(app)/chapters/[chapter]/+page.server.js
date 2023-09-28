@@ -10,6 +10,15 @@ export async function load({ params, request }) {
       ...,
       modules[]{
         ...,
+        _type == "figure" => {
+          ...,
+          image{
+            ...,
+            asset->{
+              url
+            }
+          }
+        },
         _type == "teaser" => {
           image{
             ...,
