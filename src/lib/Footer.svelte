@@ -25,7 +25,12 @@
         <button type="submit" class="submit">Submit</button>
       </div>
       <label for="footer-opt-in">
-        <input class="check" checked type="checkbox" id="footer-opt-in" name="opt-in" />
+        <input
+          class="check"
+          checked
+          type="checkbox"
+          id="footer-opt-in"
+          name="opt-in" />
         <span class="label">Receive news about our other projects</span>
       </label>
     </form>
@@ -42,9 +47,24 @@
     </nav>
     <div class="end">
       <div class="terms">
-        <a href="https://www.idea.int/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-        <a href="https://www.idea.int/terms-and-conditions" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-        <a href="https://www.idea.int/cookies" target="_blank" rel="noopener noreferrer">Cookie policy</a>
+        <a
+          href="https://www.idea.int/privacy-policy"
+          target="_blank"
+          rel="noopener noreferrer">
+          Privacy Policy
+        </a>
+        <a
+          href="https://www.idea.int/terms-and-conditions"
+          target="_blank"
+          rel="noopener noreferrer">
+          Privacy Policy
+        </a>
+        <a
+          href="https://www.idea.int/cookies"
+          target="_blank"
+          rel="noopener noreferrer">
+          Cookie policy
+        </a>
       </div>
       <p>© 2023 International IDEA. All Rights Reserved</p>
     </div>
@@ -68,7 +88,7 @@
   }
 
   .form {
-    background: #62A3BF;
+    background: #62a3bf;
     border-radius: 0.75rem;
     padding: var(--page-gutter);
     margin-top: -4.3rem;
@@ -124,7 +144,6 @@
 
   /* Checkbox */
 
-
   .check {
     position: absolute;
     width: 0;
@@ -145,7 +164,7 @@
   }
 
   .label::before {
-    content: "";
+    content: '';
     display: flex;
     align-items: center;
     justify-content: center;
@@ -160,7 +179,7 @@
   }
 
   .check:checked + .label::before {
-    content: "✓";
+    content: '✓';
   }
 
   /* Ending */
@@ -172,7 +191,7 @@
     margin-top: clamp(2.5rem, 6vw, 4rem);
     padding: clamp(1.5rem, 6vw, 2rem) 0;
     justify-content: space-between;
-    border-top: 1px solid rgba(255, 255, 255, 0.2)
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .terms {
