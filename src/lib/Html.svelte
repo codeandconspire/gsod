@@ -27,7 +27,7 @@
     max-width: var(--text-width);
     font-weight: var(--sans-serif-normal);
     line-height: 1.3;
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
   }
 
   @media (width > 40rem) {
@@ -106,7 +106,7 @@
     margin: 1em 0;
     text-wrap: balance;
     font-weight: 700;
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
   }
 
   .html :global(blockquote::before) {

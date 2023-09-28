@@ -71,7 +71,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: clamp(0.75rem, 1vh, 1.8rem);
+    gap: 1.25em;
     width: 100%;
   }
 
@@ -91,18 +91,19 @@
     font-size: clamp(2rem, 5vw, 3.875rem);
     font-weight: var(--sans-serif-bold);
     color: var(--theme-primary-color);
+    line-height: 1.1;
+    margin: -0.15em 0;
   }
 
   .description {
     font-family: var(--sans-serif);
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
     color: var(--theme-primary-color);
   }
 
   .link {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
     padding: 0.8rem 1.1rem 0.8rem 1.5rem;
     font-family: var(--sans-serif);
     font-weight: var(--sans-serif-bold);
@@ -110,6 +111,7 @@
     color: var(--theme-text-color);
     background-color: var(--theme-primary-color);
     transition: background-color 190ms cubic-bezier(0.33, 1, 0.68, 1);
+    font-size: var(--framework-font-size);
   }
 
   .link:hover {
@@ -117,8 +119,10 @@
   }
 
   .chevron {
-    width: 1.2em;
-    height: 1.2em;
+    display: block;
+    width: 1.35em;
+    margin: 0 -0.2em 0 0;
+    height: auto;
     transition: transform 190ms cubic-bezier(0.33, 1, 0.68, 1);
   }
 

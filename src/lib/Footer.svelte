@@ -77,7 +77,7 @@
   .heading {
     font-weight: var(--sans-serif-normal);
     line-height: 1.3;
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
     text-wrap: balance;
     max-width: 28rem;
   }

@@ -103,6 +103,7 @@
               class:medium={module.size === 'medium'}
               class:large={module.size === 'large'} />
           {:else if module._type === 'heading'}
+            <div class="divider large visible" />
             <div class="contain">
               <Html size="large">
                 <Text content={module.content} />
@@ -202,15 +203,6 @@
     max-width: var(--text-width-max);
   }
 
-  .module-heading + .module,
-  .module + .module-heading {
-    margin-top: 4rem;
-  }
-
-  .module + .module-heading {
-    padding-top: 2rem;
-  }
-
   .icon {
     width: 2rem;
     height: 2rem;
@@ -305,23 +297,33 @@
   /* Divider */
 
   .divider {
-    height: 1px;
+    height: 0;
   }
 
   .divider,
   .divider.medium {
-    margin: clamp(2rem, 8vh, 4rem) auto;
+    margin: var(--space-medium) auto;
   }
 
   .divider.small {
-    margin: clamp(1rem, 4vh, 2rem) auto;
+    margin: clamp(5.5rem, 8.5vw, 8rem) auto;
   }
 
   .divider.large {
-    margin: clamp(4rem, 12vh, 8rem) auto;
+    margin: var(--space-large) auto;
   }
 
   .divider.visible {
     border-top: 1px solid currentcolor;
+  }
+
+  .module-heading .divider {
+    margin-bottom: 2rem;
+  }
+
+  /* Module margins */
+
+  .module-teaser {
+    margin-top: var(--space-medium);
   }
 </style>
