@@ -137,7 +137,7 @@
     margin: 0.5em 0 0 1px;
     flex: 0 0 auto;
     align-self: flex-start;
-    background: var(--theme-primary-color, currentColor);
+    background: var(--theme-primary-color, currentcolor);
   }
 
   .html :global(ol li::before) {
@@ -145,7 +145,7 @@
     content: counter(list) '. ';
     font-weight: bold;
     min-width: 1rem;
-    color: var(--theme-primary-color, currentColor);
+    color: var(--theme-primary-color, currentcolor);
   }
 
   /* Links */

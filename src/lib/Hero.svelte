@@ -53,7 +53,7 @@
       {#if back}
         <div>
           <a href={back} class="back">
-            <svg class="chevron" fill="currentColor" viewBox="0 -960 960 960">
+            <svg class="chevron" fill="currentcolor" viewBox="0 -960 960 960">
               <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
             </svg>
             Back

@@ -5,6 +5,7 @@
   import Footnotes from '$lib/Footnotes.svelte'
   import MegaList from '$lib/MegaList.svelte'
   import { resolve } from '$lib/sanity.js'
+  import Details from '$lib/Details.svelte'
   import Figure from '$lib/Figure.svelte'
   import Teaser from '$lib/Teaser.svelte'
   import Dialog from '$lib/Dialog.svelte'
@@ -169,11 +170,14 @@
           {/if}
         </div>
       {/each}
-      <div class="divider large" />
-      <div class="contain">
-        <Html>
-          <Footnotes />
-        </Html>
+      <div class="module module-details">
+        <Details heading="References">
+          <div class="contain">
+            <Html>
+              <Footnotes />
+            </Html>
+          </div>
+        </Details>
       </div>
     </div>
   </div>
@@ -351,5 +355,13 @@
 
   .module-figure {
     margin: var(--space-medium) 0;
+  }
+
+  .module-details {
+    margin-top: var(--space-large);
+  }
+
+  .module-details + .module-details {
+    margin-top: -1px;
   }
 </style>

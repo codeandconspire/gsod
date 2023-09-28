@@ -30,7 +30,7 @@
     display: block;
     line-height: 0.75;
     min-width: 3rem;
-    color: var(--theme-primary-color, currentColor);
+    color: var(--theme-primary-color, currentcolor);
     font-weight: bold;
     font-size: 3.75rem;
     letter-spacing: -0.05em;
