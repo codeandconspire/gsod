@@ -1,16 +1,17 @@
 import React from 'react'
-
 import {
   CommentIcon,
   OlistIcon,
   RemoveIcon,
   StringIcon,
-  ImageIcon,
-  BlockContentIcon,
-  DashboardIcon
+  BlockContentIcon
 } from '@sanity/icons'
 
+import FigureReference, {
+  FigureReferenceIcon
+} from './components/FigureReference.jsx'
 import Color from './components/Color.jsx'
+import footnote from './footnote.jsx'
 
 export default {
   name: 'chapter',
@@ -170,17 +171,20 @@ export default {
                   ],
                   marks: {
                     annotations: [
+                      footnote,
                       {
-                        name: 'footnote',
+                        name: 'figure',
                         type: 'object',
-                        title: 'Footnote',
-                        icon: CommentIcon,
+                        title: 'Reference to figure',
+                        icon: FigureReferenceIcon,
                         fields: [
                           {
-                            title: 'Content',
-                            name: 'content',
-                            type: 'array',
-                            of: [{ type: 'block', styles: [] }]
+                            name: 'figure',
+                            type: 'string',
+                            title: 'Figure',
+                            components: {
+                              input: FigureReference
+                            }
                           }
                         ]
                       }
@@ -305,7 +309,7 @@ export default {
           name: 'figure',
           type: 'object',
           title: 'Figure',
-          icon: ImageIcon,
+          icon: FigureReferenceIcon,
           preview: {
             select: {
               title: 'description',
@@ -370,22 +374,7 @@ export default {
                   styles: [],
                   lists: [],
                   marks: {
-                    annotations: [
-                      {
-                        name: 'footnote',
-                        type: 'object',
-                        title: 'Footnote',
-                        icon: CommentIcon,
-                        fields: [
-                          {
-                            title: 'Content',
-                            name: 'content',
-                            type: 'array',
-                            of: [{ type: 'block', styles: [] }]
-                          }
-                        ]
-                      }
-                    ]
+                    annotations: [footnote]
                   }
                 }
               ]

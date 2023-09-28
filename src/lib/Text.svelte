@@ -1,4 +1,6 @@
 <script context="module">
+  const bindings = new WeakMap()
+
   export function asText(content) {
     if (!Array.isArray(content)) return String(content)
     return content
@@ -11,20 +13,17 @@
 <script>
   import { page } from '$app/stores'
 
-  import Footnotes, { anchor, collect } from '$lib/Footnotes.svelte'
+  import Footnotes, * as footnote from '$lib/Footnotes.svelte'
+  import * as figure from '$lib/Figure.svelte'
 
   export let plain = false
 
-  /** @type {any?}*/
-  export let content = null
+  /** @type {any[]}*/
+  export let content
 
-  /** @type {any[]?}*/
-  export let defs = null
-
-  const footnotes = collect()
+  const footnotes = footnote.all()
 
   let selected = null
-
   const onopen = (def) => (event) => {
     selected = def
     event.preventDefault()
@@ -34,89 +33,108 @@
     event.preventDefault()
   }
 
-  $: blocks = Array.isArray(content)
-    ? content.reduce(function compile(acc, block) {
-        const prev = acc.at(-1)
-        if (block.listItem) {
-          const { _key, children } = block
-          const item = { children, _key, _type: '$li' }
-          const _type = block.listItem === 'bullet' ? '$ul' : '$ol'
-          if (prev._type === _type) {
-            prev._key += `-${_key}`
-            prev.children.push(item)
-          } else {
-            acc.push({ _key, _type, children: [item] })
-          }
-        } else {
-          acc.push(block)
-        }
-        return acc
-      }, [])
-    : []
+  // The Sanity PortableText format is a flat array of blocks which needs
+  // processing to collect list items and preserve markDef references
+  $: blocks = content.reduce(function compile(acc, block) {
+    const { _key, children, marks, markDefs, listItem } = block
+    const prev = acc.at(-1)
+
+    if (listItem) {
+      // Create a faux child list item
+      const child = { _key, children, marks, _type: '$li' }
+
+      // Determine the list type
+      const _type = listItem === 'bullet' ? '$ul' : '$ol'
+
+      // Associate the faux child with block markDefs
+      bindings.set(child, markDefs)
+
+      if (prev?._type === _type) {
+        // Append list item key to block key
+        prev._key += `-${_key}`
+
+        // Append faux child
+        prev.children.push(child)
+      } else {
+        // Create a new list block
+        acc.push({ _key, _type, children: [child] })
+      }
+    } else {
+      // Associate all children with the block markDefs
+      children?.forEach((child) => bindings.set(child, markDefs))
+
+      // Append block as-is
+      acc.push(block)
+    }
+
+    return acc
+  }, [])
 </script>
 
 {#if plain}
   {@html asText(content).replace(/\n/g, '<br />')}
-{:else if content}
+{:else}
   {#each blocks as block (block._key)}
-    {@const { style, _type } = block}
+    {@const { _type, style, children } = block}
     <slot {block}>
       {#if style === 'normal'}
-        <p>
-          <svelte:self content={block.children} defs={block.markDefs} />
-        </p>
+        <p><svelte:self content={children} /></p>
       {:else if style === 'h1'}
-        <h1><svelte:self content={block.children} /></h1>
+        <h1><svelte:self content={children} /></h1>
       {:else if style === 'h2'}
-        <h2><svelte:self content={block.children} /></h2>
+        <h2><svelte:self content={children} /></h2>
       {:else if style === 'h3'}
-        <h3><svelte:self content={block.children} /></h3>
+        <h3><svelte:self content={children} /></h3>
       {:else if style === 'h4'}
-        <h4><svelte:self content={block.children} /></h4>
+        <h4><svelte:self content={children} /></h4>
       {:else if style === 'h5'}
-        <h5><svelte:self content={block.children} /></h5>
+        <h5><svelte:self content={children} /></h5>
       {:else if style === 'h6'}
-        <h6><svelte:self content={block.children} /></h6>
+        <h6><svelte:self content={children} /></h6>
       {:else if style === 'blockquote'}
-        <blockquote>
-          <svelte:self content={block.children} />
-        </blockquote>
+        <blockquote><svelte:self content={children} /></blockquote>
       {:else if _type === '$ul'}
-        <ul>
-          <svelte:self content={block.children} />
-        </ul>
+        <ul><svelte:self content={children} /></ul>
       {:else if _type === '$ol'}
-        <ol>
-          <svelte:self content={block.children} />
-        </ol>
+        <ol><svelte:self content={children} /></ol>
       {:else if _type === '$li'}
-        <li><svelte:self content={block.children} /></li>
+        <li><svelte:self content={children} /></li>
       {:else if _type === 'span'}
         {@const [mark, ...marks] = block.marks}
         {#if mark}
           {#if mark === 'strong'}
-            <strong>
-              <svelte:self content={[{ ...block, marks }]} {defs} />
-            </strong>
+            <strong><svelte:self content={[{ ...block, marks }]} /></strong>
           {:else if mark === 'em'}
-            <em><svelte:self content={[{ ...block, marks }]} {defs} /></em>
+            <em><svelte:self content={[{ ...block, marks }]} /></em>
           {:else if mark === 'code'}
-            <code><svelte:self content={[{ ...block, marks }]} {defs} /></code>
+            <code><svelte:self content={[{ ...block, marks }]} /></code>
           {:else if mark === 'underline'}
-            <u><svelte:self content={[{ ...block, marks }]} {defs} /></u>
+            <u><svelte:self content={[{ ...block, marks }]} /></u>
           {:else if mark === 'strikethrough'}
-            <s><svelte:self content={[{ ...block, marks }]} {defs} /></s>
+            <s><svelte:self content={[{ ...block, marks }]} /></s>
           {:else}
+            {@const defs = bindings.get(block)}
             {@const def = defs?.find((def) => def._key === mark)}
             {#if def?._type === 'footnote'}
               {@const index = footnotes.push(def)}
               <a
                 class="anchor"
                 id="anchor-{def._key}"
-                href="#{anchor(def._key)}"
+                href="#{footnote.anchor(def._key)}"
                 on:click={onopen(def)}>
-                <svelte:self content={[{ ...block, marks }]} {defs} />
+                <svelte:self content={[{ ...block, marks }]} />
                 <sup>[{index}]</sup>
+              </a>
+            {:else if def?._type === 'figure'}
+              {@const id = figure.anchor(def.figure)}
+              <a
+                href="#{id}"
+                on:click|preventDefault={() =>
+                  document.getElementById(id)?.scrollIntoView({
+                    block: 'nearest',
+                    behavior: 'smooth'
+                  })}>
+                <svelte:self content={[{ ...block, marks }]} />
               </a>
             {/if}
           {/if}

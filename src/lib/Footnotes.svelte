@@ -11,7 +11,7 @@
     setContext(FOOTNOTES, [])
   }
 
-  export function collect() {
+  export function all() {
     return getContext(FOOTNOTES)
   }
 </script>
@@ -25,7 +25,7 @@
   /** @type {string?}*/
   export let share = null
   export let selected = false
-  export let items = collect()
+  export let items = all()
 
   const onshare = (event) => {
     const url = /** @type {string} */ (share)
@@ -43,41 +43,35 @@
   }
 </script>
 
-<svelte:element this={selected ? 'div' : 'div'}>
-  {#each items as item, index}
-    {@const id = anchor(item._key)}
-    <svelte:element
-      this={selected ? 'div' : 'p'}
-      {id}
-      class:selected
-      class="note">
-      <div class="content">
-        <sup>[{index + 1}]</sup>
-        <Html size="small">
-          <Text content={item.content} />
-        </Html>
-        <div class="actions">
-          <a
-            href={share || $page.url.href.replace(/(#.+)|$/, `#${id}`)}
-            class="action"
-            title="Share"
-            on:click|preventDefault={onshare}>
-            <svg viewBox="0 -960 960 960" class="icon">
-              <path
-                d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z" />
-            </svg>
-          </a>
-          <a href="#_" class="action" title="Close" on:click>
-            <svg viewBox="0 -960 960 960" class="icon">
-              <path
-                d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-            </svg>
-          </a>
-        </div>
+{#each items as item, index}
+  {@const id = anchor(item._key)}
+  <div {id} class="note" class:selected>
+    <div class="content">
+      <sup>[{index + 1}]</sup>
+      <Html size="small">
+        <Text content={item.content} />
+      </Html>
+      <div class="actions">
+        <a
+          href={share || $page.url.href.replace(/(#.+)|$/, `#${id}`)}
+          class="action"
+          title="Share"
+          on:click|preventDefault={onshare}>
+          <svg viewBox="0 -960 960 960" class="icon">
+            <path
+              d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z" />
+          </svg>
+        </a>
+        <a href="#_" class="action" title="Close" on:click>
+          <svg viewBox="0 -960 960 960" class="icon">
+            <path
+              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+          </svg>
+        </a>
       </div>
-    </svelte:element>
-  {/each}
-</svelte:element>
+    </div>
+  </div>
+{/each}
 
 <style>
   .note:is(:target, .selected) {

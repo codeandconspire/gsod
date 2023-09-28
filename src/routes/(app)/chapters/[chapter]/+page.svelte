@@ -1,12 +1,12 @@
 <script>
   import { page } from '$app/stores'
 
-  import Footnotes, { reset } from '$lib/Footnotes.svelte'
+  import Footnotes, * as footnote from '$lib/Footnotes.svelte'
+  import Figure, * as figure from '$lib/Figure.svelte'
   import Text, { asText } from '$lib/Text.svelte'
   import MegaList from '$lib/MegaList.svelte'
-  import { resolve } from '$lib/sanity.js'
   import Details from '$lib/Details.svelte'
-  import Figure from '$lib/Figure.svelte'
+  import { resolve } from '$lib/sanity.js'
   import Teaser from '$lib/Teaser.svelte'
   import Dialog from '$lib/Dialog.svelte'
   import Theme from '$lib/Theme.svelte'
@@ -18,7 +18,8 @@
   let open = false
   let dialog
 
-  reset()
+  footnote.reset()
+  figure.reset()
 
   $: chapter = data.chapter
   $: menu = chapter.cover.menu.map(function each(item) {
@@ -35,8 +36,8 @@
 <Theme primary={chapter.primaryColor} secondary={chapter.secondaryColor}>
   <Hero size="small" back={resolve(chapter.cover)}>
     <Menu slot="menu" items={menu} />
-    <Text slot="heading" content={chapter.title} plain />
-    <Text slot="subheading" content={chapter.subheading} plain />
+    <span slot="heading">{chapter.title}</span>
+    <span slot="subheading">{chapter.subheading}</span>
   </Hero>
 
   <div class="content">
@@ -154,7 +155,7 @@
             </div>
           {:else if module._type === 'figure'}
             <div class={module.fill ? 'unwrap' : ''}>
-              <Figure fill={module.fill}>
+              <Figure fill={module.fill} id={figure.anchor(module._key)}>
                 {#if module.image.image}
                   <img
                     alt={module.image.alt || ''}
@@ -162,9 +163,15 @@
                 {:else if module.embed.content}
                   {@html module.embed.content}
                 {/if}
-                <Html size="small" slot="description">
-                  <Text content={module.description} />
-                </Html>
+                <span slot="description">
+                  <Text content={module.description} let:block>
+                    {#if block.style === 'normal'}
+                      <Text content={block.children} />
+                    {:else}
+                      <Text content={block} />
+                    {/if}
+                  </Text>
+                </span>
               </Figure>
             </div>
           {/if}
@@ -227,6 +234,8 @@
 
   @media (width <= 70rem) {
     .toc {
+      --narrow: 0;
+
       position: sticky;
       top: 0;
       width: calc(100% + (var(--page-gutter) * 2));
@@ -235,8 +244,6 @@
       backdrop-filter: blur(4px);
       box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05);
       margin-bottom: var(--margin);
-
-      --narrow: 0;
     }
 
     .toc:not(:is(.open, :target)) .items {
@@ -287,6 +294,11 @@
 
     :root:has(.toc:is(.open, :target)) {
       overflow: hidden;
+    }
+
+    :root:has(.toc:not(.open, :target)) {
+      /* .toggle[padding] + .icon[height] + extra space for good measure */
+      --current-scroll-margin-top: calc(1rem + 2rem + 2rem);
     }
   }
 

@@ -4,7 +4,11 @@ import { error } from '@sveltejs/kit'
 import { createClient } from '$lib/sanity.js'
 
 export async function load({ params, request }) {
-  const client = createClient({ request, token: SANITY_API_TOKEN })
+  const url = new URL(request.url)
+  const client = createClient({
+    preview: url.searchParams.has('preview'),
+    token: SANITY_API_TOKEN
+  })
   const chapter = await client.fetch(
     `*[_type == "chapter" && slug.current == $slug][0]{
       ...,

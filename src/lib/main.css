@@ -83,6 +83,12 @@
   cursor: default;
 }
 
+* {
+  /* Set scroll margin with conditional selector, e.g. :root:has(.something) */
+  scroll-margin-top: var(--current-scroll-margin-top);
+  scroll-margin-bottom: var(--current-scroll-margin-bottom);
+}
+
 a {
   color: inherit;
   text-decoration: none;

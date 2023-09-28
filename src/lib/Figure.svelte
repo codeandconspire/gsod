@@ -1,8 +1,36 @@
-<script>
-  export let fill = false
+<script context="module">
+  import { setContext, getContext } from 'svelte'
+  import { writable, get } from 'svelte/store'
+
+  export const FIGURES = Symbol('figures')
+
+  export function anchor(key) {
+    return `figure-${key}`
+  }
+
+  export function reset() {
+    setContext(FIGURES, writable([]))
+  }
+
+  export function all() {
+    return get(getContext(FIGURES))
+  }
 </script>
 
-<figure class="figure" class:fill>
+<script>
+  import Html from '$lib/Html.svelte'
+
+  export let fill = false
+
+  /** @type {string?} */
+  export let id
+
+  let index
+  const figures = getContext(FIGURES)
+  if (id) index = $figures.push(id)
+</script>
+
+<figure class="figure" class:fill {id}>
   <div class="main">
     <div class:u-container={fill}>
       <slot />
@@ -11,7 +39,10 @@
   {#if $$slots.description}
     <figcaption class:u-container={fill}>
       <div class="caption">
-        <slot name="description" />
+        <Html size="small">
+          {#if index}Figure {index}: {/if}
+          <slot name="description" />
+        </Html>
       </div>
     </figcaption>
   {/if}
