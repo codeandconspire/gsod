@@ -148,12 +148,21 @@
     color: var(--theme-primary-color, currentColor);
   }
 
+  /* Links */
+
   .html :global(a) {
-    color: blue;
+    color: var(--theme-primary-color, #62a3bf);
     text-decoration: underline;
   }
 
+  .html :global(a:hover) {
+    color: var(--theme-dark-color, #000);
+  }
+
   .html :global(a sup) {
+    font-size: 0.75em;
+    font-weight: bold;
+
     /* Prevent text underline */
     display: inline-block;
   }

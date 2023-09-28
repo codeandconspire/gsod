@@ -69,7 +69,7 @@
 
   /* Link underlines */
   text-underline-offset: 0.25em;
-  text-decoration-thickness: var(--border-width);
+  text-decoration-thickness: 0.5px;
 
   /* We'll set up our own active states */
   -webkit-tap-highlight-color: transparent;

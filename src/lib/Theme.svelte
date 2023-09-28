@@ -7,7 +7,7 @@
   /** @type {string?} */
   export let secondary = null
 
-  $: dark = primary ? shade(primary, -10) : null
+  $: dark = primary ? shade(primary, -30) : null
   $: text = primary ? (luma(primary) > 165 ? '#000' : '#fff') : null
 </script>
 
@@ -23,6 +23,7 @@
 <style>
   .theme {
     --theme-text-color: #fff;
+    --theme-dark-color: #1e3e5b;
     --theme-primary-color: #62a3bf;
     --theme-secondary-color: #326593;
   }
