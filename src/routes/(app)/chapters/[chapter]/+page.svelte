@@ -153,7 +153,7 @@
               </Theme>
             </div>
           {:else if module._type === 'figure'}
-            <div class={module.fill ? 'unwrap' : 'contain'}>
+            <div class={module.fill ? 'unwrap' : ''}>
               <Figure fill={module.fill}>
                 {#if module.image.image}
                   <img
@@ -293,7 +293,7 @@
   @media (width > 70rem) {
     .toc {
       position: sticky;
-      top: var(--page-gutter);
+      top: var(--sticky-top-margin);
       margin-bottom: var(--margin);
     }
 
@@ -309,6 +309,10 @@
   }
 
   @media (width > 70rem) {
+    .contain {
+      max-width: var(--text-width);
+    }
+
     .uncontain {
       margin-left: calc(-50vw + (var(--text-width) / 2) + var(--page-gutter));
       padding-left: calc(50vw - (var(--page-width) / 2) - var(--page-gutter));

@@ -18,6 +18,13 @@
 </figure>
 
 <style>
+  .figure {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem 2rem;
+    text-align: center;
+  }
+
   .main {
     background: #f8f8f8;
     padding: var(--page-gutter);
@@ -28,14 +35,30 @@
     padding: 1.5rem;
   }
 
+  @media (width > 70rem) {
+    .figure:not(.fill) {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      text-align: right;
+    }
+
+    .figure:not(.fill) .main {
+      max-width: var(--text-width);
+    }
+
+    .figure:not(.fill) .caption {
+      position: sticky;
+      top: var(--sticky-top-margin);
+    }
+  }
+
   .figure :global(img) {
     width: 100%;
   }
 
   .caption {
-    margin: 1.25rem auto 0;
+    margin: 0 auto;
     max-width: 35rem;
-    text-align: center;
     text-wrap: balance;
   }
 </style>

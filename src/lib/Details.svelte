@@ -43,8 +43,8 @@
   }
 
   .marker {
-    width: 1em;
-    height: 1em;
+    width: 0.8em;
+    height: 0.8em;
     flex: 0 0 auto;
     transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
   }
@@ -58,22 +58,28 @@
     content: '';
     display: block;
     order: 1;
-    width: 3px;
+    width: var(--icon-line-width);
     height: 100%;
-    border-radius: 1.5px;
+    border-radius: calc(var(--icon-line-width) / 2);
     transform-origin: center;
     background-color: currentcolor;
   }
 
   .marker::before {
-    margin-top: calc(0.5em - 1.5px);
+    margin-top: calc(0.5em - calc(var(--icon-line-width) / 2));
     transform: rotate(90deg)
-      translate(calc(-0.5em + 1.5px), calc(-0.5em + 1.5px));
+      translate(
+        calc(-0.5em + calc(var(--icon-line-width) / 2)),
+        calc(-0.5em + calc(var(--icon-line-width) / 2))
+      );
   }
 
   .marker::after {
     margin-top: -100%;
-    transform: translate(calc(0.5em - 1.5px), calc(-0.5em + 1.5px));
+    transform: translate(
+      calc(0.5em - calc(var(--icon-line-width) / 2)),
+      calc(-0.5em + calc(var(--icon-line-width) / 2))
+    );
   }
 
   .details[open] {

@@ -64,7 +64,7 @@
   font-family: var(--serif);
   background-color: var(--background-color);
   color: var(--text-color);
-  font-size: 100%;
+  font-size: var(--font-size);
   line-height: var(--line-height);
 
   /* Link underlines */
@@ -81,13 +81,6 @@
 
   /* Feels better then global text cursor */
   cursor: default;
-}
-
-/* Scale the entire page for wide viewports */
-@media (width > 100rem) {
-  :root {
-    font-size: 105%;
-  }
 }
 
 a {
