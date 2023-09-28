@@ -1,8 +1,8 @@
 <script>
   import { page } from '$app/stores'
 
-  import Text, { asText, reset } from '$lib/Text.svelte'
-  import Footnotes from '$lib/Footnotes.svelte'
+  import Footnotes, { reset } from '$lib/Footnotes.svelte'
+  import Text, { asText } from '$lib/Text.svelte'
   import MegaList from '$lib/MegaList.svelte'
   import { resolve } from '$lib/sanity.js'
   import Details from '$lib/Details.svelte'

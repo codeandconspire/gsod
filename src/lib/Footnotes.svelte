@@ -1,7 +1,25 @@
+<script context="module">
+  import { setContext, getContext } from 'svelte'
+
+  export const FOOTNOTES = Symbol('footnotes')
+
+  export function anchor(key) {
+    return `footnote-${key}`
+  }
+
+  export function reset() {
+    setContext(FOOTNOTES, [])
+  }
+
+  export function collect() {
+    return getContext(FOOTNOTES)
+  }
+</script>
+
 <script>
   import { page } from '$app/stores'
 
-  import Text, { asText, collect, anchor } from '$lib/Text.svelte'
+  import Text, { asText } from '$lib/Text.svelte'
   import Html from '$lib/Html.svelte'
 
   /** @type {string?}*/

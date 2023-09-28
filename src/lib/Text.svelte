@@ -1,20 +1,4 @@
 <script context="module">
-  import { setContext, getContext, hasContext } from 'svelte'
-
-  export const FOOTNOTES = Symbol('footnotes')
-
-  export function anchor(key) {
-    return `footnote-${key}`
-  }
-
-  export function reset() {
-    setContext(FOOTNOTES, [])
-  }
-
-  export function collect() {
-    return getContext(FOOTNOTES)
-  }
-
   export function asText(content) {
     if (!Array.isArray(content)) return String(content)
     return content
@@ -27,7 +11,7 @@
 <script>
   import { page } from '$app/stores'
 
-  import Footnotes from '$lib/Footnotes.svelte'
+  import Footnotes, { anchor, collect } from '$lib/Footnotes.svelte'
 
   export let plain = false
 
@@ -37,9 +21,7 @@
   /** @type {any[]?}*/
   export let defs = null
 
-  if (!hasContext(FOOTNOTES)) reset()
-
-  const footnotes = getContext(FOOTNOTES)
+  const footnotes = collect()
 
   let selected = null
 
