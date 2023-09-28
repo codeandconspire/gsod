@@ -337,6 +337,6 @@
   /* Module margins */
 
   .module-teaser {
-    margin-top: var(--space-medium);
+    margin-top: var(--space-large);
   }
 </style>

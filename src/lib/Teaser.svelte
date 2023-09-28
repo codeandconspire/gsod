@@ -34,31 +34,24 @@
 
 <style>
   .teaser {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: flex-start;
-    gap: clamp(2rem, 4vw, 8rem);
-    flex-wrap: wrap;
+    display: grid;
+    gap: clamp(2rem, 5vw, 5rem);
   }
 
-  @media (min-width: 40rem) {
+  @media (width > 60rem) {
     .teaser {
-      flex-wrap: nowrap;
+      grid-template-columns: 1fr 1fr;
+      align-items: self-start;
     }
 
     .teaser.flip {
-      flex-direction: row;
+      text-align: right;
     }
   }
 
   .image {
     width: 100%;
-  }
-
-  @media (min-width: 40rem) {
-    .image {
-      flex: 1 1 clamp(20rem, 20vw, 33rem);
-    }
+    order: -1;
   }
 
   .image :global(img) {
@@ -75,14 +68,10 @@
     width: 100%;
   }
 
-  @media (min-width: 40rem) {
-    .teaser:not(.flip) .content {
+  @media (width > 60rem) {
+    .teaser.flip .content {
+      order: -2;
       align-items: flex-end;
-      text-align: right;
-    }
-
-    .content {
-      flex: 1 1 clamp(25rem, 25vw, 20rem);
     }
   }
 
@@ -93,12 +82,14 @@
     color: var(--theme-primary-color);
     line-height: 1.1;
     margin: -0.15em 0;
+    text-wrap: balance;
   }
 
   .description {
     font-family: var(--sans-serif);
     font-size: clamp(1.5rem, 3vw, 1.75rem);
     color: var(--theme-primary-color);
+    text-wrap: balance;
   }
 
   .link {
