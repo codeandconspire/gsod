@@ -152,7 +152,7 @@
               </Theme>
             </div>
           {:else if module._type === 'figure'}
-            <div class={module.fill ? 'uncontain' : 'contain'}>
+            <div class={module.fill ? 'unwrap' : 'contain'}>
               <Figure fill={module.fill}>
                 {#if module.image.image}
                   <img
@@ -161,7 +161,7 @@
                 {:else if module.embed.content}
                   {@html module.embed.content}
                 {/if}
-                <Html slot="description">
+                <Html size="small" slot="description">
                   <Text content={module.description} />
                 </Html>
               </Figure>
@@ -170,9 +170,11 @@
         </div>
       {/each}
       <div class="divider large" />
-      <Html>
-        <Footnotes />
-      </Html>
+      <div class="contain">
+        <Html>
+          <Footnotes />
+        </Html>
+      </div>
     </div>
   </div>
 </Theme>
@@ -203,17 +205,6 @@
 
   .body {
     grid-column: span 2;
-  }
-
-  .contain {
-    max-width: var(--text-width-max);
-  }
-
-  @media (width > 70rem) {
-    .uncontain {
-      margin-left: calc(-50vw + (var(--text-width) / 2) + var(--page-gutter));
-      padding-left: calc(50vw - (var(--page-width) / 2) - var(--page-gutter));
-    }
   }
 
   .icon {
@@ -307,6 +298,24 @@
     }
   }
 
+  /* Content wrapping */
+
+  .contain {
+    max-width: var(--text-width-max);
+  }
+
+  @media (width > 70rem) {
+    .uncontain {
+      margin-left: calc(-50vw + (var(--text-width) / 2) + var(--page-gutter));
+      padding-left: calc(50vw - (var(--page-width) / 2) - var(--page-gutter));
+    }
+
+    .unwrap {
+      margin-left: calc(-50vw + (var(--text-width) / 2));
+      width: 100vw;
+    }
+  }
+
   /* Divider */
 
   .divider {
@@ -338,5 +347,9 @@
 
   .module-teaser {
     margin-top: var(--space-large);
+  }
+
+  .module-figure {
+    margin: var(--space-medium) 0;
   }
 </style>

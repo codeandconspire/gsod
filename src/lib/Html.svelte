@@ -15,11 +15,12 @@
     font-size: 1.125rem;
     line-height: 1.4;
     letter-spacing: -0.005em;
-    letter-spacing: -0.005em;
   }
 
   .html.small {
-    font-size: 0.875rem;
+    font-family: var(--sans-serif);
+    font-size: var(--framework-font-size);
+    letter-spacing: 0;
   }
 
   .html.large {
