@@ -128,40 +128,44 @@
           {:else if module._type === 'teaser'}
             {@const { title, description, flip, image, content, link } = module}
             {@const href = resolve(link.document)}
-            <Theme
-              primary={link.document.primaryColor}
-              secondary={link.document.secondaryColor}>
-              <Teaser
-                heading={title}
-                {description}
-                {flip}
-                link={href ? { href, label: link.label } : null}>
-                <img
-                  slot="image"
-                  alt={image.alt || ''}
-                  src={image.asset.url}
-                  sizes="(min-width: 40rem) 40rem"
-                  srcset={[300, 500, 600]
-                    .map((size) => `${image.asset.url}?w=${size} ${size}w`)
-                    .join(',')} />
-                <Html>
-                  <Text {content} />
-                </Html>
-              </Teaser>
-            </Theme>
+            <div class="uncontain">
+              <Theme
+                primary={link.document.primaryColor}
+                secondary={link.document.secondaryColor}>
+                <Teaser
+                  heading={title}
+                  {description}
+                  {flip}
+                  link={href ? { href, label: link.label } : null}>
+                  <img
+                    slot="image"
+                    alt={image.alt || ''}
+                    src={image.asset.url}
+                    sizes="(min-width: 40rem) 40rem"
+                    srcset={[300, 500, 600]
+                      .map((size) => `${image.asset.url}?w=${size} ${size}w`)
+                      .join(',')} />
+                  <Html>
+                    <Text {content} />
+                  </Html>
+                </Teaser>
+              </Theme>
+            </div>
           {:else if module._type === 'figure'}
-            <Figure fill={module.fill}>
-              {#if module.image.image}
-                <img
-                  alt={module.image.alt || ''}
-                  src={module.image.asset.url} />
-              {:else if module.embed.content}
-                {@html module.embed.content}
-              {/if}
-              <Html slot="description">
-                <Text content={module.description} />
-              </Html>
-            </Figure>
+            <div class={module.fill ? 'uncontain' : 'contain'}>
+              <Figure fill={module.fill}>
+                {#if module.image.image}
+                  <img
+                    alt={module.image.alt || ''}
+                    src={module.image.asset.url} />
+                {:else if module.embed.content}
+                  {@html module.embed.content}
+                {/if}
+                <Html slot="description">
+                  <Text content={module.description} />
+                </Html>
+              </Figure>
+            </div>
           {/if}
         </div>
       {/each}
@@ -203,6 +207,13 @@
 
   .contain {
     max-width: var(--text-width-max);
+  }
+
+  @media (width > 70rem) {
+    .uncontain {
+      margin-left: calc(-50vw + (var(--text-width) / 2) + var(--page-gutter));
+      padding-left: calc(50vw - (var(--page-width) / 2) - var(--page-gutter));
+    }
   }
 
   .icon {
