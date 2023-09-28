@@ -198,7 +198,7 @@ export default {
           icon: OlistIcon,
           preview: {
             select: {
-              content: 'content'
+              title: 'content'
             }
           },
           fields: [
@@ -209,7 +209,8 @@ export default {
               of: [
                 {
                   type: 'block',
-                  styles: []
+                  styles: [],
+                  lists: [{ title: 'Number', value: 'number' }]
                 }
               ]
             }

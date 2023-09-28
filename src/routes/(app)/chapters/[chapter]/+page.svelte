@@ -117,9 +117,11 @@
             </div>
           {:else if module._type === 'megaList'}
             <div class="contain">
-              <MegaList items={module.content} let:item>
+              <MegaList
+                items={module.content.filter((block) => block.listItem)}
+                let:item>
                 <Html>
-                  <Text content={item.content} />
+                  <Text content={item.children} />
                 </Html>
               </MegaList>
             </div>
