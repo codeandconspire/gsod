@@ -12,7 +12,7 @@
   }
 
   export function all() {
-    return getContext(FOOTNOTES)
+    return getContext(FOOTNOTES) || []
   }
 </script>
 
@@ -43,11 +43,14 @@
   }
 </script>
 
-{#each items as item, index}
+{#each items as item}
+  {@const index = all().indexOf(item)}
   {@const id = anchor(item._key)}
   <div {id} class="note" class:selected>
     <div class="content">
-      <sup>[{index + 1}]</sup>
+      {#if index !== -1}
+        <sup>[{index + 1}]</sup>
+      {/if}
       <Html size="small">
         <Text content={item.content} />
       </Html>
