@@ -1,4 +1,5 @@
 <script>
+  import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
 
   import Footnotes, * as footnote from '$lib/Footnotes.svelte'
@@ -18,8 +19,15 @@
   let open = false
   let dialog
 
-  footnote.reset()
-  figure.reset()
+  const reset = () => {
+    footnote.reset()
+    figure.reset()
+  }
+
+  reset()
+
+  // Prevent context persist when navigating between similar pages
+  beforeNavigate(reset)
 
   $: chapter = data.chapter
   $: menu = chapter.cover.menu.map(function each(item) {
