@@ -2,6 +2,7 @@
   import { page } from '$app/stores'
 
   import { resolve } from '$lib/sanity.js'
+  import Ranking from '$lib/Ranking.svelte'
   import Theme from '$lib/Theme.svelte'
   import Text from '$lib/Text.svelte'
   import Menu from '$lib/Menu.svelte'
@@ -35,6 +36,10 @@
     </span>
     <Text slot="subheading" content={cover.subheading} plain />
   </Hero>
+
+  <div class="u-container">
+    <Ranking />
+  </div>
 
   <div class="chapters u-container">
     <h2 class="title">Report Chapters</h2>
