@@ -1,15 +1,15 @@
 import React from 'react'
 import {
-  CommentIcon,
   OlistIcon,
   RemoveIcon,
   StringIcon,
   BlockContentIcon
 } from '@sanity/icons'
 
-import FigureReference, {
-  FigureReferenceIcon
-} from './components/FigureReference.jsx'
+import { FigureReferenceIcon } from './components/FigureReference.jsx'
+import figureReference from './figure-reference.jsx'
+import externalLink from './external-link.jsx'
+import internalLink from './internal-link.jsx'
 import Color from './components/Color.jsx'
 import footnote from './footnote.jsx'
 
@@ -171,23 +171,10 @@ export default {
                   ],
                   marks: {
                     annotations: [
+                      internalLink,
+                      externalLink,
                       footnote,
-                      {
-                        name: 'figure',
-                        type: 'object',
-                        title: 'Reference to figure',
-                        icon: FigureReferenceIcon,
-                        fields: [
-                          {
-                            name: 'figure',
-                            type: 'string',
-                            title: 'Figure',
-                            components: {
-                              input: FigureReference
-                            }
-                          }
-                        ]
-                      }
+                      figureReference
                     ]
                   }
                 }
@@ -374,7 +361,7 @@ export default {
                   styles: [],
                   lists: [],
                   marks: {
-                    annotations: [footnote]
+                    annotations: [internalLink, externalLink, footnote]
                   }
                 }
               ]

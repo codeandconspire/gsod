@@ -1,5 +1,9 @@
 import React from 'react'
 
+import figureReference from './figure-reference.jsx'
+import externalLink from './external-link.jsx'
+import internalLink from './internal-link.jsx'
+
 export default {
   name: 'footnote',
   type: 'object',
@@ -19,7 +23,15 @@ export default {
       title: 'Content',
       name: 'content',
       type: 'array',
-      of: [{ type: 'block', styles: [] }]
+      of: [
+        {
+          type: 'block',
+          styles: [],
+          marks: {
+            annotations: [internalLink, externalLink, figureReference]
+          }
+        }
+      ]
     }
   ]
 }

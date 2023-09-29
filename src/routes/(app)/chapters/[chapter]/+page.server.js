@@ -21,6 +21,35 @@ export async function load({ params, request }) {
             asset->{
               url
             }
+          },
+          description[]{
+            ...,
+            markDefs[]{
+              ...,
+              _type == "internalLink" => {
+                ...,
+                reference->{
+                  _type,
+                  slug
+                }
+              },
+              _type == "footnote" => {
+                ...,
+                content[]{
+                  ...,
+                  markDefs[]{
+                    ...,
+                    _type == "internalLink" => {
+                      ...,
+                      reference->{
+                        _type,
+                        slug
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         _type == "teaser" => {
@@ -37,6 +66,38 @@ export async function load({ params, request }) {
               slug,
               primaryColor,
               secondaryColor
+            }
+          }
+        },
+        _type == "richText" => {
+          ...,
+          content[]{
+            ...,
+            markDefs[]{
+              ...,
+              _type == "internalLink" => {
+                ...,
+                reference->{
+                  _type,
+                  slug
+                }
+              },
+              _type == "footnote" => {
+                ...,
+                content[]{
+                  ...,
+                  markDefs[]{
+                    ...,
+                    _type == "internalLink" => {
+                      ...,
+                      reference->{
+                        _type,
+                        slug
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }

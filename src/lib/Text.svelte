@@ -15,6 +15,7 @@
 
   import Footnotes, * as footnote from '$lib/Footnotes.svelte'
   import * as figure from '$lib/Figure.svelte'
+  import { resolve } from '$lib/sanity.js'
 
   export let plain = false
 
@@ -115,7 +116,20 @@
           {:else}
             {@const defs = bindings.get(block)}
             {@const def = defs?.find((def) => def._key === mark)}
-            {#if def?._type === 'footnote'}
+            {#if def?._type === 'externalLink'}
+              <a href={def.url} target="_blank" rel="noopener noreferrer">
+                <svelte:self content={[{ ...block, marks }]} />
+              </a>
+            {:else if def?._type === 'internalLink'}
+              {@const href = resolve(def.reference)}
+              {#if href}
+                <a href={resolve(def.reference)}>
+                  <svelte:self content={[{ ...block, marks }]} />
+                </a>
+              {:else}
+                <svelte:self content={[{ ...block, marks }]} />
+              {/if}
+            {:else if def?._type === 'footnote'}
               {@const index = footnotes.push(def)}
               <a
                 class="anchor"
