@@ -1,6 +1,5 @@
 <script>
   import Level from '$lib/Level.svelte'
-  import { luma } from '$lib/utils.js'
 
   export let hover = false
 

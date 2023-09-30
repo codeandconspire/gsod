@@ -139,7 +139,7 @@
                 <svelte:self content={[{ ...block, marks }]} />
                 <sup>[{index}]</sup>
               </a>
-            {:else if def?._type === 'figure'}
+            {:else if def?._type === 'figureReference'}
               {@const id = figure.anchor(def.figure)}
               <a
                 href="#{id}"

@@ -1,10 +1,11 @@
+import { defineType } from 'sanity'
 import React from 'react'
 
 import figureReference from './figure-reference.jsx'
-import externalLink from './external-link.jsx'
 import internalLink from './internal-link.jsx'
+import externalLink from './external-link.jsx'
 
-export default {
+export default defineType({
   name: 'footnote',
   type: 'object',
   title: 'Add footnote',
@@ -34,4 +35,4 @@ export default {
       ]
     }
   ]
-}
+})

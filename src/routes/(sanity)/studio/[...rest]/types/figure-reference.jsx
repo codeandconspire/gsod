@@ -1,9 +1,10 @@
 import FigureReference, {
   FigureReferenceIcon
-} from './components/FigureReference.jsx'
+} from '../components/FigureReference.jsx'
+import { defineType } from 'sanity'
 
-export default {
-  name: 'figure',
+export default defineType({
+  name: 'figureReference',
   type: 'object',
   title: 'Reference to figure',
   icon: FigureReferenceIcon,
@@ -17,4 +18,4 @@ export default {
       }
     }
   ]
-}
+})

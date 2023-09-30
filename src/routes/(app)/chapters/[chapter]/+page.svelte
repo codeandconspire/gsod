@@ -2,16 +2,13 @@
   import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
 
-  import Footnotes, * as footnote from '$lib/Footnotes.svelte'
-  import Figure, * as figure from '$lib/Figure.svelte'
-  import Text, { asText } from '$lib/Text.svelte'
-  import MegaList from '$lib/MegaList.svelte'
-  import Details from '$lib/Details.svelte'
+  import * as footnotes from '$lib/Footnotes.svelte'
+  import * as figure from '$lib/Figure.svelte'
+  import { asText } from '$lib/Text.svelte'
+  import Modules from '$lib/Modules.svelte'
   import { resolve } from '$lib/sanity.js'
-  import Teaser from '$lib/Teaser.svelte'
   import Dialog from '$lib/Dialog.svelte'
   import Theme from '$lib/Theme.svelte'
-  import Html from '$lib/Html.svelte'
   import Hero from '$lib/Hero.svelte'
   import Menu from '$lib/Menu.svelte'
 
@@ -20,7 +17,7 @@
   let dialog
 
   const reset = () => {
-    footnote.reset()
+    footnotes.reset()
     figure.reset()
   }
 
@@ -103,108 +100,18 @@
         fugiat proident commodo. Est amet adipisicing nulla ullamco ad dolor
         consequat eiusmod nulla et.
       </Dialog>
-      {#each chapter.modules as module}
-        <div class="module module-{module._type}">
-          {#if module._type === 'divider'}
-            <div
-              class="divider"
-              class:visible={module.visible}
-              class:small={module.size === 'small'}
-              class:medium={module.size === 'medium'}
-              class:large={module.size === 'large'} />
-          {:else if module._type === 'heading'}
-            <div class="divider large visible" />
-            <div class="contain">
-              <Html size="large">
-                <Text content={module.content} />
-              </Html>
-            </div>
-          {:else if module._type === 'richText'}
-            <div class="contain">
-              <Html>
-                <Text content={module.content} />
-              </Html>
-            </div>
-          {:else if module._type === 'megaList'}
-            <div class="contain">
-              <MegaList
-                items={module.content.filter((block) => block.listItem)}
-                let:item>
-                <Html>
-                  <Text content={item.children} />
-                </Html>
-              </MegaList>
-            </div>
-          {:else if module._type === 'teaser'}
-            {@const { title, description, flip, image, content, link } = module}
-            {@const href = resolve(link.document)}
-            <div class="uncontain">
-              <Theme
-                primary={link.document.primaryColor}
-                secondary={link.document.secondaryColor}>
-                <Teaser
-                  heading={title}
-                  {description}
-                  {flip}
-                  link={href ? { href, label: link.label } : null}>
-                  <img
-                    slot="image"
-                    alt={image.alt || ''}
-                    src={image.asset.url}
-                    sizes="(min-width: 40rem) 40rem"
-                    srcset={[300, 500, 600]
-                      .map((size) => `${image.asset.url}?w=${size} ${size}w`)
-                      .join(',')} />
-                  <Html>
-                    <Text {content} />
-                  </Html>
-                </Teaser>
-              </Theme>
-            </div>
-          {:else if module._type === 'figure'}
-            <div class={module.fill ? 'unwrap' : ''}>
-              <Figure fill={module.fill} id={figure.anchor(module._key)}>
-                {#if module.image.image}
-                  <img
-                    alt={module.image.alt || ''}
-                    src={module.image.asset.url} />
-                {:else if module.embed.content}
-                  {@html module.embed.content}
-                {/if}
-                <span slot="description">
-                  <Text content={module.description} let:block>
-                    {#if block.style === 'normal'}
-                      <Text content={block.children} />
-                    {:else}
-                      <Text content={block} />
-                    {/if}
-                  </Text>
-                </span>
-              </Figure>
-            </div>
-          {/if}
-        </div>
-      {/each}
-      <div class="module module-details">
-        <Details heading="References">
-          <div class="contain">
-            <Html>
-              <Footnotes />
-            </Html>
-          </div>
-        </Details>
-      </div>
+      <Modules modules={chapter.modules} />
     </div>
   </div>
 </Theme>
 
 <style>
   .content {
+    --margin: clamp(3rem, 10vh, 7rem);
+
     position: relative;
     max-width: min(calc(100vw - var(--page-gutter) * 2), var(--page-width));
     margin: var(--margin) auto;
-
-    --margin: clamp(3rem, 10vh, 7rem);
   }
 
   @media (width > 70rem) {
@@ -320,72 +227,5 @@
     .toggle {
       display: none;
     }
-  }
-
-  /* Content wrapping */
-
-  .contain {
-    max-width: var(--text-width-max);
-  }
-
-  @media (width > 70rem) {
-    .contain {
-      max-width: var(--text-width);
-    }
-
-    .uncontain {
-      margin-left: calc(-50vw + (var(--text-width) / 2) + var(--page-gutter));
-      padding-left: calc(50vw - (var(--page-width) / 2) - var(--page-gutter));
-    }
-
-    .unwrap {
-      margin-left: calc(-50vw + (var(--text-width) / 2));
-      width: 100vw;
-    }
-  }
-
-  /* Divider */
-
-  .divider {
-    height: 0;
-  }
-
-  .divider,
-  .divider.medium {
-    margin: var(--space-medium) auto;
-  }
-
-  .divider.small {
-    margin: clamp(5.5rem, 8.5vw, 8rem) auto;
-  }
-
-  .divider.large {
-    margin: var(--space-large) auto;
-  }
-
-  .divider.visible {
-    border-top: 1px solid currentcolor;
-  }
-
-  .module-heading .divider {
-    margin-bottom: 2rem;
-  }
-
-  /* Module margins */
-
-  .module-teaser {
-    margin-top: var(--space-large);
-  }
-
-  .module-figure {
-    margin: var(--space-medium) 0;
-  }
-
-  .module-details {
-    margin-top: var(--space-large);
-  }
-
-  .module-details + .module-details {
-    margin-top: -1px;
   }
 </style>

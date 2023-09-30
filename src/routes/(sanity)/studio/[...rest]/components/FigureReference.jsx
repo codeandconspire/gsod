@@ -9,7 +9,6 @@ export default function FigureReference({ value, onChange }) {
     /** @type {({ _id: string, modules: any[] }|Error)?} */ (null)
   )
   const client = useClient({ apiVersion: '2023-09-19' })
-  const type = useFormValue(['_type'])
   const id = useFormValue(['_id'])
 
   useEffect(function () {
@@ -17,23 +16,17 @@ export default function FigureReference({ value, onChange }) {
       .fetch(
         `*[_id == "${id}"][0]{
           _id,
-          ${
-            type === 'chapter'
-              ? `
-                modules[] {
-                  _type == "figure" => {
-                    _key,
-                    _type,
-                    description,
-                    image {
-                      asset->{
-                        url
-                      }
-                    }
-                  }
+          modules[] {
+            _type == "figure" => {
+              _key,
+              _type,
+              description,
+              image {
+                asset->{
+                  url
                 }
-              `
-              : ''
+              }
+            }
           }
         }
       `
@@ -43,7 +36,9 @@ export default function FigureReference({ value, onChange }) {
 
   if (document instanceof Error) throw new Error(document.message)
 
-  const figures = document?.modules.filter((item) => item._type === 'figure')
+  const figures = document?.modules.filter(
+    (module) => module._type === 'figure'
+  )
 
   return document ? (
     <Autocomplete

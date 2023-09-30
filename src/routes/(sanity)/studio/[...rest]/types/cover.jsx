@@ -1,8 +1,9 @@
 import { LinkIcon } from '@sanity/icons'
+import { defineType } from 'sanity'
 
-import Color from './components/Color.jsx'
+import Color from '../components/Color.jsx'
 
-export default {
+export default defineType({
   name: 'cover',
   type: 'document',
   title: 'Cover',
@@ -37,9 +38,11 @@ export default {
       type: 'slug',
       title: 'Slug',
       group: 'meta',
-      source: 'title',
       description: 'The URL slug for this report',
-      validation: (Rule) => Rule.required()
+      validation: (Rule) => Rule.required(),
+      options: {
+        source: 'title'
+      }
     },
     {
       name: 'title',
@@ -50,14 +53,7 @@ export default {
         {
           type: 'block',
           styles: [],
-          lists: [],
-          marks: {
-            annotations: [],
-            decorators: [
-              { title: 'Strong', value: 'strong' },
-              { title: 'Emphasis', value: 'em' }
-            ]
-          }
+          lists: []
         }
       ]
     },
@@ -70,14 +66,7 @@ export default {
         {
           type: 'block',
           styles: [],
-          lists: [],
-          marks: {
-            annotations: [],
-            decorators: [
-              { title: 'Strong', value: 'strong' },
-              { title: 'Emphasis', value: 'em' }
-            ]
-          }
+          lists: []
         }
       ]
     },
@@ -90,14 +79,7 @@ export default {
         {
           type: 'block',
           styles: [],
-          lists: [],
-          marks: {
-            annotations: [],
-            decorators: [
-              { title: 'Strong', value: 'strong' },
-              { title: 'Emphasis', value: 'em' }
-            ]
-          }
+          lists: []
         }
       ]
     },
@@ -133,20 +115,7 @@ export default {
         },
         {
           name: 'image',
-          type: 'object',
-          title: 'Image',
-          fields: [
-            {
-              name: 'image',
-              type: 'image',
-              title: 'Image'
-            },
-            {
-              name: 'alt',
-              type: 'string',
-              title: 'Alt text'
-            }
-          ]
+          type: 'image'
         },
         {
           name: 'heading',
@@ -156,14 +125,7 @@ export default {
             {
               type: 'block',
               styles: [],
-              lists: [],
-              marks: {
-                annotations: [],
-                decorators: [
-                  { title: 'Strong', value: 'strong' },
-                  { title: 'Emphasis', value: 'em' }
-                ]
-              }
+              lists: []
             }
           ]
         },
@@ -175,14 +137,7 @@ export default {
             {
               type: 'block',
               styles: [],
-              lists: [],
-              marks: {
-                annotations: [],
-                decorators: [
-                  { title: 'Strong', value: 'strong' },
-                  { title: 'Emphasis', value: 'em' }
-                ]
-              }
+              lists: []
             }
           ]
         },
@@ -269,4 +224,4 @@ export default {
       group: 'meta'
     }
   ]
-}
+})

@@ -1,6 +1,7 @@
+import { defineType } from 'sanity'
 import React from 'react'
 
-export default {
+export default defineType({
   name: 'externalLink',
   type: 'object',
   title: 'Exernal link',
@@ -25,4 +26,4 @@ export default {
         })
     }
   ]
-}
+})
