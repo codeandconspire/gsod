@@ -1,7 +1,5 @@
 <script context="module">
   import { setContext, getContext } from 'svelte'
-  import { slide } from 'svelte/transition'
-  import { quartOut } from 'svelte/easing'
 
   export const FOOTNOTES = Symbol('footnotes')
 
@@ -49,12 +47,7 @@
 {#each items as item}
   {@const index = all().indexOf(item)}
   {@const id = anchor(item._key)}
-  <div
-    {id}
-    class="note"
-    class:selected
-    in:slide={{ axis: 'y', duration: 220, easing: quartOut }}
-    out:slide={{ axis: 'y', duration: 250, easing: quartOut }}>
+  <div {id} class="note" class:selected>
     <div class="content">
       {#if index !== -1}
         <sup>[{index + 1}]</sup>
@@ -101,6 +94,16 @@
     background: var(--theme-primary-color, var(--background-color));
     box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.025),
       0 -0.8rem 1.4rem rgba(0, 0, 0, 0.035);
+    animation: slide-in 400ms forwards cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  @keyframes slide-in {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
 
   .content {

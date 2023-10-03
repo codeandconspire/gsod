@@ -1,6 +1,4 @@
 <script>
-  import { quartOut } from 'svelte/easing'
-  import { fly } from 'svelte/transition'
   import { goto } from '$app/navigation'
 
   import Theme from '$lib/Theme.svelte'
@@ -33,9 +31,7 @@
   {open}
   bind:this={dialog}
   on:close
-  on:click|preventDefault={click}
-  in:fly={{ duration: 300, easing: quartOut, y: '100%' }}
-  out:fly={{ duration: 300, easing: quartOut, y: '100%' }}>
+  on:click|preventDefault={click}>
   <div class="container">
     <div class="main" class:has-image={$$slots.image}>
       <svelte:element
@@ -73,7 +69,18 @@
     left: 0;
     top: 0;
     z-index: 2;
-    background-color: rgba(255, 255, 255, 0.6);
+    animation: fade-in 400ms forwards cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  @keyframes fade-in {
+    from {
+      background: rgba(255, 255, 255, 0);
+      backdrop-filter: blur(0px);
+    }
+    to {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(4px);
+    }
   }
 
   :root:has(.dialog[open]) {
@@ -90,11 +97,6 @@
       min-width: auto;
       padding: 0;
     }
-  }
-
-  .dialog::backdrop {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(4px);
   }
 
   .container {
@@ -123,6 +125,16 @@
     background: var(--theme-primary-color);
     border-radius: var(--border-radius);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05);
+    animation: slide-in 400ms forwards cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  @keyframes slide-in {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
 
   @media (width <= 40rem) {

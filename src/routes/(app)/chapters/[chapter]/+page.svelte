@@ -1,5 +1,4 @@
 <script>
-  import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
 
   import { resolver, resolve } from '$lib/sanity.js'
@@ -21,9 +20,6 @@
   }
 
   reset()
-
-  // Prevent context persist when navigating between similar pages
-  // beforeNavigate(reset)
 
   resolver(function (doc) {
     switch (doc?._type) {
@@ -154,6 +150,7 @@
 
       position: sticky;
       top: 0;
+      z-index: 1;
       width: calc(100% + (var(--page-gutter) * 2));
       margin-left: calc(var(--page-gutter) * -1);
       background: rgba(255, 255, 255, 0.85);
