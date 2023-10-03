@@ -46,7 +46,7 @@
     {#if cover.featuredChapter}
       {@const { featuredChapter: feature } = cover}
       {@const href = resolve(feature.link)}
-      <Tilt {href} let:hover>
+      <Tilt {href} depth={1.8} let:hover>
         <article class="feature" class:hover>
           {#if feature.image.image}
             <img

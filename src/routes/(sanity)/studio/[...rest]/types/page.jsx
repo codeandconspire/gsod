@@ -20,7 +20,7 @@ export default defineType({
       type: 'slug',
       title: 'Slug',
       group: 'meta',
-      description: 'The URL slug for this chapter',
+      description: 'The URL slug for this page',
       validation: (Rule) => Rule.required(),
       options: {
         source: 'shortname'

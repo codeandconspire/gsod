@@ -1,4 +1,5 @@
 import { createClient as createSanityClient } from '@sanity/client'
+import { setContext, getContext } from 'svelte'
 import { dev } from '$app/environment'
 
 export function createClient({ preview, token }) {
@@ -12,15 +13,38 @@ export function createClient({ preview, token }) {
   })
 }
 
+const RESOLVER = Symbol('resolver')
+const BYPASS = Symbol('bypass')
+
+export function resolver(fn) {
+  setContext(RESOLVER, fn)
+}
+
 export function resolve(doc) {
+  const resolver = getContext(RESOLVER)
+  const bypass = getContext(BYPASS)
+  if (resolver && !bypass) {
+    try {
+      setContext(BYPASS, true)
+      const resolved = resolver(doc)
+      if (resolved) return resolved
+    } finally {
+      setContext(BYPASS, false)
+    }
+  }
+
   switch (doc?._type) {
     case 'cover':
     case 'settings':
       return '/'
-    case 'chapter':
+    case 'chapter': {
+      if (!doc.slug?.current) return null
       return `/chapters/${doc.slug.current}`
-    case 'page':
+    }
+    case 'page': {
+      if (!doc.slug?.current) return null
       return `/${doc.slug.current}`
+    }
     default:
       return null
   }

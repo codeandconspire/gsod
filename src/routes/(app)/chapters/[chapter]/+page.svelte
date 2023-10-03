@@ -2,19 +2,18 @@
   import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
 
+  import { resolver, resolve } from '$lib/sanity.js'
   import * as footnotes from '$lib/Footnotes.svelte'
   import * as figure from '$lib/Figure.svelte'
   import { asText } from '$lib/Text.svelte'
   import Modules from '$lib/Modules.svelte'
-  import { resolve } from '$lib/sanity.js'
-  import Dialog from '$lib/Dialog.svelte'
   import Theme from '$lib/Theme.svelte'
   import Hero from '$lib/Hero.svelte'
   import Menu from '$lib/Menu.svelte'
 
   export let data
+
   let open = false
-  let dialog
 
   const reset = () => {
     footnotes.reset()
@@ -24,7 +23,16 @@
   reset()
 
   // Prevent context persist when navigating between similar pages
-  beforeNavigate(reset)
+  // beforeNavigate(reset)
+
+  resolver(function (doc) {
+    switch (doc?._type) {
+      case 'case':
+        return `${resolve(chapter)}/${doc.slug.current}`
+      default:
+        return null
+    }
+  })
 
   $: chapter = data.chapter
   $: menu = chapter.cover.menu.map(function each(item) {
@@ -93,13 +101,6 @@
       </ol>
     </nav>
     <div class="body">
-      <button on:click={() => dialog.showModal()}>Open dialog</button>
-      <Dialog bind:dialog>
-        Qui incididunt veniam fugiat. Ipsum labore sit ullamco esse velit anim.
-        Nulla pariatur duis magna elit ea enim ea nostrud elit velit fugiat
-        fugiat proident commodo. Est amet adipisicing nulla ullamco ad dolor
-        consequat eiusmod nulla et.
-      </Dialog>
       <Modules modules={chapter.modules} />
     </div>
   </div>

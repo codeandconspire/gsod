@@ -27,7 +27,10 @@
 
   let index
   const figures = getContext(FIGURES)
-  if (id) index = $figures.push(id)
+  if (id) {
+    $figures = [...$figures, id]
+    index = $figures.length
+  }
 </script>
 
 <figure class="figure" class:fill {id}>
@@ -40,8 +43,11 @@
     <figcaption class:u-container={fill}>
       <div class="caption">
         <Html size="small">
-          {#if index}Figure {index}: {/if}
-          <slot name="description" />
+          <div
+            class="description"
+            data-prefix={index ? `Figure ${index}: ` : ''}>
+            <slot name="description" />
+          </div>
         </Html>
       </div>
     </figcaption>
@@ -91,5 +97,13 @@
     margin: 0 auto;
     max-width: 35rem;
     text-wrap: balance;
+  }
+
+  .description:empty {
+    display: none;
+  }
+
+  .description::before {
+    content: attr(data-prefix);
   }
 </style>

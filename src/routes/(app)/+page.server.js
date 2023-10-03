@@ -21,9 +21,7 @@ export async function load({ request }) {
         image{
           ...,
           image{
-            asset->{
-              url
-            }
+            asset->
           }
         }
       },

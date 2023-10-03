@@ -1,14 +1,14 @@
 <script>
   import { luma, shade } from '$lib/utils.js'
 
-  /** @type {string?} */
-  export let primary = null
+  /** @type {string} */
+  export let primary
 
-  /** @type {string?} */
-  export let secondary = null
+  /** @type {string} */
+  export let secondary
 
-  $: dark = primary ? shade(primary, -30) : null
-  $: text = primary ? (luma(primary) > 165 ? '#000' : '#fff') : null
+  $: dark = shade(primary, -30)
+  $: text = luma(primary) > 165 ? '#000' : '#fff'
 </script>
 
 <div

@@ -1,7 +1,7 @@
 import { defineType } from 'sanity'
 
 export default defineType({
-  name: 'caseStudy',
+  name: 'case',
   type: 'document',
   title: 'Case Study',
   groups: [
@@ -15,6 +15,17 @@ export default defineType({
     }
   ],
   fields: [
+    {
+      name: 'slug',
+      type: 'slug',
+      title: 'Slug',
+      group: 'meta',
+      description: 'The URL slug for this case study',
+      validation: (Rule) => Rule.required(),
+      options: {
+        source: 'title'
+      }
+    },
     {
       name: 'title',
       type: 'string',

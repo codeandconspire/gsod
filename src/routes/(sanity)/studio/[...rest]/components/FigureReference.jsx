@@ -22,9 +22,7 @@ export default function FigureReference({ value, onChange }) {
               _type,
               description,
               image {
-                asset->{
-                  url
-                }
+                asset->
               }
             }
           }
@@ -54,7 +52,7 @@ export default function FigureReference({ value, onChange }) {
         option.key.toLowerCase().includes(query.toLowerCase())
       }
       options={figures?.map((item, index) => ({
-        key: `Figure ${index + 1}: ${asText(item.description)}`,
+        key: title(index + 1, item),
         value: item._key,
         index: index + 1,
         payload: item
@@ -66,9 +64,7 @@ export default function FigureReference({ value, onChange }) {
         const figure = figures.find((item) => item._key === value)
         if (!figure) return 'Not found'
 
-        return `Figure ${figures.indexOf(figure) + 1}: ${asText(
-          figure.description
-        )}`
+        return title(figures.indexOf(figure) + 1, figure)
       }}
       renderOption={(option) => (
         <Card as="button">
@@ -94,6 +90,13 @@ export default function FigureReference({ value, onChange }) {
       <Spinner muted />
     </Flex>
   )
+}
+
+function title(index, figure) {
+  const description = asText(figure.description)
+  let str = `Figure ${index}`
+  if (description) str += `: ${description}`
+  return str
 }
 
 export function FigureReferenceIcon() {

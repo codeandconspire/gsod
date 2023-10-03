@@ -3,9 +3,6 @@
 
   export let hover = false
 
-  /** @type {({ src: string } & { [key: string]: string })?} */
-  export let image = null
-
   /** @type {{ href?: string, label: string }?}*/
   export let link = null
 
@@ -16,17 +13,15 @@
   export let subheading = null
 </script>
 
-<article class="card" class:hover class:has-image={image}>
-  {#if image}
-    <div class="graphic">
-      <img alt="" {...image} class="image" />
-    </div>
-  {:else}
-    <div class="graphic">
+<article class="card" class:hover class:has-image={$$slots.image}>
+  <div class="graphic">
+    {#if $$slots.image}
+      <slot name="image" />
+    {:else}
       <Level />
-    </div>
-  {/if}
-  <div class="body" class:overlay={image}>
+    {/if}
+  </div>
+  <div class="body">
     {#if heading || subheading}
       <h3 class="heading">
         {#if subheading}
@@ -62,6 +57,7 @@
 
   .card.has-image {
     color: #fff;
+    text-shadow: 0 0 0.8em rgba(0, 0, 0, 0.2);
   }
 
   .card::before {
@@ -79,7 +75,7 @@
     transition: var(--tilt-transform-transition);
   }
 
-  .image {
+  .graphic :global(img) {
     object-fit: cover;
     width: 100%;
     height: 100%;
@@ -88,19 +84,28 @@
     top: 0;
   }
 
+  .card.has-image .graphic::after {
+    content: '';
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      244deg,
+      rgba(0, 0, 0, 0) 30%,
+      rgba(0, 0, 0, 0.1) 60%,
+      rgba(0, 0, 0, 0.25) 100%
+    );
+  }
+
   .body {
     display: flex;
     flex-direction: column;
     gap: clamp(0.3rem, 0.8vw, 1.2rem);
-    padding: clamp(1.2rem, 2.5vw, 2rem);
+    padding: clamp(1.2rem, 2.5vw, 1.8rem);
     width: 100%;
     position: relative;
     transform: var(--tilt-foreground-transform);
     transition: var(--tilt-transform-transition);
-  }
-
-  .overlay {
-    text-shadow: 0 0 0.8em rgba(0, 0, 0, 0.2);
   }
 
   .heading {

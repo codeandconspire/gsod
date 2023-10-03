@@ -12,7 +12,7 @@
 
   export let reverse = false
   export let glare = true
-  export let depth = 1.75
+  export let depth = 1.5
 
   /** @type {string?} */
   export let href = null
@@ -58,6 +58,8 @@
 <svelte:element
   this={href ? 'a' : 'div'}
   {href}
+  {...$$restProps}
+  on:click
   class="tilt"
   class:active
   class:reverse
@@ -89,9 +91,9 @@
     --tilt-transform-transition: transform var(--tilt-duration)
       var(--tilt-delay) var(--tilt-easing-function);
     --tilt-foreground-transform: var(--tilt-transform)
-      translateZ(calc(var(--tilt-depth) * 2.5em));
+      translateZ(calc(var(--tilt-depth) * 1.5em));
     --tilt-background-transform: scale(1.05) var(--tilt-transform)
-      translateZ(calc(var(--tilt-depth) * -2.5em));
+      translateZ(calc(var(--tilt-depth) * -1.5em));
     --tilt-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.025),
       calc(var(--tilt-y) * -0.8rem) calc(var(--tilt-x) * 0.8rem + 0.8rem) 1.2rem
         rgba(0, 0, 0, 0.035);

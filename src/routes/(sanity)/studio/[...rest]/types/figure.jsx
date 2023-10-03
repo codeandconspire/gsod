@@ -3,6 +3,7 @@ import { defineType } from 'sanity'
 
 import internalLink from './internal-link.jsx'
 import externalLink from './external-link.jsx'
+import { asText } from '$lib/Text.svelte'
 import footnote from './footnote.jsx'
 
 export default defineType({
@@ -12,8 +13,14 @@ export default defineType({
   icon: FigureReferenceIcon,
   preview: {
     select: {
-      title: 'description',
+      description: 'description',
       media: 'image'
+    },
+    prepare({ description, media }) {
+      return {
+        title: asText(description) || 'Figure',
+        media
+      }
     }
   },
   fields: [

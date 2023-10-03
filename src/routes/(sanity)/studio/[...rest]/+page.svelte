@@ -95,7 +95,7 @@
                   .title('Chapters')
                   .icon(DocumentsIcon),
                 S.divider(),
-                S.documentTypeListItem('caseStudy')
+                S.documentTypeListItem('case')
                   .title('Case Studies')
                   .icon(CaseIcon),
                 S.documentTypeListItem('page').title('Pages').icon(DocumentIcon)

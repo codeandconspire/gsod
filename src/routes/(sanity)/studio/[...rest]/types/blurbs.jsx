@@ -15,6 +15,17 @@ export default defineType({
       </svg>
     )
   },
+  preview: {
+    select: {
+      items: 'items'
+    },
+    prepare({ items }) {
+      return {
+        title: 'Blurbs',
+        subtitle: items.map((item) => item.title).join(', ')
+      }
+    }
+  },
   fields: [
     {
       name: 'items',
@@ -49,7 +60,7 @@ export default defineType({
                     { type: 'cover' },
                     { type: 'chapter' },
                     { type: 'page' },
-                    { type: 'caseStudy' }
+                    { type: 'case' }
                   ]
                 },
                 {

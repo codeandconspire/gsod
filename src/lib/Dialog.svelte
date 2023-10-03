@@ -1,35 +1,83 @@
 <script>
-  export let dialog
+  import { quartOut } from 'svelte/easing'
+  import { fly } from 'svelte/transition'
+  import { goto } from '$app/navigation'
+
+  import Theme from '$lib/Theme.svelte'
+
+  /** @type {HTMLDialogElement?} */
+  export let dialog = null
+
+  /** @type {boolean?} */
+  export let open = false
+
+  /** @type {string?} */
+  export let href
 
   function click(event) {
-    if (event.target === dialog) dialog.close()
+    if (event.target === dialog) {
+      if (href) goto(href, { noScroll: true, replaceState: true })
+      else dialog?.close()
+    }
   }
 
   function close() {
-    dialog.close()
+    if (href) goto(href, { noScroll: true, replaceState: true })
+    else dialog?.close()
   }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<dialog class="dialog" bind:this={dialog} on:close on:click={click}>
-  <div class="main">
-    <button class="close" on:click={close}>
-      <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
-        <path
-          fill="currentcolor"
-          d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-      </svg>
-      <span class="u-hidden">Close dialog</span>
-    </button>
-    <slot />
+<dialog
+  class="dialog"
+  {open}
+  bind:this={dialog}
+  on:close
+  on:click|preventDefault={click}
+  in:fly={{ duration: 300, easing: quartOut, y: '100%' }}
+  out:fly={{ duration: 300, easing: quartOut, y: '100%' }}>
+  <div class="container">
+    <div class="main" class:has-image={$$slots.image}>
+      <svelte:element
+        this={href ? 'a' : 'button'}
+        {href}
+        class="close"
+        on:click|preventDefault={close}>
+        <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
+          <path
+            fill="currentcolor"
+            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+        </svg>
+        <span class="u-hidden">Close dialog</span>
+      </svelte:element>
+      {#if $$slots.image}
+        <div class="image">
+          <slot name="image" />
+        </div>
+      {/if}
+      <Theme primary="#000" secondary="#000">
+        <slot />
+      </Theme>
+    </div>
   </div>
 </dialog>
 
 <style>
   .dialog {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 0;
     border: 0;
-    background: transparent;
-    padding: 2rem;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+
+  :root:has(.dialog[open]) {
+    overflow: hidden;
   }
 
   @media (width <= 40rem) {
@@ -44,14 +92,37 @@
     }
   }
 
+  .dialog::backdrop {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+  }
+
+  .container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: var(--page-gutter);
+    overflow: auto;
+    -ms-scroll-chaining: none;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .main {
+    --spacing: clamp(1rem, 4vw, 2rem);
+
+    width: 100%;
+    height: auto;
+    max-width: 48rem;
+    padding: var(--spacing) var(--page-gutter) calc(var(--spacing) + 1rem);
+    margin: auto 0;
     position: relative;
-    padding: 5rem var(--page-gutter);
-    background: var(--theme-primary-color);
+    overflow: hidden;
     color: var(--theme-text-color);
+    background: var(--theme-primary-color);
+    border-radius: var(--border-radius);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05);
-    border-radius: 0.75rem;
-    max-width: 53rem;
   }
 
   @media (width <= 40rem) {
@@ -62,9 +133,13 @@
     }
   }
 
-  .dialog::backdrop {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(4px);
+  .image {
+    margin: calc(var(--spacing) * -1) calc(var(--page-gutter) * -1)
+      var(--spacing);
+  }
+
+  .image :global(img) {
+    width: 100%;
   }
 
   .close {
@@ -78,5 +153,17 @@
     height: 3rem;
     padding: 0.5rem;
     margin: -0.5rem;
+    border-radius: 100%;
+  }
+
+  .main.has-image .icon {
+    width: 2rem;
+    height: 2rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    transition: background-color 250ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .main.has-image .icon:hover {
+    background-color: rgba(255, 255, 255, 1);
   }
 </style>

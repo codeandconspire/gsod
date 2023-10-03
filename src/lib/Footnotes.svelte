@@ -1,5 +1,7 @@
 <script context="module">
   import { setContext, getContext } from 'svelte'
+  import { slide } from 'svelte/transition'
+  import { quartOut } from 'svelte/easing'
 
   export const FOOTNOTES = Symbol('footnotes')
 
@@ -20,6 +22,7 @@
   import { page } from '$app/stores'
 
   import Text, { asText } from '$lib/Text.svelte'
+  import Theme from '$lib/Theme.svelte'
   import Html from '$lib/Html.svelte'
 
   /** @type {string?}*/
@@ -46,14 +49,21 @@
 {#each items as item}
   {@const index = all().indexOf(item)}
   {@const id = anchor(item._key)}
-  <div {id} class="note" class:selected>
+  <div
+    {id}
+    class="note"
+    class:selected
+    in:slide={{ axis: 'y', duration: 220, easing: quartOut }}
+    out:slide={{ axis: 'y', duration: 250, easing: quartOut }}>
     <div class="content">
       {#if index !== -1}
         <sup>[{index + 1}]</sup>
       {/if}
-      <Html size="small">
-        <Text content={item.content} />
-      </Html>
+      <Theme primary="#000" secondary="#000">
+        <Html size="small">
+          <Text content={item.content} />
+        </Html>
+      </Theme>
       <div class="actions">
         <a
           href={share || $page.url.href.replace(/(#.+)|$/, `#${id}`)}
@@ -77,6 +87,10 @@
 {/each}
 
 <style>
+  .note {
+    text-align: left;
+  }
+
   .note:is(:target, .selected) {
     list-style: none;
     padding: clamp(1.2rem, 5vw, 1.6rem);
@@ -87,16 +101,6 @@
     background: var(--theme-primary-color, var(--background-color));
     box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.025),
       0 -0.8rem 1.4rem rgba(0, 0, 0, 0.035);
-    animation: appear 180ms forwards cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  @keyframes appear {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
   }
 
   .content {

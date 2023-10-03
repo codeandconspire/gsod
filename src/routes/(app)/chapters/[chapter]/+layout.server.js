@@ -14,13 +14,27 @@ export async function load({ params, request }) {
       ...,
       modules[]{
         ...,
+        _type == 'blurbs' => {
+          items[]{
+            ...,
+            link{
+              ...,
+              document->{
+                _type,
+                slug,
+                image{
+                  ...,
+                  asset->
+                }
+              }
+            }
+          }
+        },
         _type == "figure" => {
           ...,
           image{
             ...,
-            asset->{
-              url
-            }
+            asset->
           },
           description[]{
             ...,
@@ -55,9 +69,7 @@ export async function load({ params, request }) {
         _type == "teaser" => {
           image{
             ...,
-            asset->{
-              url
-            }
+            asset->
           },
           link{
             ...,
