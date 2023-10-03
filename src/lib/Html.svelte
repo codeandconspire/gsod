@@ -28,7 +28,7 @@
     max-width: var(--text-width);
     font-weight: var(--sans-serif-normal);
     line-height: 1.3;
-    font-size: clamp(1.5rem, 3vw, 1.75rem);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
   }
 
   @media (width > 40rem) {
@@ -55,7 +55,7 @@
 
   /* Headings */
 
-  .html :global(:is(h1, h2, h3, h4, h5, h6)) {
+  .html :global(:is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6)) {
     font-family: var(--sans-serif);
     font-weight: var(--sans-serif-bold);
     line-height: 1.3;
@@ -64,14 +64,16 @@
     text-wrap: balance;
   }
 
-  .html :global(h1) {
+  .html :global(h1),
+  .html :global(.h1) {
     font-size: clamp(2.5rem, 5vw, 4.5rem);
     font-weight: var(--sans-serif-heavy);
     letter-spacing: -0.005em;
     line-height: 1.05;
   }
 
-  .html :global(h2) {
+  .html :global(h2),
+  .html :global(.h2) {
     font-size: clamp(2rem, 5vw, 2.5rem);
     font-weight: var(--sans-serif-heavy);
     letter-spacing: -0.005em;
@@ -79,17 +81,22 @@
     margin: 0.75em 0;
   }
 
-  .html :global(h3) {
+  .html :global(h3),
+  .html :global(.h3) {
     font-size: clamp(1.75rem, 5vw, 2rem);
     margin: 0.75em 0;
     line-height: 1.25;
   }
 
-  .html :global(h4) {
+  .html :global(h4),
+  .html :global(.h4) {
     font-size: inherit;
   }
 
-  .html :global(:is(h6, h5)) {
+  .html :global(h5),
+  .html :global(.h5),
+  .html :global(h6),
+  .html :global(.h6) {
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;

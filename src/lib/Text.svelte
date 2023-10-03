@@ -1,7 +1,21 @@
 <script context="module">
+  import { getContext, setContext } from 'svelte'
+
   const bindings = new WeakMap()
 
+  const HEADING_REG = /h(\d)/
+  const OFFSET = Symbol('offset')
+
+  export function setOffset(offset) {
+    setContext(OFFSET, offset)
+  }
+
+  export function getOffset() {
+    return getContext(OFFSET) || 0
+  }
+
   export function asText(content) {
+    if (content == null) return null
     if (!Array.isArray(content)) return String(content)
     return content
       .filter((block) => block._type === 'block')
@@ -23,6 +37,7 @@
   export let content
 
   const footnotes = footnote.all()
+  const figures = getContext(figure.FIGURES)
 
   let selected = null
   const onopen = (def) => (event) => {
@@ -36,7 +51,7 @@
 
   // The Sanity PortableText format is a flat array of blocks which needs
   // processing to collect list items and preserve markDef references
-  $: blocks = content.reduce(function compile(acc, block) {
+  $: blocks = content?.reduce(function compile(acc, block) {
     const { _key, children, marks, markDefs, listItem } = block
     const prev = acc.at(-1)
 
@@ -73,25 +88,19 @@
 </script>
 
 {#if plain}
-  {@html asText(content).replace(/\n/g, '<br />')}
-{:else}
+  {@html asText(content)?.replace(/\n/g, '<br />')}
+{:else if blocks}
   {#each blocks as block (block._key)}
     {@const { _type, style, children } = block}
     <slot {block}>
       {#if style === 'normal'}
         <p><svelte:self content={children} /></p>
-      {:else if style === 'h1'}
-        <h1><svelte:self content={children} /></h1>
-      {:else if style === 'h2'}
-        <h2><svelte:self content={children} /></h2>
-      {:else if style === 'h3'}
-        <h3><svelte:self content={children} /></h3>
-      {:else if style === 'h4'}
-        <h4><svelte:self content={children} /></h4>
-      {:else if style === 'h5'}
-        <h5><svelte:self content={children} /></h5>
-      {:else if style === 'h6'}
-        <h6><svelte:self content={children} /></h6>
+      {:else if style?.match(HEADING_REG)}
+        {@const offset = getOffset()}
+        {@const tag = style.replace(HEADING_REG, (_, num) => +num + offset)}
+        <svelte:element this={`h${tag}`} class={style}>
+          <svelte:self content={children} />
+        </svelte:element>
       {:else if style === 'blockquote'}
         <blockquote><svelte:self content={children} /></blockquote>
       {:else if _type === '$ul'}
@@ -141,6 +150,11 @@
               </a>
             {:else if def?._type === 'figureReference'}
               {@const id = figure.anchor(def.figure)}
+              {@const index = $figures.findIndex((figure) => figure === id)}
+              {@const text =
+                index > -1
+                  ? block.text.replace(/\[X\]/gi, index + 1)
+                  : block.text}
               <a
                 href="#{id}"
                 on:click|preventDefault={() =>
@@ -148,7 +162,7 @@
                     block: 'nearest',
                     behavior: 'smooth'
                   })}>
-                <svelte:self content={[{ ...block, marks }]} />
+                <svelte:self content={[{ ...block, text, marks }]} />
               </a>
             {/if}
           {/if}

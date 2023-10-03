@@ -1,4 +1,5 @@
 <script>
+  import { getOffset } from './Text.svelte'
   import Level from '$lib/Level.svelte'
 
   export let image = null
@@ -10,6 +11,8 @@
   export let back = null
 
   let bottom
+
+  $: heading = `h${1 + getOffset()}`
 </script>
 
 <header
@@ -60,7 +63,9 @@
           </a>
         </div>
       {/if}
-      <h1 class="heading"><slot name="heading" /></h1>
+      <svelte:element this={heading} class="heading">
+        <slot name="heading" />
+      </svelte:element>
       {#if $$slots.subheading}
         <p class="subheading">
           <slot name="subheading" />
