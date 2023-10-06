@@ -63,6 +63,7 @@ export default defineType({
         { type: 'teaser' },
         { type: 'figure' },
         { type: 'divider' },
+        { type: 'accordion' },
         { type: 'blurbs' },
         { type: 'footnotes' }
       ]

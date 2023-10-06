@@ -95,15 +95,21 @@
         </Figure>
       </div>
     {:else if module._type === 'footnotes'}
-      <div class="module module-details">
-        <Details heading={module.heading || 'References'}>
-          <div class="contain">
-            <Html>
-              <Footnotes />
-            </Html>
-          </div>
-        </Details>
-      </div>
+      <Details heading={module.heading || 'References'}>
+        <div class="contain">
+          <Html>
+            <Footnotes />
+          </Html>
+        </div>
+      </Details>
+    {:else if module._type === 'accordion'}
+      <Details heading={module.heading || 'Details'}>
+        <div class="contain">
+          <Html>
+            <Text content={module.content} />
+          </Html>
+        </div>
+      </Details>
     {:else if module._type === 'blurbs'}
       <div class="module module-blurbs">
         <div class="blurbs">
@@ -225,7 +231,10 @@
     margin-top: var(--space-large);
   }
 
-  .module-details + .module-details {
+  .module-footnotes + .module-footnotes,
+  .module-footnotes + .module-accordion,
+  .module-accordion + .module-footnotes,
+  .module-accordion + .module-accordion {
     margin-top: -1px;
   }
 </style>
