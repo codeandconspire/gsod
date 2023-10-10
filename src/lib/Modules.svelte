@@ -4,6 +4,7 @@
   import MegaList from '$lib/MegaList.svelte'
   import Details from '$lib/Details.svelte'
   import { resolve } from '$lib/sanity.js'
+  import Button from '$lib/Button.svelte'
   import Teaser from '$lib/Teaser.svelte'
   import Image from '$lib/Image.svelte'
   import Theme from '$lib/Theme.svelte'
@@ -73,6 +74,19 @@
           </Teaser>
         </Theme>
       </div>
+    {:else if module._type === 'button'}
+      {@const { link } = module}
+      {@const href = resolve(link.document)}
+      {#if link.document}
+        <Theme
+          primary={link.document.primaryColor}
+          secondary={link.document.secondaryColor}
+          dark={link.document.darkColor}>
+          <Button {href}>{link.label}</Button>
+        </Theme>
+      {:else}
+        <Button {href}>{link.label}</Button>
+      {/if}
     {:else if module._type === 'figure'}
       <div class={module.fill ? 'unwrap' : ''}>
         <Figure fill={module.fill} id={figure.anchor(module._key)}>

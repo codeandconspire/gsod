@@ -59,6 +59,7 @@ export default defineType({
       of: [
         { type: 'heading' },
         { type: 'richText' },
+        { type: 'button' },
         { type: 'megaList' },
         { type: 'teaser' },
         { type: 'figure' },

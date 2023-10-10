@@ -1,4 +1,5 @@
 <script>
+  import Button from '$lib/Button.svelte'
   export let heading
 
   export let flip = false
@@ -20,14 +21,9 @@
     <slot />
     {#if link}
       {@const { label, href, ...attrs } = link}
-      <a {...attrs} {href} class="link">
+      <Button {...attrs} {href}>
         {label}
-        <svg viewBox="0 -960 960 960" class="chevron">
-          <path
-            fill="currentcolor"
-            d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
-        </svg>
-      </a>
+      </Button>
     {/if}
   </div>
 </article>
@@ -87,37 +83,8 @@
 
   .description {
     font-family: var(--sans-serif);
+    color: var(--theme-dark-color);
     font-size: clamp(1.5rem, 3vw, 1.75rem);
-    color: var(--theme-primary-color);
     text-wrap: balance;
-  }
-
-  .link {
-    display: flex;
-    align-items: center;
-    padding: 0.8rem 1.1rem 0.8rem 1.5rem;
-    font-family: var(--sans-serif);
-    font-weight: var(--sans-serif-bold);
-    border-radius: var(--border-radius);
-    color: var(--theme-text-color);
-    background-color: var(--theme-primary-color);
-    transition: background-color 190ms cubic-bezier(0.33, 1, 0.68, 1);
-    font-size: var(--framework-font-size);
-  }
-
-  .link:hover {
-    background-color: var(--theme-dark-color);
-  }
-
-  .chevron {
-    display: block;
-    width: 1.35em;
-    margin: 0 -0.2em 0 0;
-    height: auto;
-    transition: transform 190ms cubic-bezier(0.33, 1, 0.68, 1);
-  }
-
-  .link:hover .chevron {
-    transform: translateX(0.15rem);
   }
 </style>
