@@ -106,6 +106,29 @@ export default defineType({
       }
     },
     {
+      name: 'darkColor',
+      type: 'string',
+      title: 'Dark Complement Color',
+      group: 'main',
+      components: {
+        input: Color
+      }
+    },
+    {
+      name: 'simplify',
+      type: 'boolean',
+      title: 'Simplify top intro area',
+      initialValue: false,
+      group: 'main'
+    },
+    {
+      name: 'hidetoc',
+      type: 'boolean',
+      title: 'Hide Table of contents',
+      initialValue: false,
+      group: 'main'
+    },
+    {
       name: 'modules',
       type: 'array',
       title: 'Modules',
@@ -115,6 +138,7 @@ export default defineType({
       of: [
         { type: 'heading' },
         { type: 'richText' },
+        { type: 'button' },
         { type: 'megaList' },
         { type: 'teaser' },
         { type: 'figure' },

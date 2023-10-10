@@ -98,7 +98,10 @@
       {:else if style?.match(HEADING_REG)}
         {@const offset = getOffset()}
         {@const tag = style.replace(HEADING_REG, (_, num) => +num + offset)}
-        <svelte:element this={`h${tag}`} class={style}>
+        <svelte:element
+          this={`h${tag}`}
+          class={style}
+          id={`heading-${block._key}`}>
           <svelte:self content={children} />
         </svelte:element>
       {:else if style === 'blockquote'}
@@ -187,6 +190,6 @@
     background: var(--theme-primary-color);
     color: var(--theme-text-color);
     border-radius: 2px;
-    box-shadow: 0 0 0 0.1em var(--theme-primary-color);
+    box-shadow: 0 0 0 0.2em var(--theme-primary-color);
   }
 </style>

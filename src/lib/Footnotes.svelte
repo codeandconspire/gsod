@@ -20,7 +20,6 @@
   import { page } from '$app/stores'
 
   import Text, { asText } from '$lib/Text.svelte'
-  import Theme from '$lib/Theme.svelte'
   import Html from '$lib/Html.svelte'
 
   /** @type {string?}*/
@@ -44,40 +43,65 @@
   }
 </script>
 
-{#each items as item}
-  {@const index = all().indexOf(item)}
-  {@const id = anchor(item._key)}
-  <div {id} class="note" class:selected>
-    <div class="content">
-      {#if index !== -1}
-        <sup>[{index + 1}]</sup>
-      {/if}
-      <Theme primary="#000" secondary="#000">
-        <Html size="small">
-          <Text content={item.content} />
-        </Html>
-      </Theme>
-      <div class="actions">
-        <a
-          href={share || $page.url.href.replace(/(#.+)|$/, `#${id}`)}
-          class="action"
-          title="Share"
-          on:click|preventDefault={onshare}>
-          <svg viewBox="0 -960 960 960" class="icon">
-            <path
-              d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z" />
-          </svg>
-        </a>
-        <a href="#_" class="action" title="Close" on:click>
-          <svg viewBox="0 -960 960 960" class="icon">
-            <path
-              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-          </svg>
-        </a>
+{#if selected}
+  {#each items as item}
+    {@const id = anchor(item._key)}
+    <div {id} class="note selected">
+      <div class="content">
+        <Text content={item.content} />
+        <div class="actions">
+          <a
+            href={share || $page.url.href.replace(/(#.+)|$/, `#${id}`)}
+            class="action"
+            title="Share"
+            on:click|preventDefault={onshare}>
+            <svg viewBox="0 -960 960 960" class="icon">
+              <path
+                d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z" />
+            </svg>
+          </a>
+          <a href="#_" class="action" title="Close" on:click>
+            <svg viewBox="0 -960 960 960" class="icon">
+              <path
+                d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-{/each}
+  {/each}
+{:else}
+  <ol>
+    {#each items as item}
+      {@const id = anchor(item._key)}
+      <li {id} class="note" class:selected>
+        <div class="content">
+          <Html>
+            <Text content={item.content} />
+          </Html>
+          <div class="actions">
+            <a
+              href={share || $page.url.href.replace(/(#.+)|$/, `#${id}`)}
+              class="action"
+              title="Share"
+              on:click|preventDefault={onshare}>
+              <svg viewBox="0 -960 960 960" class="icon">
+                <path
+                  d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z" />
+              </svg>
+            </a>
+            <a href="#_" class="action" title="Close" on:click>
+              <svg viewBox="0 -960 960 960" class="icon">
+                <path
+                  d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
+    {/each}
+  </ol>
+{/if}
 
 <style>
   .note {
@@ -86,15 +110,36 @@
 
   .note:is(:target, .selected) {
     list-style: none;
-    padding: clamp(1.2rem, 5vw, 1.6rem);
+    padding: 1rem 5rem 1rem var(--page-gutter);
     position: fixed;
     inset: auto 0 0;
     z-index: 1;
-    color: var(--theme-text-color, var(--text-color));
-    background: var(--theme-primary-color, var(--background-color));
     box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.025),
       0 -0.8rem 1.4rem rgba(0, 0, 0, 0.035);
     animation: slide-in 400ms forwards cubic-bezier(0.25, 1, 0.5, 1);
+    background: #fff;
+    box-shadow: 0 -0.3rem 1.5rem rgba(0, 0, 0, 0.1),
+      0 0 0 0.5px rgba(0, 0, 0, 0.1);
+    font-family: var(--sans-serif);
+    letter-spacing: 0;
+    font-size: var(--framework-font-size);
+  }
+
+  .note:is(:target, .selected) :global(p) {
+    margin: 0;
+  }
+
+  @media (width > 45rem) {
+    .note:is(:target, .selected) {
+      width: calc(var(--text-width) - 2rem);
+      max-width: 36rem;
+      margin: 0 auto;
+      padding: 1rem 4.5rem 1rem 1.5rem;
+      bottom: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 0.3rem 1.5rem rgba(0, 0, 0, 0.1),
+        0 0 0 0.5px rgba(0, 0, 0, 0.1);
+    }
   }
 
   @keyframes slide-in {
@@ -106,23 +151,12 @@
     }
   }
 
-  .content {
-    display: flex;
-    align-items: baseline;
-    gap: 0.25rem;
-  }
-
-  .note:is(:target, .selected) .content {
-    width: min(calc(100vw - var(--page-gutter) * 2), var(--page-width));
-    margin: 0 auto;
-  }
-
   .actions {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.5rem;
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0.7rem;
+    right: 0.7rem;
   }
 
   .note:not(:is(:target, .selected)) .actions {
@@ -130,7 +164,7 @@
   }
 
   .action {
-    width: 1rem;
-    height: 1rem;
+    width: 1.2rem;
+    height: 1.2rem;
   }
 </style>

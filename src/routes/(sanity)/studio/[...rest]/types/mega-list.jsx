@@ -1,6 +1,11 @@
 import { OlistIcon } from '@sanity/icons'
 import { defineType } from 'sanity'
 
+import figureReference from './figure-reference.jsx'
+import internalLink from './internal-link.jsx'
+import externalLink from './external-link.jsx'
+import footnote from './footnote.jsx'
+
 export default defineType({
   name: 'megaList',
   type: 'object',
@@ -20,7 +25,23 @@ export default defineType({
         {
           type: 'block',
           styles: [],
-          lists: [{ title: 'Number', value: 'number' }]
+          lists: [{ title: 'Number', value: 'number' }],
+          marks: {
+            annotations: [internalLink, externalLink, footnote, figureReference]
+          }
+        }
+      ]
+    },
+    {
+      name: 'link',
+      type: 'object',
+      title: 'Page to get colors from',
+      fields: [
+        {
+          name: 'document',
+          type: 'reference',
+          title: 'Document',
+          to: [{ type: 'chapter' }, { type: 'page' }]
         }
       ]
     }

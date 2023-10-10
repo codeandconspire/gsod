@@ -46,11 +46,11 @@
   }
 
   .html :global(:first-child) {
-    margin-top: 0;
+    margin-top: 0 !important;
   }
 
   .html :global(:last-child) {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
   }
 
   /* Headings */
@@ -78,14 +78,24 @@
     font-weight: var(--sans-serif-heavy);
     letter-spacing: -0.005em;
     line-height: 1.15;
-    margin: 0.75em 0;
+    margin: var(--space-medium) 0 var(--space-small);
+  }
+
+  .html :global(h2:first-child),
+  .html :global(.h2:first-child) {
+    margin-top: var(--space-small);
   }
 
   .html :global(h3),
   .html :global(.h3) {
-    font-size: clamp(1.75rem, 5vw, 2rem);
-    margin: 0.75em 0;
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
+    margin: calc(var(--space-medium) - var(--space-small)) 0 var(--space-small);
     line-height: 1.25;
+  }
+
+  .html :global(h3:first-child),
+  .html :global(.h3:first-child) {
+    margin-top: var(--space-small);
   }
 
   .html :global(h4),
@@ -107,7 +117,7 @@
   .html :global(blockquote) {
     display: flex;
     gap: 0.25em;
-    color: var(--theme-secondary-color);
+    color: var(--theme-primary-color);
     font-family: var(--sans-serif);
     line-height: 1.3;
     letter-spacing: 0;
@@ -124,7 +134,7 @@
   /* Lists */
 
   .html :global(:is(ul, ol)) {
-    margin: 1.5em 0;
+    margin: 1.5em 0 1.5em 1em;
     counter-reset: list;
   }
 
@@ -133,6 +143,7 @@
     align-items: baseline;
     gap: 0.75rem;
     margin: 0.75em 0;
+    text-wrap: balance;
   }
 
   .html :global(ul li::before) {
@@ -152,23 +163,25 @@
     content: counter(list) '. ';
     font-weight: bold;
     min-width: 1rem;
-    color: var(--theme-primary-color, currentcolor);
+    color: var(--theme-dark-color, currentcolor);
   }
 
   /* Links */
 
   .html :global(a) {
-    color: var(--theme-primary-color, #62a3bf);
+    color: var(--theme-dark-color, #1e3e5b);
     text-decoration: underline;
   }
 
   .html :global(a:hover) {
-    color: var(--theme-dark-color, #000);
+    color: #000;
   }
 
   .html :global(a sup) {
     font-size: 0.75em;
-    font-weight: bold;
+    font-size: var(--framework-font-size);
+    font-family: var(--sans-serif);
+    letter-spacing: 0;
 
     /* Prevent text underline */
     display: inline-block;

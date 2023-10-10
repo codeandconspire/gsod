@@ -69,6 +69,19 @@ export async function load(event) {
                   }
                 }
               }
+            },
+            source[]{
+              ...,
+              markDefs[]{
+                ...,
+                _type == "internalLink" => {
+                  ...,
+                  reference->{
+                    _type,
+                    slug
+                  }
+                }
+              }
             }
           },
           _type == "teaser" => {
@@ -82,7 +95,32 @@ export async function load(event) {
                 _type,
                 slug,
                 primaryColor,
-                secondaryColor
+                secondaryColor,
+                darkColor
+              }
+            }
+          },
+          _type == "button" => {
+            link{
+              ...,
+              document->{
+                _type,
+                slug,
+                primaryColor,
+                secondaryColor,
+                darkColor
+              }
+            }
+          },
+          _type == "megaList" => {
+            link{
+              ...,
+              document->{
+                _type,
+                slug,
+                primaryColor,
+                secondaryColor,
+                darkColor
               }
             }
           },

@@ -53,6 +53,7 @@
     box-shadow: var(--tilt-box-shadow);
     transition: var(--tilt-box-shadow-transition);
     color: var(--theme-text-color);
+    user-select: none;
   }
 
   .card.has-image {
@@ -113,9 +114,10 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
     font-weight: var(--sans-serif-heavy);
     text-wrap: balance;
+    line-height: 1.3;
   }
 
   .subheading {

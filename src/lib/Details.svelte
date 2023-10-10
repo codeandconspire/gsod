@@ -83,6 +83,6 @@
   }
 
   .details[open] {
-    padding-bottom: 1.4em;
+    padding-bottom: var(--space-small);
   }
 </style>

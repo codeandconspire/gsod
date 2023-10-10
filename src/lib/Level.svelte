@@ -121,8 +121,8 @@
   }
 
   .alternate {
-    opacity: 0.15;
-    background-color: #fff;
+    opacity: var(--tilt-alternative-opacity, 0.5);
+    background-color: var(--tilt-alternative-color, var(--theme-dark-color));
   }
 
   .secondary {

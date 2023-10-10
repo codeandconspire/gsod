@@ -102,6 +102,15 @@ export default defineType({
       }
     },
     {
+      name: 'darkColor',
+      type: 'string',
+      title: 'Dark Complement Color',
+      group: 'main',
+      components: {
+        input: Color
+      }
+    },
+    {
       name: 'featuredChapter',
       type: 'object',
       title: 'Featured Chapter',

@@ -67,10 +67,6 @@
   font-size: var(--font-size);
   line-height: var(--line-height);
 
-  /* Link underlines */
-  text-underline-offset: 0.25em;
-  text-decoration-thickness: 0.5px;
-
   /* We'll set up our own active states */
   -webkit-tap-highlight-color: transparent;
 
@@ -78,15 +74,19 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricPrecision;
-
-  /* Feels better then global text cursor */
-  cursor: default;
 }
 
 * {
   /* Set scroll margin with conditional selector, e.g. :root:has(.something) */
   scroll-margin-top: var(--current-scroll-margin-top);
   scroll-margin-bottom: var(--current-scroll-margin-bottom);
+
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px !important;
+}
+
+::selection {
+  background: var(--theme-selection-color);
 }
 
 a {

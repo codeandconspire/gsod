@@ -30,6 +30,13 @@
     }
   })
 
+  function scroll(event) {
+    const { hash } = new URL(event.currentTarget.href)
+    const target = document.querySelector(hash)
+    target?.scrollIntoView({ block: 'start', behavior: 'smooth' })
+    event.preventDefault()
+  }
+
   $: chapter = data.chapter
   $: menu = chapter.cover.menu.map(function each(item) {
     const { link, label } = item
@@ -42,8 +49,13 @@
   })
 </script>
 
-<Theme primary={chapter.primaryColor} secondary={chapter.secondaryColor}>
-  <Hero size="small" back={resolve(chapter.cover)}>
+<Theme
+  primary={chapter.primaryColor}
+  secondary={chapter.secondaryColor}
+  dark={chapter.darkColor}>
+  <Hero
+    size={chapter.simplify ? 'simple' : 'small'}
+    back={resolve(chapter.cover)}>
     <Menu slot="menu" items={menu} />
     <span slot="heading">{chapter.title}</span>
     <span slot="subheading">{chapter.subheading}</span>
@@ -52,49 +64,53 @@
   <div class="content">
     <nav class="aside toc" class:open id="toc">
       <!-- svelte-ignore a11y-invalid-attribute -->
-      <a
-        href="#"
-        class="toggle close"
-        aria-controls="toc"
-        on:click|preventDefault={() => {
-          open = false
-        }}>
-        <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
-          <path
-            fill="currentcolor"
-            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-        </svg>
-        <span>Close table of contents</span>
-      </a>
-      <a
-        href="#toc"
-        class="toggle open"
-        on:click|preventDefault={() => {
-          open = true
-        }}>
-        <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
-          <path
-            fill="currentcolor"
-            d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
-        </svg>
-        <span>Open table of contents</span>
-      </a>
-      <ol class="items">
-        {#each chapter.modules as module}
-          {#if module._type === 'richText'}
-            {@const heading = module.content.find(
-              (block) => block.style === 'h2'
-            )}
-            {#if heading}
-              <li class="item">
-                <a href="{resolve(chapter)}#{heading._key}">
-                  {asText([heading])}
-                </a>
-              </li>
+      {#if !chapter.hidetoc}
+        <a
+          href="#"
+          class="toggle close"
+          aria-controls="toc"
+          on:click|preventDefault={() => {
+            open = false
+          }}>
+          <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
+            <path
+              fill="currentcolor"
+              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+          </svg>
+          <span>Close table of contents</span>
+        </a>
+        <a
+          href="#toc"
+          class="toggle open"
+          on:click|preventDefault={() => {
+            open = true
+          }}>
+          <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
+            <path
+              fill="currentcolor"
+              d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+          </svg>
+          <span>Open table of contents</span>
+        </a>
+        <ol class="items">
+          {#each chapter.modules as module}
+            {#if module._type === 'richText' || module._type === 'heading'}
+              {@const heading = module.content.find(
+                (block) => block.style === 'h2'
+              )}
+              {#if heading}
+                <li class="item">
+                  <a
+                    href="{resolve(chapter)}#heading-{heading._key}"
+                    on:click={scroll}>
+                    {asText([heading])}
+                  </a>
+                </li>
+              {/if}
             {/if}
-          {/if}
-        {/each}
-      </ol>
+          {/each}
+        </ol>
+      {/if}
     </nav>
     <div class="body">
       <Modules modules={chapter.modules} />
@@ -153,10 +169,11 @@
       z-index: 1;
       width: calc(100% + (var(--page-gutter) * 2));
       margin-left: calc(var(--page-gutter) * -1);
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(4px);
-      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05);
+      background: #fff;
+      box-shadow: 0 0.3rem 1.5rem rgba(0, 0, 0, 0.1),
+        0 0 0 0.5px rgba(0, 0, 0, 0.1);
       margin-bottom: var(--margin);
+      user-select: none;
     }
 
     .toc:not(:is(.open, :target)) .items {
@@ -220,6 +237,7 @@
       position: sticky;
       top: var(--sticky-top-margin);
       margin-bottom: var(--margin);
+      user-select: none;
     }
 
     .toggle {

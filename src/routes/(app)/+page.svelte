@@ -2,7 +2,7 @@
   import { page } from '$app/stores'
 
   import { resolve } from '$lib/sanity.js'
-  import Ranking from '$lib/Ranking.svelte'
+  // import Ranking from '$lib/Ranking.svelte'
   import Theme from '$lib/Theme.svelte'
   import Text from '$lib/Text.svelte'
   import Menu from '$lib/Menu.svelte'
@@ -24,7 +24,10 @@
   })
 </script>
 
-<Theme primary={cover.primaryColor} secondary={cover.secondaryColor}>
+<Theme
+  primary={cover.primaryColor}
+  secondary={cover.secondaryColor}
+  dark={cover.darkColor}>
   <Hero size="fill">
     <Menu slot="menu" items={menu} />
     <span slot="heading">
@@ -37,16 +40,16 @@
     <Text slot="subheading" content={cover.subheading} plain />
   </Hero>
 
-  <div class="u-container">
+  <!-- <div class="u-container">
     <Ranking />
-  </div>
+  </div> -->
 
   <div class="chapters u-container">
     <h2 class="title">Report Chapters</h2>
     {#if cover.featuredChapter}
       {@const { featuredChapter: feature } = cover}
       {@const href = resolve(feature.link)}
-      <Tilt {href} depth={1.8} let:hover>
+      <Tilt {href} depth={0.5} let:hover>
         <article class="feature" class:hover>
           {#if feature.image.image}
             <img
@@ -80,7 +83,8 @@
         <Tilt {href} let:hover>
           <Theme
             primary={chapter.primaryColor || cover.primaryColor}
-            secondary={chapter.secondaryColor || cover.secondaryColor}>
+            secondary={chapter.secondaryColor || cover.secondaryColor}
+            dark={chapter.darkColor || cover.darkColor}>
             <Card
               {hover}
               heading={chapter.shortname || chapter.title}
@@ -97,7 +101,7 @@
   .chapters {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: var(--space-small);
     margin: 3rem 0;
     position: relative;
     z-index: 0;
@@ -117,6 +121,7 @@
     border-radius: var(--border-radius);
     box-shadow: var(--tilt-box-shadow);
     transition: var(--tilt-box-shadow-transition);
+    user-select: none;
   }
 
   .feature::after {
@@ -167,12 +172,13 @@
     max-width: 18em;
     margin-bottom: auto;
     font-weight: var(--sans-serif-bold);
-    font-size: clamp(1.25rem, 4vw, 2.375rem);
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
     text-wrap: balance;
+    line-height: 1.3;
   }
 
   .subheading {
-    font-size: clamp(0.9375rem, 3vw, 1.25rem);
+    font-size: 1.125rem;
   }
 
   .image {
@@ -208,7 +214,7 @@
   .items {
     margin-top: 3rem;
     display: grid;
-    gap: clamp(1.5rem, 10vw, 4rem);
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   }
 </style>

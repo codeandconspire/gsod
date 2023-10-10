@@ -62,11 +62,33 @@
       type="text"
       id="table-search"
       placeholder="Search" />
+
+    <strong style="margin-left: 1rem">Regions:</strong>
+    <label>
+      <input style="margin: 0 0.25rem" type="checkbox" />
+      <span>Africa</span>
+    </label>
+    <label>
+      <input style="margin: 0 0.25rem" type="checkbox" />
+      <span>Western Asia</span>
+    </label>
+    <label>
+      <input style="margin: 0 0.25rem" type="checkbox" />
+      <span>the Americas</span>
+    </label>
+    <label>
+      <input style="margin: 0 0.25rem" type="checkbox" />
+      <span>Asia and the Pacific</span>
+    </label>
+    <label>
+      <input style="margin: 0 0.25rem" type="checkbox" />
+      <span>Europe</span>
+    </label>
   </div>
   <table>
     <thead>
       <th on:click={() => setSort('name')}>Name</th>
-      <th on:click={() => setSort('region')}>Region</th>
+      <!-- <th on:click={() => setSort('region')}>Region</th> -->
     </thead>
     <tbody>
       {#each $items as item, index}
@@ -76,7 +98,7 @@
             <br />
             {item.region}
           </td>
-          <td>{item.name}</td>
+          <!-- <td>{item.name}</td> -->
         </tr>
         {#if open === index}
           <tr>

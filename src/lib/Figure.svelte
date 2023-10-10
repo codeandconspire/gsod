@@ -35,18 +35,21 @@
 
 <figure class="figure" class:fill {id}>
   <div class="main">
-    <div class:u-container={fill}>
+    <div class:contain={fill}>
       <slot />
     </div>
   </div>
-  {#if $$slots.description}
-    <figcaption class:u-container={fill}>
+  {#if $$slots.description || $$slots.source}
+    <figcaption class:contain={fill}>
       <div class="caption">
         <Html size="small">
           <div
             class="description"
             data-prefix={index ? `Figure ${index}: ` : ''}>
             <slot name="description" />
+          </div>
+          <div class="source">
+            <slot name="source" />
           </div>
         </Html>
       </div>
@@ -62,9 +65,15 @@
     text-align: center;
   }
 
+  .contain {
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+
   .main {
     background: #f8f8f8;
     padding: var(--page-gutter);
+    user-select: none;
   }
 
   .figure:not(.fill) .main {
@@ -81,6 +90,7 @@
 
     .figure:not(.fill) .main {
       max-width: var(--text-width);
+      flex: 0 0 auto;
     }
 
     .figure:not(.fill) .caption {
@@ -90,6 +100,7 @@
   }
 
   .figure :global(img) {
+    display: block;
     width: 100%;
   }
 
@@ -99,11 +110,21 @@
     text-wrap: balance;
   }
 
-  .description:empty {
+  .description:empty,
+  .source:empty {
     display: none;
   }
 
   .description::before {
     content: attr(data-prefix);
+  }
+
+  .source {
+    margin-top: 0.75em;
+    opacity: 0.5;
+  }
+
+  .source::before {
+    content: 'Source: ';
   }
 </style>

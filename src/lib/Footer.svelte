@@ -1,5 +1,4 @@
 <script>
-  export let groups = []
   export let form = null
 
   $: email = form?.email
@@ -35,15 +34,36 @@
       </label>
     </form>
     <nav class="menu">
-      {#each groups as group}
-        <ul>
-          {#each group as { label, active, href }}
-            <li>
-              <a class="link" class:active {href}>{label}</a>
-            </li>
-          {/each}
-        </ul>
-      {/each}
+      <ul>
+        <li>
+          <a class="link" href="#example">Download as PDF</a>
+        </li>
+        <li>
+          <a class="link" href="#example">Acknowledgements</a>
+        </li>
+        <li>
+          <a class="link" href="#example">Sources</a>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a class="link" href="#example">About GSoD</a>
+        </li>
+        <li>
+          <a class="link" href="#example">About International IDEA</a>
+        </li>
+        <li>
+          <a class="link" href="#example">Other Publications</a>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a class="link" href="#example">Democracy Tracker</a>
+        </li>
+        <li>
+          <a class="link" href="#example">Other links...</a>
+        </li>
+      </ul>
     </nav>
     <div class="end">
       <div class="terms">
@@ -79,12 +99,23 @@
     padding: 0 var(--page-gutter);
     font-family: var(--sans-serif);
     margin-top: 10rem;
+    user-select: none;
   }
 
-  .main {
-    display: grid;
-    /* grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr; */
+  @media (width > 70rem) {
+    .main {
+      display: grid;
+      grid-template-columns: 40% 1fr;
+      grid-template-rows: 1fr auto;
+      gap: 0 3rem;
+    }
+  }
+
+  @media (width > 80rem) {
+    .main {
+      grid-template-columns: 36.5rem 1fr;
+      gap: 0 6rem;
+    }
   }
 
   .form {
@@ -135,11 +166,13 @@
     padding: 0 3rem 0 1.25rem;
     font-size: 1rem;
     width: 100%;
+    font-weight: bold;
   }
 
   .field::placeholder {
     color: inherit;
     opacity: 1;
+    font-weight: normal;
   }
 
   /* Checkbox */
@@ -182,9 +215,35 @@
     content: '✓';
   }
 
+  /* Menu */
+
+  .menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  @media (width > 40rem) {
+    .menu {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  .menu ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .menu a:hover {
+    text-decoration: underline;
+  }
+
   /* Ending */
 
   .end {
+    grid-column: span 2;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem 2rem;
@@ -202,6 +261,12 @@
   @media (width > 40rem) {
     .terms {
       gap: 1.75em;
+    }
+  }
+
+  @media (width > 70rem) {
+    .end {
+      grid-column: span 2;
     }
   }
 </style>

@@ -21,6 +21,7 @@ export default function FigureReference({ value, onChange }) {
               _key,
               _type,
               description,
+              source,
               image {
                 asset->
               }

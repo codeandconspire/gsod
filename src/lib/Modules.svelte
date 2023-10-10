@@ -39,14 +39,28 @@
         </Html>
       </div>
     {:else if module._type === 'megaList'}
+      {@const { link, content } = module}
       <div class="contain">
-        <MegaList
-          items={module.content.filter((block) => block.listItem)}
-          let:item>
-          <Html>
-            <Text content={item.children} />
-          </Html>
-        </MegaList>
+        {#if link}
+          <Theme
+            primary={link?.document?.primaryColor}
+            secondary={link?.document?.secondaryColor}
+            dark={link?.document?.darkColor}>
+            <MegaList
+              items={content.filter((block) => block.listItem)}
+              let:item>
+              <Html>
+                <Text content={item.children} />
+              </Html>
+            </MegaList>
+          </Theme>
+        {:else}
+          <MegaList items={content.filter((block) => block.listItem)} let:item>
+            <Html>
+              <Text content={item.children} />
+            </Html>
+          </MegaList>
+        {/if}
       </div>
     {:else if module._type === 'teaser'}
       {@const { title, description, flip, image, content, link } = module}
@@ -54,7 +68,8 @@
       <div class="uncontain">
         <Theme
           primary={link.document.primaryColor}
-          secondary={link.document.secondaryColor}>
+          secondary={link.document.secondaryColor}
+          dark={link.document.darkColor}>
           <Teaser
             heading={title}
             {description}
@@ -106,6 +121,17 @@
               </Text>
             {/if}
           </svelte:fragment>
+          <svelte:fragment slot="source">
+            {#if module.source}
+              <Text content={module.source} let:block>
+                {#if block.style === 'normal'}
+                  <Text content={block.children} />
+                {:else}
+                  <Text content={block} />
+                {/if}
+              </Text>
+            {/if}
+          </svelte:fragment>
         </Figure>
       </div>
     {:else if module._type === 'footnotes'}
@@ -117,7 +143,7 @@
         </div>
       </Details>
     {:else if module._type === 'accordion'}
-      <Details heading={module.heading || 'Details'}>
+      <Details heading={module.title || 'Details'}>
         <div class="contain">
           <Html>
             <Text content={module.content} />
@@ -125,45 +151,39 @@
         </div>
       </Details>
     {:else if module._type === 'blurbs'}
-      <div class="module module-blurbs">
-        <div class="blurbs">
-          {#each module.items as item}
-            {@const href = resolve(item.link.document)}
-            {#if href}
-              <Tilt
-                {href}
-                data-sveltekit-noscroll
-                data-sveltekit-replacestate
-                let:hover>
-                {#if item.link.document.image}
-                  <Card
-                    {hover}
-                    heading={item.title}
-                    subheading={item.subheading}
-                    link={href
-                      ? { label: item.link.label || 'Show more' }
-                      : null}>
-                    <Image
-                      slot="image"
-                      image={item.link.document.image}
-                      width={300}
-                      variants={[300, 600, 900]}
-                      sizes="(min-width: 40rem) 50vw, (min-width: 60rem) 33vw" />
-                  </Card>
-                {:else}
-                  <Card
-                    {hover}
-                    heading={item.title}
-                    subheading={item.subheading}
-                    link={href
-                      ? { label: item.link.label || 'Show more' }
-                      : null} />
-                {/if}
-              </Tilt>
+      {#each module.items as item}
+        {@const href = resolve(item.link.document)}
+        {#if href}
+          <Tilt
+            {href}
+            data-sveltekit-noscroll
+            data-sveltekit-replacestate
+            let:hover>
+            {#if item.link.document.image}
+              <Card
+                {hover}
+                heading={item.title}
+                subheading={item.subheading}
+                link={href ? { label: item.link.label || 'Show more' } : null}>
+                <Image
+                  slot="image"
+                  image={item.link.document.image}
+                  width={300}
+                  variants={[300, 600, 900]}
+                  sizes="(min-width: 40rem) 50vw, (min-width: 60rem) 33vw" />
+              </Card>
+            {:else}
+              <Card
+                {hover}
+                heading={item.title}
+                subheading={item.subheading}
+                link={href
+                  ? { label: item.link.label || 'Show more' }
+                  : null} />
             {/if}
-          {/each}
-        </div>
-      </div>
+          </Tilt>
+        {/if}
+      {/each}
     {/if}
   </div>
 {/each}
@@ -191,13 +211,13 @@
     }
   }
 
-  /** Blurbs*/
+  /* Blurbs */
 
-  .blurbs {
+  .module-blurbs {
     display: grid;
     gap: clamp(1.5rem, 10vw, 4rem);
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    margin-top: 2rem;
+    margin: 2rem 0 var(--space-medium);
   }
 
   /* Divider */
@@ -227,14 +247,37 @@
     margin-bottom: 2rem;
   }
 
+  .module-heading:first-child .divider {
+    display: none;
+  }
+
+  .module-heading:first-child {
+    margin-top: -0.2em;
+  }
+
   /* Module margins */
 
   .module + .module-teaser {
     margin-top: var(--space-large);
   }
 
-  .module + .module-figure {
+  .module-figure {
     margin-top: var(--space-medium);
+    margin-bottom: var(--space-medium);
+  }
+
+  .module-megaList {
+    margin-top: var(--space-small);
+    margin-bottom: var(--space-small);
+  }
+
+  .module-megaList + .module:not(.module-button) {
+    margin-top: calc(var(--space-medium) - 1rem);
+  }
+
+  .module-button {
+    margin-top: var(--space-small);
+    margin-bottom: var(--space-small);
   }
 
   .module + .module-richText {
@@ -250,5 +293,9 @@
   .module-accordion + .module-footnotes,
   .module-accordion + .module-accordion {
     margin-top: -1px;
+  }
+
+  .module:last-child {
+    margin-bottom: 0 !important;
   }
 </style>

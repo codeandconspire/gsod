@@ -20,7 +20,8 @@
 
 <Theme
   primary={data.chapter.primaryColor}
-  secondary={data.chapter.secondaryColor}>
+  secondary={data.chapter.secondaryColor}
+  dark={data.chapter.darkColor}>
   <Dialog open href={resolve(data.chapter)}>
     <Image
       slot="image"
@@ -31,8 +32,8 @@
       <h1 class="heading">
         Case Study: <strong class="title">{asText(data.case.title)}</strong>
       </h1>
-      <Html size="large" class="description">
-        <Text content={data.case.description} />
+      <Html class="description">
+        <strong><Text content={data.case.description} /></strong>
       </Html>
       <Modules modules={data.case.modules} />
     </div>
@@ -43,9 +44,11 @@
 
 <style>
   .heading {
-    margin-bottom: clamp(1rem, 4vw, 2rem);
+    font-size: clamp(2rem, 5vw, 2.5rem);
     font-family: var(--sans-serif);
-    font-size: clamp(1.5rem, 5vw, 2.625rem);
+    letter-spacing: -0.005em;
+    line-height: 1.15;
+    margin: 0 0 0.75em;
   }
 
   .title {
@@ -55,6 +58,6 @@
   .case :global(.description) {
     --text-width: 100%;
 
-    margin-bottom: clamp(1rem, 4vw, 2rem);
+    margin-bottom: 1em;
   }
 </style>

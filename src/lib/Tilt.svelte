@@ -12,7 +12,7 @@
 
   export let reverse = false
   export let glare = true
-  export let depth = 1.5
+  export let depth = 1.35
 
   /** @type {string?} */
   export let href = null
@@ -102,6 +102,8 @@
 
     transform-style: preserve-3d;
     transform: perspective(100rem);
+    display: flex;
+    flex-direction: column;
   }
 
   .tilt.active {
@@ -141,7 +143,7 @@
   }
 
   .tilt:hover .glare::after {
-    opacity: 1;
+    opacity: 0.5;
   }
 
   .tilt.active .glare::after {

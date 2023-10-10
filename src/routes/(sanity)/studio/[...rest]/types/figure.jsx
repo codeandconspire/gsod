@@ -67,6 +67,21 @@ export default defineType({
           }
         }
       ]
+    },
+    {
+      name: 'source',
+      type: 'array',
+      title: 'Source',
+      of: [
+        {
+          type: 'block',
+          styles: [],
+          lists: [],
+          marks: {
+            annotations: [internalLink, externalLink]
+          }
+        }
+      ]
     }
   ]
 })

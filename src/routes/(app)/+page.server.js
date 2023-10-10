@@ -33,6 +33,7 @@ export async function load({ request }) {
         shortname,
         primaryColor,
         secondaryColor,
+        darkColor,
         featuredImage
       },
       menu[]{
@@ -50,7 +51,7 @@ export async function load({ request }) {
         }
       }
     }`,
-    { slug: 'the-new-checks-and-balances' }
+    { slug: '2022' }
   )
   if (!cover) throw error(404, 'Cover not found')
   return { cover }

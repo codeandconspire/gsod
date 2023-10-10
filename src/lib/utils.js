@@ -14,20 +14,15 @@ export function luma(color) {
 }
 
 /**
- * @param {string} color
- * @param {number} amount
+ * @param {string} hex
  * @returns {string}
  */
-export function shade(color, amount) {
-  return (
-    '#' +
-    color
-      .replace(/^#/, '')
-      .replace(/../g, (color) =>
-        (
-          '0' +
-          Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)
-        ).slice(-2)
-      )
-  )
+
+export function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  if (!result) return ''
+  return `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(
+    result[3],
+    16
+  )}`
 }

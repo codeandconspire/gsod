@@ -4,7 +4,7 @@
 
   export let image = null
 
-  /** @type {('small'|'fill')?} */
+  /** @type {('small'|'fill'|'simple')?} */
   export let size = null
 
   /** @type {string?} */
@@ -18,16 +18,19 @@
 <header
   class="hero"
   class:fill={size === 'fill'}
-  class:small={size === 'small'}
+  class:small={size === 'small' || size === 'simple'}
+  class:simple={size === 'simple'}
   class:has-menu={$$slots.menu}>
-  {#if image}
-    <div class="graphic">
-      <img alt="" {...image} class="image" />
-    </div>
-  {:else}
-    <div class="graphic">
-      <Level />
-    </div>
+  {#if size !== 'simple'}
+    {#if image}
+      <div class="graphic">
+        <img alt="" {...image} class="image" />
+      </div>
+    {:else}
+      <div class="graphic">
+        <Level />
+      </div>
+    {/if}
   {/if}
   {#if size === 'fill'}
     <div class="skip">
@@ -88,6 +91,17 @@
     background-color: var(--theme-primary-color);
   }
 
+  .hero:not(.small) {
+    user-select: none;
+    min-height: 35rem;
+  }
+
+  .simple {
+    background: transparent;
+    color: var(--color-text);
+    padding-bottom: 0;
+  }
+
   .hero.has-menu {
     grid-template-rows: auto 1fr auto;
   }
@@ -104,6 +118,11 @@
     background-color: var(--theme-primary-color);
     transform: var(--tilt-background-transform);
     transition: var(--tilt-transform-transition);
+  }
+
+  .hero:not(.small) .graphic {
+    --tilt-alternative-color: #fff;
+    --tilt-alternative-opacity: 0.15;
   }
 
   .image {
@@ -126,6 +145,10 @@
     max-width: var(--page-width);
     padding: clamp(3rem, 17vh, 6rem) 0;
     margin: 0 auto;
+  }
+
+  .hero.simple .body {
+    padding-bottom: 0;
   }
 
   .content {
@@ -181,6 +204,10 @@
     font-weight: var(--sans-serif-heavy);
   }
 
+  .simple .heading {
+    color: var(--theme-primary-color);
+  }
+
   .hero.small .heading {
     max-width: var(--text-width);
     text-align: left;
@@ -189,6 +216,18 @@
     letter-spacing: -0.005em;
     margin: 0 0 -0.02em;
     text-wrap: balance;
+  }
+
+  @media (width > 40rem) {
+    .hero.small .heading {
+      max-width: calc(var(--text-width) + 4rem);
+    }
+  }
+
+  @media (width > 70rem) {
+    .hero.small .heading {
+      width: 105%;
+    }
   }
 
   .subheading {

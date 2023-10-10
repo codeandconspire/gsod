@@ -51,7 +51,7 @@
           <slot name="image" />
         </div>
       {/if}
-      <Theme primary="#000" secondary="#000">
+      <Theme primary="#000" secondary="#000" dark="#000">
         <slot />
       </Theme>
     </div>
@@ -60,6 +60,8 @@
 
 <style>
   .dialog {
+    --space-medium: var(--space-small);
+
     display: flex;
     width: 100%;
     height: 100%;
@@ -102,9 +104,9 @@
   .container {
     display: flex;
     width: 100%;
+    padding: calc(var(--page-gutter) * 1.5);
     align-items: center;
     justify-content: center;
-    padding: var(--page-gutter);
     overflow: auto;
     -ms-scroll-chaining: none;
     overscroll-behavior: contain;
@@ -112,20 +114,32 @@
   }
 
   .main {
-    --spacing: clamp(1rem, 4vw, 2rem);
+    --padding: clamp(2.5rem, 4vw, 3.75rem);
 
     width: 100%;
     height: auto;
-    max-width: 48rem;
-    padding: var(--spacing) var(--page-gutter) calc(var(--spacing) + 1rem);
+    max-width: 52rem;
+    padding: var(--padding);
     margin: auto 0;
     position: relative;
     overflow: hidden;
     color: var(--theme-text-color);
     background: var(--theme-primary-color);
     border-radius: var(--border-radius);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05);
     animation: slide-in 400ms forwards cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  @media (width <= 40rem) {
+    .container {
+      padding: var(--page-gutter);
+    }
+
+    .main {
+      --padding: 2rem;
+
+      height: 100%;
+      border-radius: 0;
+    }
   }
 
   @keyframes slide-in {
@@ -137,17 +151,8 @@
     }
   }
 
-  @media (width <= 40rem) {
-    .main {
-      height: 100%;
-      border-radius: 0;
-      box-shadow: none;
-    }
-  }
-
   .image {
-    margin: calc(var(--spacing) * -1) calc(var(--page-gutter) * -1)
-      var(--spacing);
+    margin: calc(var(--padding) * -1) calc(var(--padding) * -1) 2rem;
   }
 
   .image :global(img) {
