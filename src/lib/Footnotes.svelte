@@ -71,7 +71,7 @@
     </div>
   {/each}
 {:else}
-  <ol>
+  <ul>
     {#each items as item}
       {@const id = anchor(item._key)}
       <li {id} class="note" class:selected>
@@ -100,7 +100,7 @@
         </div>
       </li>
     {/each}
-  </ol>
+  </ul>
 {/if}
 
 <style>
