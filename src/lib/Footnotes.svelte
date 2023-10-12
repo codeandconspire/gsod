@@ -27,6 +27,12 @@
   export let selected = false
   export let items = all()
 
+  $: byName = items.slice().sort((a, b) => {
+    const aName = asText(a.content)?.replace(/^The /, '') || ''
+    const bName = asText(b.content)?.replace(/^The /, '') || ''
+    return aName < bName ? -1 : aName > bName ? 1 : 0
+  })
+
   const onshare = (event) => {
     const url = /** @type {string} */ (share)
     if ('share' in navigator) {
@@ -44,7 +50,7 @@
 </script>
 
 {#if selected}
-  {#each items as item}
+  {#each byName as item}
     {@const id = anchor(item._key)}
     <div {id} class="note selected">
       <div class="content">
@@ -72,7 +78,7 @@
   {/each}
 {:else}
   <ul>
-    {#each items as item}
+    {#each byName as item}
       {@const id = anchor(item._key)}
       <li {id} class="note" class:selected>
         <div class="content">
