@@ -29,15 +29,15 @@
     if (LINK_REG.test(string)) {
       return format(string.replace(LINK_REG, '\0$1\0')).replace(
         /\0(.+?)\0/,
-        '&lt;<a href="$1" rel="noopener noreferrer" target="_blank">$1</a>&gt;'
+        '&lt;<a href="$1" style="word-break: break-all;" rel="noopener noreferrer" target="_blank">$1</a>&gt;'
       )
     }
     return string
-      .replace(/\n/g, '<br />')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
+      .replace(/\n/g, '<br />')
   }
 </script>
 

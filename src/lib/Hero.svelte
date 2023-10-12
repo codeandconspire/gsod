@@ -1,25 +1,54 @@
 <script>
-  import { getOffset } from './Text.svelte'
+  import { quadIn } from 'svelte/easing'
+
+  import { intersection } from '$lib/intersection.js'
+  import { getOffset } from '$lib/Text.svelte'
   import Level from '$lib/Level.svelte'
   import Text from '$lib/Text.svelte'
-  import { intersection } from '$lib/intersection.js'
-
-  let inview = 1
-
-  function onintersect(index) {
-    return () => {
-      inview = index
-    }
-  }
 
   export let slides = []
+  export let scrolljack = true
 
   $: heading = `h${1 + getOffset()}`
+
+  const threshold = Array(100)
+    .fill(0)
+    .map((_, i) => i * 0.01)
+    .concat(1)
+
+  const progress = new Map()
+  function reel(node) {
+    const onintersect = (value) => {
+      value = quadIn(value)
+      progress.set(node, value)
+      node.style.setProperty('--ratio', Math.ceil(value * 100) / 100)
+    }
+    return intersection(node, { onintersect, threshold })
+  }
+
+  let timeout
+  function align() {
+    clearTimeout(timeout)
+    if (!scrolljack) return
+    timeout = setTimeout(function () {
+      let candidate
+      for (const [node, value] of progress) {
+        if (value > 0.1 && (!candidate || value > progress.get(candidate))) {
+          candidate = node
+        }
+      }
+      if (candidate) {
+        candidate.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }, 200)
+  }
 </script>
+
+<svelte:window on:scroll={align} on:resize={align} />
 
 <header class="hero" class:has-menu={$$slots.menu}>
   <div class="graphic">
-    <Level />
+    <Level inview loop />
   </div>
   {#if $$slots.menu}
     <div class="menu">
@@ -27,13 +56,10 @@
     </div>
   {/if}
   <div class="slides">
-    <div class="slide primary" class:inview={inview === 1}>
+    <div class="slide primary" use:reel>
       <div class="body">
         <div class="content">
-          <svelte:element
-            this={heading}
-            class="heading"
-            use:intersection={onintersect(1)}>
+          <svelte:element this={heading} class="heading">
             <slot name="heading" />
           </svelte:element>
           {#if $$slots.subheading}
@@ -44,11 +70,11 @@
         </div>
       </div>
     </div>
-    {#each slides as slide, index}
-      <div class="slide" class:inview={inview === index}>
+    {#each slides as slide}
+      <div class="slide" use:reel>
         <div class="body">
           <div class="content">
-            <div class="subheading bump" use:intersection={onintersect(index)}>
+            <div class="subheading bump">
               {slide.title}
             </div>
             <div class="subheading">
@@ -80,7 +106,7 @@
     top: clamp(1rem, var(--page-gutter), 2.25rem);
     padding: 0 var(--page-gutter);
     margin-bottom: clamp(1rem, var(--page-gutter), 2.25rem);
-    margin-top: -100svh;
+    margin-top: -100vh;
     z-index: 1;
   }
 
@@ -96,7 +122,7 @@
     position: sticky;
     top: 0;
 
-    height: 100svh;
+    height: 100vh;
     background-color: var(--theme-primary-color);
     transform: var(--tilt-background-transform);
     transition: var(--tilt-transform-transition);
@@ -104,7 +130,7 @@
 
   .slide {
     position: relative;
-    height: 70svh;
+    height: 70vh;
     padding: clamp(1rem, var(--page-gutter), 2.25rem) var(--page-gutter);
   }
 
@@ -125,6 +151,7 @@
     height: 100%;
     width: 100%;
     position: relative;
+    perspective: 1000px;
   }
 
   .content {
@@ -136,18 +163,18 @@
     margin-top: -0.5rem;
   }
 
-  .chevron {
-    width: 1.35em;
-    margin: 0 -0.1em 0 -0.2em;
-    height: auto;
-    will-change: transform;
-    transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+  @media (min-width: 50rem) {
+    .content {
+      opacity: var(--ratio, 1);
+      will-change: transform, opacity;
+      transform: translateY(calc(20% * (1 - var(--ratio, 1))));
+    }
   }
 
   .heading {
     font-size: clamp(3.9rem, 16.5vw, 7rem);
     text-align: center;
-    line-height: 1;
+    line-height: 0.95;
     font-weight: var(--sans-serif-light);
     letter-spacing: -0.01em;
     max-width: 8em;
@@ -159,13 +186,17 @@
   }
 
   .subheading {
-    margin: 0 auto;
     font-weight: var(--sans-serif-normal);
-    line-height: 1.3;
+    line-height: 1.25;
     font-size: clamp(1.5rem, 3vw, 1.75rem);
     text-wrap: balance;
-    text-align: center;
+    text-align: left;
     max-width: 25em;
+  }
+
+  .primary .subheading {
+    margin: 0 auto;
+    text-align: center;
   }
 
   @media (width > 40rem) {
@@ -179,7 +210,7 @@
     font-weight: var(--sans-serif-heavy);
     font-size: clamp(2.5rem, 5vw, 4.5rem);
     letter-spacing: -0.005em;
-    margin: 0 auto -0.02em;
+    margin: 0 0 -0.02em;
     max-width: 15em;
   }
 </style>

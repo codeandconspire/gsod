@@ -1,8 +1,8 @@
 <script>
   import { page } from '$app/stores'
 
+  import { intersection } from '$lib/intersection.js'
   import { resolve } from '$lib/sanity.js'
-  // import Ranking from '$lib/Ranking.svelte'
   import Theme from '$lib/Theme.svelte'
   import Text from '$lib/Text.svelte'
   import Menu from '$lib/Menu.svelte'
@@ -11,6 +11,8 @@
   import Tilt from '$lib/Tilt.svelte'
 
   export let data
+
+  let scrolljack = true
 
   $: cover = data.cover
   $: menu = cover.menu.map(function each(item) {
@@ -28,7 +30,7 @@
   primary={cover.primaryColor}
   secondary={cover.secondaryColor}
   dark={cover.darkColor}>
-  <Hero slides={cover.highlights}>
+  <Hero slides={cover.highlights} {scrolljack}>
     <Menu slot="menu" items={menu} />
     <span slot="heading">
       <Text content={cover.title} let:block>
@@ -40,11 +42,13 @@
     <Text slot="subheading" content={cover.subheading} plain />
   </Hero>
 
-  <!-- <div class="u-container">
-    <Ranking />
-  </div> -->
-
-  <div class="chapters u-container">
+  <div
+    class="chapters u-container"
+    use:intersection={{
+      onintersect(ratio) {
+        scrolljack = !ratio
+      }
+    }}>
     <h2 class="title">Report Chapters</h2>
     {#if cover.featuredChapter}
       {@const { featuredChapter: feature } = cover}

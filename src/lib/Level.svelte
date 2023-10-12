@@ -3,23 +3,30 @@
 
   import { intersection } from '$lib/intersection.js'
 
-  let inview = !browser
+  export let inview = !browser
+  export let loop = false
+
   let alternate
   let secondary
 
-  let delay = '0ms'
-  let level = 6 + 10 * Math.random()
+  const media = browser ? matchMedia('(orientation: portrait)') : null
+  const base = media?.matches ? 16 : 6
 
-  function onintersect() {
-    inview = true
+  let delay = '0ms'
+  let looping = false
+  let level = base + 10 * Math.random()
+
+  function onintersect(ratio) {
+    if (ratio) inview = true
   }
 
   function tilt(element, direction, turn = 0) {
     element.addEventListener(
       'transitionend',
       () => {
-        level *= 0.75
-        if (turn < 2) {
+        if (loop || turn < 2) {
+          if (turn < 3) level *= 0.85
+          else looping = true
           element.classList.remove(direction)
           tilt(element, direction === 'right' ? 'left' : 'right', turn + 1)
         }
@@ -42,9 +49,10 @@
 <div
   class="level"
   class:inview
+  class:looping
   style:--delay={delay}
   style:--level={level.toFixed(2)}
-  use:intersection={onintersect}>
+  use:intersection={{ onintersect, once: true }}>
   <div class="parts">
     <div class="board alternate" bind:this={alternate} />
     <div class="board secondary" bind:this={secondary} />
@@ -69,7 +77,7 @@
     left: 0;
     top: 0;
     transform: translateY(100%);
-    transition: transform 1400ms 50ms cubic-bezier(0.23, 1, 0.32, 1);
+    transition: transform 2500ms 50ms cubic-bezier(0.23, 1, 0.32, 1);
     will-change: transform;
   }
 
@@ -110,6 +118,10 @@
     transform-origin: 50% 0;
     transition: transform 2200ms var(--delay)
       cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  }
+
+  .level.looping .board {
+    transition-duration: 5500ms;
   }
 
   .level :global(.board.right) {
