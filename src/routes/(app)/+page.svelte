@@ -28,7 +28,7 @@
   primary={cover.primaryColor}
   secondary={cover.secondaryColor}
   dark={cover.darkColor}>
-  <Hero size="fill">
+  <Hero slides={cover.highlights}>
     <Menu slot="menu" items={menu} />
     <span slot="heading">
       <Text content={cover.title} let:block>

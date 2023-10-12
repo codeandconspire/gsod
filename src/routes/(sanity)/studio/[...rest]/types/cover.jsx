@@ -24,6 +24,10 @@ export default defineType({
       title: 'Menu'
     },
     {
+      name: 'highlights',
+      title: 'Highlights'
+    },
+    {
       name: 'chapters',
       title: 'Chapters'
     },
@@ -109,6 +113,38 @@ export default defineType({
       components: {
         input: Color
       }
+    },
+    {
+      name: 'highlights',
+      title: 'Highlights',
+      type: 'array',
+      group: 'highlights',
+      of: [
+        {
+          name: 'item',
+          type: 'object',
+          title: 'Item',
+          fields: [
+            {
+              name: 'title',
+              type: 'string',
+              title: 'Title'
+            },
+            {
+              name: 'description',
+              type: 'array',
+              title: 'Description',
+              of: [
+                {
+                  type: 'block',
+                  styles: [],
+                  lists: []
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       name: 'featuredChapter',

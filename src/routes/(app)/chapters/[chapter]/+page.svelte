@@ -7,7 +7,7 @@
   import { asText } from '$lib/Text.svelte'
   import Modules from '$lib/Modules.svelte'
   import Theme from '$lib/Theme.svelte'
-  import Hero from '$lib/Hero.svelte'
+  import Intro from '$lib/Intro.svelte'
   import Menu from '$lib/Menu.svelte'
 
   export let data
@@ -53,13 +53,11 @@
   primary={chapter.primaryColor}
   secondary={chapter.secondaryColor}
   dark={chapter.darkColor}>
-  <Hero
-    size={chapter.simplify ? 'simple' : 'small'}
-    back={resolve(chapter.cover)}>
+  <Intro simple={chapter.simplify} back={resolve(chapter.cover)}>
     <Menu slot="menu" items={menu} />
     <span slot="heading">{chapter.title}</span>
     <span slot="subheading">{chapter.subheading}</span>
-  </Hero>
+  </Intro>
 
   <div class="content">
     <nav class="aside toc" class:open id="toc">

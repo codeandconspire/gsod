@@ -1,137 +1,123 @@
 <script>
   import { getOffset } from './Text.svelte'
   import Level from '$lib/Level.svelte'
+  import Text from '$lib/Text.svelte'
+  import { intersection } from '$lib/intersection.js'
 
-  export let image = null
+  let inview = 1
 
-  /** @type {('small'|'fill'|'simple')?} */
-  export let size = null
+  function onintersect(index) {
+    return () => {
+      console.log('hej')
+      inview = index
+    }
+  }
 
-  /** @type {string?} */
-  export let back = null
-
-  let bottom
+  export let slides = []
 
   $: heading = `h${1 + getOffset()}`
 </script>
 
-<header
-  class="hero"
-  class:fill={size === 'fill'}
-  class:small={size === 'small' || size === 'simple'}
-  class:simple={size === 'simple'}
-  class:has-menu={$$slots.menu}>
-  {#if size !== 'simple'}
-    {#if image}
-      <div class="graphic">
-        <img alt="" {...image} class="image" />
-      </div>
-    {:else}
-      <div class="graphic">
-        <Level />
-      </div>
-    {/if}
-  {/if}
-  {#if size === 'fill'}
-    <div class="skip">
-      <a
-        href="#hero-bottom"
-        tabindex="-1"
-        aria-hidden="true"
-        on:click|preventDefault={() =>
-          bottom.scrollIntoView({ block: 'start', behavior: 'smooth' })}>
-        <span class="u-hidden">Skip to content</span>
-        <svg viewBox="0 0 64 27" fill="none" class="chevron">
-          <path
-            stroke="#fff"
-            stroke-linecap="round"
-            stroke-width="3"
-            d="M62 2 32 25 2 2" />
-        </svg>
-      </a>
-    </div>
-  {/if}
+<header class="hero" class:has-menu={$$slots.menu}>
+  <div class="graphic">
+    <Level />
+  </div>
   {#if $$slots.menu}
-    <slot name="menu" />
-  {/if}
-  <div class="body">
-    <div class="content">
-      {#if back}
-        <div>
-          <a href={back} class="back">
-            <svg class="chevron" fill="currentcolor" viewBox="0 -960 960 960">
-              <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
-            </svg>
-            Back
-          </a>
-        </div>
-      {/if}
-      <svelte:element this={heading} class="heading">
-        <slot name="heading" />
-      </svelte:element>
-      {#if $$slots.subheading}
-        <p class="subheading">
-          <slot name="subheading" />
-        </p>
-      {/if}
+    <div class="menu">
+      <slot name="menu" />
     </div>
+  {/if}
+  <div class="slides">
+    <div class="slide primary" class:inview={inview === 1}>
+      <div class="body">
+        <div class="content">
+          <svelte:element
+            this={heading}
+            class="heading"
+            use:intersection={onintersect(1)}>
+            <slot name="heading" />
+          </svelte:element>
+          {#if $$slots.subheading}
+            <p class="subheading">
+              <slot name="subheading" />
+            </p>
+          {/if}
+        </div>
+      </div>
+    </div>
+    {#each slides as slide, index}
+      <div class="slide" class:inview={inview === index}>
+        <div class="body">
+          <div class="content">
+            <div class="subheading bump" use:intersection={onintersect(index)}>
+              {slide.title}
+            </div>
+            <div class="subheading">
+              <Text content={slide.description} />
+            </div>
+          </div>
+        </div>
+      </div>
+    {/each}
   </div>
 </header>
-<div id="hero-bottom" class="bottom" bind:this={bottom} />
 
 <style>
   .hero {
     display: grid;
     position: relative;
+    width: 100svw;
     grid-template-rows: 1fr auto;
-    padding: clamp(1rem, var(--page-gutter), 2.25rem) var(--page-gutter);
     line-height: 1.25;
     font-family: var(--sans-serif);
     color: var(--theme-text-color);
     background-color: var(--theme-primary-color);
-  }
-
-  .hero:not(.small) {
     user-select: none;
     min-height: 35rem;
   }
 
-  .simple {
-    background: transparent;
-    color: var(--color-text);
-    padding-bottom: 0;
+  .menu {
+    position: sticky;
+    top: clamp(1rem, var(--page-gutter), 2.25rem);
+    padding: 0 var(--page-gutter);
+    margin-bottom: clamp(1rem, var(--page-gutter), 2.25rem);
+    margin-top: -100svh;
   }
 
   .hero.has-menu {
     grid-template-rows: auto 1fr auto;
   }
 
-  .hero.fill {
-    height: 100svh;
-    width: 100svw;
-  }
-
   .graphic {
+    --tilt-alternative-color: #fff;
+    --tilt-alternative-opacity: 0.15;
+
     display: grid;
-    position: absolute;
-    inset: 0;
+    position: sticky;
+    top: 0;
+
+    height: 100svh;
     background-color: var(--theme-primary-color);
     transform: var(--tilt-background-transform);
     transition: var(--tilt-transform-transition);
   }
 
-  .hero:not(.small) .graphic {
-    --tilt-alternative-color: #fff;
-    --tilt-alternative-opacity: 0.15;
+  .slide {
+    position: relative;
+    height: 70svh;
+    padding: clamp(1rem, var(--page-gutter), 2.25rem) var(--page-gutter);
   }
 
-  .image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
+  .slide.primary {
+    height: 100svh;
+  }
+
+  .slide:last-child {
+    margin-bottom: 20svh;
+  }
+
+  .primary {
+    margin-top: -100svh;
   }
 
   .body {
@@ -139,16 +125,6 @@
     height: 100%;
     width: 100%;
     position: relative;
-  }
-
-  .hero.small .body {
-    max-width: var(--page-width);
-    padding: clamp(3rem, 17vh, 6rem) 0;
-    margin: 0 auto;
-  }
-
-  .hero.simple .body {
-    padding-bottom: 0;
   }
 
   .content {
@@ -160,34 +136,12 @@
     margin-top: -0.5rem;
   }
 
-  @media (width > 70rem) {
-    .hero.small .content {
-      max-width: var(--text-width);
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-
-  .back {
-    font-weight: bold;
-    font-size: var(--framework-font-size);
-    display: inline-flex;
-    align-items: flex-end;
-    padding: 0.5rem;
-    margin: -0.5rem;
-    margin-left: -0.85rem;
-  }
-
   .chevron {
     width: 1.35em;
     margin: 0 -0.1em 0 -0.2em;
     height: auto;
     will-change: transform;
     transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .back:hover .chevron {
-    transform: translateX(-0.15em);
   }
 
   .heading {
@@ -204,56 +158,28 @@
     font-weight: var(--sans-serif-heavy);
   }
 
-  .simple .heading {
-    color: var(--theme-primary-color);
-  }
-
-  .hero.small .heading {
-    max-width: var(--text-width);
-    text-align: left;
-    font-weight: var(--sans-serif-heavy);
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    letter-spacing: -0.005em;
-    margin: 0 0 -0.02em;
-    text-wrap: balance;
-  }
-
-  @media (width > 40rem) {
-    .hero.small .heading {
-      max-width: calc(var(--text-width) + 4rem);
-    }
-  }
-
-  @media (width > 70rem) {
-    .hero.small .heading {
-      width: 105%;
-    }
-  }
-
   .subheading {
-    font-size: 1.5rem;
-    font-weight: var(--sans-serif-bold);
-    text-align: center;
-    text-wrap: balance;
-  }
-
-  .hero.small .subheading {
-    max-width: var(--text-width);
-    text-align: left;
+    margin: 0 auto;
     font-weight: var(--sans-serif-normal);
     line-height: 1.3;
     font-size: clamp(1.5rem, 3vw, 1.75rem);
+    text-wrap: balance;
+    text-align: center;
+    max-width: 25em;
   }
 
   @media (width > 40rem) {
-    .hero.small .subheading {
+    .subheading {
       line-height: 1.2;
     }
   }
 
-  .skip {
-    grid-row: 3;
-    display: flex;
-    justify-content: center;
+  .subheading.bump {
+    line-height: 1;
+    font-weight: var(--sans-serif-heavy);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    letter-spacing: -0.005em;
+    margin: 0 auto -0.02em;
+    max-width: 15em;
   }
 </style>
