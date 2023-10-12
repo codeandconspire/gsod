@@ -37,8 +37,14 @@
     border-radius: var(--border-radius);
     color: #fff;
     background-color: var(--theme-primary-color);
-    transition: background-color 190ms cubic-bezier(0.33, 1, 0.68, 1);
+    transition: background-color 190ms cubic-bezier(0.33, 1, 0.68, 1),
+      opacity 100ms ease-out;
     font-size: var(--framework-font-size);
+  }
+
+  .button:active {
+    opacity: 0.7;
+    transition: none;
   }
 
   .button:hover {

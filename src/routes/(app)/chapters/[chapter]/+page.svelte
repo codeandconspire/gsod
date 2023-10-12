@@ -54,7 +54,7 @@
   secondary={chapter.secondaryColor}
   dark={chapter.darkColor}>
   <Intro simple={chapter.simplify} back={resolve(chapter.cover)}>
-    <Menu slot="menu" items={menu} />
+    <Menu slot="menu" items={menu} color={chapter.simplify} />
     <span slot="heading">{chapter.title}</span>
     <span slot="subheading">{chapter.subheading}</span>
   </Intro>
@@ -75,7 +75,7 @@
               fill="currentcolor"
               d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
           </svg>
-          <span>Close table of contents</span>
+          <span class="u-hidden">Close Table of Contents</span>
         </a>
         <a
           href="#toc"
@@ -83,12 +83,7 @@
           on:click|preventDefault={() => {
             open = true
           }}>
-          <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
-            <path
-              fill="currentcolor"
-              d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
-          </svg>
-          <span>Open table of contents</span>
+          <span>Table of Contents</span>
         </a>
         <ol class="items">
           {#each chapter.modules as module}
@@ -158,20 +153,36 @@
     gap: 1rem;
   }
 
+  .item a {
+    transition: opacity 100ms ease-out;
+  }
+
+  .item a:active {
+    opacity: 0.6;
+    transition: none;
+  }
+
   @media (width <= 70rem) {
     .toc {
       --narrow: 0;
 
       position: sticky;
+      padding: 0.5rem 0;
       top: 0;
       z-index: 1;
+      font-weight: bold;
       width: calc(100% + (var(--page-gutter) * 2));
       margin-left: calc(var(--page-gutter) * -1);
       background: #fff;
       box-shadow: 0 0.3rem 1.5rem rgba(0, 0, 0, 0.1),
-        0 0 0 0.5px rgba(0, 0, 0, 0.1);
+        0 0.5px 0 0 rgba(0, 0, 0, 0.1);
       margin-bottom: var(--margin);
       user-select: none;
+      z-index: 4;
+    }
+
+    .toc:empty {
+      display: none;
     }
 
     .toc:not(:is(.open, :target)) .items {
@@ -185,17 +196,28 @@
       width: 100%;
       margin: 0;
       z-index: 1;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .items {
       padding: var(--page-gutter);
       width: 100%;
       font-size: 1.25rem;
+      font-weight: normal;
+      margin-top: -4rem;
     }
 
-    .item {
+    .item + .item {
+      border-top: 1px solid #ddd;
       padding-top: 1rem;
-      border-top: 1px solid rgba(0, 0, 0);
+    }
+
+    .item a {
+      padding: 0.5rem;
+      margin: -0.5rem;
     }
 
     .toggle {
@@ -206,6 +228,12 @@
       display: flex;
       align-items: center;
       padding: 0.5rem var(--page-gutter);
+      transition: opacity 100ms ease-out;
+    }
+
+    .toggle:active {
+      opacity: 0.6;
+      transition: none;
     }
 
     .toggle.close {
@@ -217,7 +245,20 @@
     }
 
     .toc:is(.open, :target) .toggle.close {
-      display: flex;
+      display: block;
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      width: auto;
+      padding: 0;
+    }
+
+    .icon {
+      width: 3rem;
+      height: 3rem;
+      padding: 0.5rem;
+      margin: -0.5rem;
+      border-radius: 100%;
     }
 
     :root:has(.toc:is(.open, :target)) {

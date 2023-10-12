@@ -133,6 +133,12 @@
     padding: 0.5rem;
     margin: -0.5rem;
     margin-left: -0.85rem;
+    transition: opacity 100ms ease-out;
+  }
+
+  .back:active {
+    opacity: 0.6;
+    transition: none;
   }
 
   .chevron {

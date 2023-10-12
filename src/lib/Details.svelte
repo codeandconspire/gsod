@@ -32,6 +32,12 @@
     letter-spacing: -0.005em;
     line-height: 1.15;
     cursor: pointer;
+    transition: opacity 100ms ease-out;
+  }
+
+  .summary:active {
+    opacity: 0.7;
+    transition: none;
   }
 
   .summary + * {

@@ -171,6 +171,12 @@
   .html :global(a) {
     color: var(--theme-dark-color, #1e3e5b);
     text-decoration: underline;
+    transition: opacity 100ms ease-out, color 100ms ease-out;
+  }
+
+  .html :global(a:active) {
+    opacity: 0.6;
+    transition: none;
   }
 
   .html :global(a:hover) {

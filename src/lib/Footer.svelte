@@ -21,7 +21,12 @@
             placeholder="Your email"
             bind:value={email} />
         </label>
-        <button type="submit" class="submit">Submit</button>
+        <button type="submit" class="submit">
+          <svg class="chevron" fill="currentcolor" viewBox="0 -960 960 960">
+            <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
+          </svg>
+          <span class="u-hidden">Submit</span>
+        </button>
       </div>
       <label for="footer-opt-in">
         <input
@@ -70,18 +75,21 @@
         <a
           href="https://www.idea.int/privacy-policy"
           target="_blank"
+          class="link"
           rel="noopener noreferrer">
           Privacy Policy
         </a>
         <a
           href="https://www.idea.int/terms-and-conditions"
           target="_blank"
+          class="link"
           rel="noopener noreferrer">
-          Privacy Policy
+          Terms and Conditions
         </a>
         <a
           href="https://www.idea.int/cookies"
           target="_blank"
+          class="link"
           rel="noopener noreferrer">
           Cookie policy
         </a>
@@ -155,6 +163,19 @@
     width: 2rem;
     height: 2rem;
     margin-left: -2.5rem;
+    transition: background 100ms ease;
+  }
+
+  .submit:hover {
+    background-color: #1f5280;
+  }
+
+  .chevron {
+    will-change: transform;
+    transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+    height: 1.5rem;
+    width: 1.5rem;
+    transform: rotate(180deg);
   }
 
   .field {
@@ -236,8 +257,17 @@
     gap: 0.5rem;
   }
 
-  .menu a:hover {
+  .link:hover {
     text-decoration: underline;
+  }
+
+  .link {
+    transition: opacity 100ms ease-out;
+  }
+
+  .link:active {
+    opacity: 0.6;
+    transition: none;
   }
 
   /* Ending */
