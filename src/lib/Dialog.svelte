@@ -39,10 +39,10 @@
         {href}
         class="close"
         on:click|preventDefault={close}>
-        <svg class="icon" height="24" viewBox="0 -960 960 960" width="24">
+        <svg class="icon" height="18.8884" width="18.8733">
           <path
-            fill="currentcolor"
-            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+            d="m.375211 18.5122c.509293.4976 1.368269.4912 1.853189.0063l7.20892-7.2089 7.20468 7.2068c.4934.4934 1.3514.5009 1.8511-.0063.4997-.5093.5018-1.3481.0084-1.8436l-7.2047-7.21642 7.2047-7.2047c.4934-.49335.5009-1.341784-.0084-1.841467-.5093-.509293-1.3577-.511402-1.8511-.008437l-7.20468 7.204704-7.20892-7.206813c-.48492-.492419-1.353506-.510466-1.853189.008437-.497574.509293-.491246 1.356546-.006328 1.841466l7.208917 7.20681-7.208917 7.22062c-.484918.4828-.500856 1.3418.006328 1.8415z"
+            fill="currentcolor" />
         </svg>
         <span class="u-hidden">Close dialog</span>
       </svelte:element>
@@ -82,7 +82,7 @@
     }
     to {
       background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(7px);
     }
   }
 
@@ -162,27 +162,29 @@
 
   .close {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
+    top: 1.25rem;
+    right: 1.25rem;
+    padding: 0.6rem;
+    transition: opacity 100ms ease-out;
   }
 
-  .icon {
-    width: 3rem;
-    height: 3rem;
-    padding: 0.5rem;
-    margin: -0.5rem;
-    border-radius: 100%;
+  .close:active {
+    opacity: 0.6;
+    transition: none;
   }
 
-  .main.has-image .icon {
-    width: 2rem;
-    height: 2rem;
-    background-color: rgba(255, 255, 255, 0.8);
+  .close .icon {
+    display: block;
+  }
+
+  .main.has-image .close {
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
     transition: background-color 250ms cubic-bezier(0.22, 1, 0.36, 1),
       color 250ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .main.has-image .icon:hover {
+  .main.has-image .close:hover {
     color: #000;
     background-color: rgba(255, 255, 255, 1);
   }

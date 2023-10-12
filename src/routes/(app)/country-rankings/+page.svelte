@@ -20,10 +20,7 @@
   })
 </script>
 
-<Theme
-  primary="#000"
-  secondary="#000"
-  dark="#000">
+<Theme primary="#000" secondary="#000" dark="#000">
   sdafasdf
   <Intro simple back={resolve(ranking.cover)}>
     <Menu slot="menu" items={menu} color />

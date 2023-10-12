@@ -84,66 +84,139 @@
             .replaceAll('east-germany', 'germany')}
           <tr on:click={() => toggle(index)}>
             <td>
-              <strong>{item.name}</strong>, <span class="region">{item.region}</span>
+              <strong>{item.name}</strong>
+              ,
+              <span class="region">{item.region}</span>
               <br />
-              <a class="link" href="https://www.idea.int/democracytracker/country/{slug}" target="_blank" rel="noopener">
-                View <span class="extra">Country </span>Profile
+              <a
+                class="link"
+                href="https://www.idea.int/democracytracker/country/{slug}"
+                target="_blank"
+                rel="noopener">
+                View <span class="extra">Country</span>
+                Profile
               </a>
             </td>
-            <td style="--score: {item.representation.rank}; --rank: {item.representation.rank}; --change1y: {item.representation.change_1y.replace('-', '')}; --change5y: {item.representation.change_5y.replace('-', '')}">
+            <td
+              style="--score: {item.representation.rank}; --rank: {item
+                .representation
+                .rank}; --change1y: {item.representation.change_1y.replace(
+                '-',
+                ''
+              )}; --change5y: {item.representation.change_5y.replace('-', '')}">
               <div class="data rank">
-                <span class="box">{item.representation.rank}</span> Ranking
+                <span class="box">{item.representation.rank}</span>
+                 Ranking
               </div>
               <!-- <div class="data score">
                 Score: {(+item.representation.score).toFixed(2)}
               </div> -->
-              <div class="data year1" class:negative={item.representation.change_1y.includes('-')}>
-                <span class="box">{item.representation.change_1y}</span> Change <span class="default">(1y)</span><span class="extra">(1 year)</span>
+              <div
+                class="data year1"
+                class:negative={item.representation.change_1y.includes('-')}>
+                <span class="box">{item.representation.change_1y}</span>
+                Change
+                <span class="default">(1y)</span>
+                <span class="extra">(1 year)</span>
               </div>
-              <div class="data year5" class:negative={item.representation.change_5y.includes('-')}>
-                <span class="box">{item.representation.change_5y}</span> Change <span class="default">(5y)</span><span class="extra">(5 year)</span>
+              <div
+                class="data year5"
+                class:negative={item.representation.change_5y.includes('-')}>
+                <span class="box">{item.representation.change_5y}</span>
+                Change
+                <span class="default">(5y)</span>
+                <span class="extra">(5 year)</span>
               </div>
             </td>
-            <td style="--score: {item.rights.rank}; --rank: {item.rights.rank}; --change1y: {item.rights.change_1y.replace('-', '')}; --change5y: {item.rights.change_5y.replace('-', '')}">
+            <td
+              style="--score: {item.rights.rank}; --rank: {item.rights
+                .rank}; --change1y: {item.rights.change_1y.replace(
+                '-',
+                ''
+              )}; --change5y: {item.rights.change_5y.replace('-', '')}">
               <div class="data rank">
-                <span class="box">{item.rights.rank}</span> Ranking
+                <span class="box">{item.rights.rank}</span>
+                 Ranking
               </div>
               <!-- <div class="data score">
                 Score: {(+item.rights.score).toFixed(2)}
               </div> -->
-              <div class="data year1" class:negative={item.rights.change_1y.includes('-')}>
-                <span class="box">{item.rights.change_1y}</span> Change <span class="default">(1y)</span><span class="extra">(1 year)</span>
+              <div
+                class="data year1"
+                class:negative={item.rights.change_1y.includes('-')}>
+                <span class="box">{item.rights.change_1y}</span>
+                Change
+                <span class="default">(1y)</span>
+                <span class="extra">(1 year)</span>
               </div>
-              <div class="data year5" class:negative={item.rights.change_5y.includes('-')}>
-                <span class="box">{item.rights.change_5y}</span> Change <span class="default">(5y)</span><span class="extra">(5 year)</span>
+              <div
+                class="data year5"
+                class:negative={item.rights.change_5y.includes('-')}>
+                <span class="box">{item.rights.change_5y}</span>
+                Change
+                <span class="default">(5y)</span>
+                <span class="extra">(5 year)</span>
               </div>
             </td>
-            <td style="--score: {item.law.rank}; --rank: {item.law.rank}; --change1y: {item.law.change_1y.replace('-', '')}; --change5y: {item.law.change_5y.replace('-', '')}">
+            <td
+              style="--score: {item.law.rank}; --rank: {item.law
+                .rank}; --change1y: {item.law.change_1y.replace(
+                '-',
+                ''
+              )}; --change5y: {item.law.change_5y.replace('-', '')}">
               <div class="data rank">
-                <span class="box">{item.law.rank}</span> Ranking
+                <span class="box">{item.law.rank}</span>
+                 Ranking
               </div>
               <!-- <div class="data score">
                 Score: {(+item.law.score).toFixed(2)}
               </div> -->
-              <div class="data year1" class:negative={item.law.change_1y.includes('-')}>
-                <span class="box">{item.law.change_1y}</span> Change <span class="default">(1y)</span><span class="extra">(1 year)</span>
+              <div
+                class="data year1"
+                class:negative={item.law.change_1y.includes('-')}>
+                <span class="box">{item.law.change_1y}</span>
+                Change
+                <span class="default">(1y)</span>
+                <span class="extra">(1 year)</span>
               </div>
-              <div class="data year5" class:negative={item.law.change_5y.includes('-')}>
-                <span class="box">{item.law.change_5y}</span> Change <span class="default">(5y)</span><span class="extra">(5 year)</span>
+              <div
+                class="data year5"
+                class:negative={item.law.change_5y.includes('-')}>
+                <span class="box">{item.law.change_5y}</span>
+                Change
+                <span class="default">(5y)</span>
+                <span class="extra">(5 year)</span>
               </div>
             </td>
-            <td style="--score: {item.participation.rank}; --rank: {item.participation.rank}; --change1y: {item.participation.change_1y.replace('-', '')}; --change5y: {item.participation.change_5y.replace('-', '')}">
+            <td
+              style="--score: {item.participation.rank}; --rank: {item
+                .participation
+                .rank}; --change1y: {item.participation.change_1y.replace(
+                '-',
+                ''
+              )}; --change5y: {item.participation.change_5y.replace('-', '')}">
               <div class="data rank">
-                <span class="box">{item.participation.rank}</span> Ranking
+                <span class="box">{item.participation.rank}</span>
+                 Ranking
               </div>
               <!-- <div class="data score">
                 Score: {(+item.participation.score).toFixed(2)}
               </div> -->
-              <div class="data year1" class:negative={item.participation.change_1y.includes('-')}>
-                <span class="box">{item.participation.change_1y}</span> Change <span class="default">(1y)</span><span class="extra">(1 year)</span>
+              <div
+                class="data year1"
+                class:negative={item.participation.change_1y.includes('-')}>
+                <span class="box">{item.participation.change_1y}</span>
+                Change
+                <span class="default">(1y)</span>
+                <span class="extra">(1 year)</span>
               </div>
-              <div class="data year5" class:negative={item.participation.change_5y.includes('-')}>
-                <span class="box">{item.participation.change_5y}</span> Change <span class="default">(5y)</span><span class="extra">(5 year)</span>
+              <div
+                class="data year5"
+                class:negative={item.participation.change_5y.includes('-')}>
+                <span class="box">{item.participation.change_5y}</span>
+                Change
+                <span class="default">(5y)</span>
+                <span class="extra">(5 year)</span>
               </div>
             </td>
           </tr>
@@ -227,7 +300,7 @@
   }
 
   .link {
-    color: #4468AA;
+    color: #4468aa;
     font-size: var(--framework-font-size);
     transition: opacity 100ms ease-out, color 100ms ease-out;
     text-decoration: underline;
@@ -241,7 +314,6 @@
   .link:hover {
     color: #000;
   }
-
 
   .default {
     display: none;
@@ -282,7 +354,7 @@
     font-size: 0.9em;
     padding: 0.1em 0.2em;
     text-align: right;
-    color: #000
+    color: #000;
   }
 
   .rank .box {

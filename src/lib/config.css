@@ -30,8 +30,8 @@
 
   --sticky-top-margin: clamp(2rem, 6vh, var(--page-gutter));
 
-  --current-scroll-margin-top: calc(var(--space-small) - 1px);
-  --current-scroll-margin-bottom: calc(var(--space-small) - 1px);
+  --current-scroll-margin-top: calc(2rem - 1px);
+  --current-scroll-margin-bottom: calc(2rem - 1px);
 }
 
 @media (width > 40rem) {

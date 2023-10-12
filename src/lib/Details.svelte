@@ -25,6 +25,7 @@
     align-items: center;
     user-select: none;
     padding: 2rem 0;
+    gap: 0.5rem;
     font-family: var(--sans-serif);
     font-size: clamp(2rem, 5vw, 2.5rem);
     font-weight: var(--sans-serif-heavy);
@@ -36,7 +37,7 @@
   }
 
   .summary:active {
-    opacity: 0.7;
+    opacity: 0.6;
     transition: none;
   }
 

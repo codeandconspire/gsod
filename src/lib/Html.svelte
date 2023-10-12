@@ -175,7 +175,7 @@
   }
 
   .html :global(a:active) {
-    opacity: 0.6;
+    opacity: 0.5;
     transition: none;
   }
 
