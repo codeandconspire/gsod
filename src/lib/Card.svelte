@@ -58,7 +58,7 @@
 
   .card.has-image {
     color: #fff;
-    text-shadow: 0 0 0.8em rgba(0, 0, 0, 0.2);
+    text-shadow: 0 0 0.6em rgba(0, 0, 0, 0.6);
   }
 
   .card::before {
