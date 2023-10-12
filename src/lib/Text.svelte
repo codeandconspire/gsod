@@ -149,7 +149,6 @@
                 href="#{footnote.anchor(def._key)}"
                 on:click={onopen(def)}>
                 <svelte:self content={[{ ...block, marks }]} />
-                <sup>[{index}]</sup>
               </a>
             {:else if def?._type === 'figureReference'}
               {@const id = figure.anchor(def.figure)}
