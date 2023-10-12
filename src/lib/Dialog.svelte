@@ -178,10 +178,12 @@
     width: 2rem;
     height: 2rem;
     background-color: rgba(255, 255, 255, 0.8);
-    transition: background-color 250ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: background-color 250ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 250ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .main.has-image .icon:hover {
+    color: #000;
     background-color: rgba(255, 255, 255, 1);
   }
 </style>
