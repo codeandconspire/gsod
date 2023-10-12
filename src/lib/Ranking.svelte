@@ -44,9 +44,9 @@
       items.set(filtered)
     }
     const sorted = [...$items].sort((a, b) => {
-      if (a[$order] < b[$order]) {
+      if (a[$order].rank < b[$order].rank) {
         return -$direction
-      } else if (a[$order] > b[$order]) {
+      } else if (a[$order].rank > b[$order].rank) {
         return $direction
       }
       return 0
@@ -62,96 +62,88 @@
       type="text"
       id="table-search"
       placeholder="Search" />
-
-    <strong style="margin-left: 1rem">Regions:</strong>
-    <label>
-      <input style="margin: 0 0.25rem" type="checkbox" />
-      <span>Africa</span>
-    </label>
-    <label>
-      <input style="margin: 0 0.25rem" type="checkbox" />
-      <span>Western Asia</span>
-    </label>
-    <label>
-      <input style="margin: 0 0.25rem" type="checkbox" />
-      <span>the Americas</span>
-    </label>
-    <label>
-      <input style="margin: 0 0.25rem" type="checkbox" />
-      <span>Asia and the Pacific</span>
-    </label>
-    <label>
-      <input style="margin: 0 0.25rem" type="checkbox" />
-      <span>Europe</span>
-    </label>
   </div>
   <table>
     <thead>
       <th on:click={() => setSort('name')}>Name</th>
-      <!-- <th on:click={() => setSort('region')}>Region</th> -->
+      <th on:click={() => setSort('representation')}>Representation</th>
+      <th on:click={() => setSort('rights')}>Rights</th>
+      <th on:click={() => setSort('law')}>Rule of Law</th>
+      <th on:click={() => setSort('participation')}>Participation</th>
     </thead>
     <tbody>
       {#each $items as item, index}
-        <tr on:click={() => toggle(index)}>
-          <td>
-            <strong>{item.name}</strong>
-            <br />
-            {item.region}
-          </td>
-          <!-- <td>{item.name}</td> -->
-        </tr>
-        {#if open === index}
-          <tr>
-            <td class="expandable" colspan="4">
-              <div
-                class="details"
-                transition:slide={{ duration: 300, axis: 'y' }}>
-                <ul>
-                  <li>
-                    <strong>Representation</strong>
-                    <ul>
-                      <li>Score: {item.years[0].representation.score}</li>
-                      <li>Rank: {item.years[0].representation.rank}</li>
-                      <li>
-                        Change_1y: {item.years[0].representation.change_1y}
-                      </li>
-                      <li>
-                        Change_5y: {item.years[0].representation.change_5y}
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <strong>Rights</strong>
-                    <ul>
-                      <li>Score: {item.years[0].rights.score}</li>
-                      <li>Rank: {item.years[0].rights.rank}</li>
-                      <li>Change_1y: {item.years[0].rights.change_1y}</li>
-                      <li>Change_5y: {item.years[0].rights.change_5y}</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <strong>Law</strong>
-                    <ul>
-                      <li>Score: {item.years[0].law.score}</li>
-                      <li>Rank: {item.years[0].law.rank}</li>
-                      <li>Change_1y: {item.years[0].law.change_1y}</li>
-                      <li>Change_5y: {item.years[0].law.change_5y}</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <strong>Participation</strong>
-                    <ul>
-                      <li>Score: {item.years[0].participation.score}</li>
-                      <li>Rank: {item.years[0].participation.rank}</li>
-                      <li>
-                        Change_1y: {item.years[0].participation.change_1y}
-                      </li>
-                      <li>
-                        Change_5y: {item.years[0].participation.change_5y}
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
+        {#if item.name !== 'East Germany'}
+          {@const slug = item.name
+            .toLowerCase()
+            .replaceAll(' ', '-')
+            .replaceAll('-of-the-', '-')
+            .replaceAll('north-korea', 'democratic-peoples-republic-korea')
+            .replaceAll('south-korea', 'republic-korea')
+            .replaceAll('united-states', 'united-states-america')
+            .replaceAll('east-germany', 'germany')}
+          <tr on:click={() => toggle(index)}>
+            <td>
+              <strong>{item.name}</strong>, <span class="region">{item.region}</span>
+              <br />
+              <a class="link" href="https://www.idea.int/democracytracker/country/{slug}" target="_blank" rel="noopener">
+                View <span class="extra">Country </span>Profile
+              </a>
+            </td>
+            <td style="--score: {item.representation.rank}; --rank: {item.representation.rank}; --change1y: {item.representation.change_1y.replace('-', '')}; --change5y: {item.representation.change_5y.replace('-', '')}">
+              <div class="data rank">
+                <span class="box">{item.representation.rank}</span> Ranking
+              </div>
+              <!-- <div class="data score">
+                Score: {(+item.representation.score).toFixed(2)}
+              </div> -->
+              <div class="data year1" class:negative={item.representation.change_1y.includes('-')}>
+                <span class="box">{item.representation.change_1y}</span> Change <span class="default">(1y)</span><span class="extra">(1 year)</span>
+              </div>
+              <div class="data year5" class:negative={item.representation.change_5y.includes('-')}>
+                <span class="box">{item.representation.change_5y}</span> Change <span class="default">(5y)</span><span class="extra">(5 year)</span>
+              </div>
+            </td>
+            <td style="--score: {item.rights.rank}; --rank: {item.rights.rank}; --change1y: {item.rights.change_1y.replace('-', '')}; --change5y: {item.rights.change_5y.replace('-', '')}">
+              <div class="data rank">
+                <span class="box">{item.rights.rank}</span> Ranking
+              </div>
+              <!-- <div class="data score">
+                Score: {(+item.rights.score).toFixed(2)}
+              </div> -->
+              <div class="data year1" class:negative={item.rights.change_1y.includes('-')}>
+                <span class="box">{item.rights.change_1y}</span> Change <span class="default">(1y)</span><span class="extra">(1 year)</span>
+              </div>
+              <div class="data year5" class:negative={item.rights.change_5y.includes('-')}>
+                <span class="box">{item.rights.change_5y}</span> Change <span class="default">(5y)</span><span class="extra">(5 year)</span>
+              </div>
+            </td>
+            <td style="--score: {item.law.rank}; --rank: {item.law.rank}; --change1y: {item.law.change_1y.replace('-', '')}; --change5y: {item.law.change_5y.replace('-', '')}">
+              <div class="data rank">
+                <span class="box">{item.law.rank}</span> Ranking
+              </div>
+              <!-- <div class="data score">
+                Score: {(+item.law.score).toFixed(2)}
+              </div> -->
+              <div class="data year1" class:negative={item.law.change_1y.includes('-')}>
+                <span class="box">{item.law.change_1y}</span> Change <span class="default">(1y)</span><span class="extra">(1 year)</span>
+              </div>
+              <div class="data year5" class:negative={item.law.change_5y.includes('-')}>
+                <span class="box">{item.law.change_5y}</span> Change <span class="default">(5y)</span><span class="extra">(5 year)</span>
+              </div>
+            </td>
+            <td style="--score: {item.participation.rank}; --rank: {item.participation.rank}; --change1y: {item.participation.change_1y.replace('-', '')}; --change5y: {item.participation.change_5y.replace('-', '')}">
+              <div class="data rank">
+                <span class="box">{item.participation.rank}</span> Ranking
+              </div>
+              <!-- <div class="data score">
+                Score: {(+item.participation.score).toFixed(2)}
+              </div> -->
+              <div class="data year1" class:negative={item.participation.change_1y.includes('-')}>
+                <span class="box">{item.participation.change_1y}</span> Change <span class="default">(1y)</span><span class="extra">(1 year)</span>
+              </div>
+              <div class="data year5" class:negative={item.participation.change_5y.includes('-')}>
+                <span class="box">{item.participation.change_5y}</span> Change <span class="default">(5y)</span><span class="extra">(5 year)</span>
               </div>
             </td>
           </tr>
@@ -163,11 +155,18 @@
 
 <style>
   .ranking {
+    --padding: min(calc(var(--page-gutter) / 2), 5vw);
+
     margin: var(--space-large) 0;
+    color: #11253e;
+    width: 100%;
   }
 
   .search {
-    margin-bottom: 2rem;
+    background: #fff;
+    position: relative;
+    z-index: 2;
+    padding: 0 var(--padding) 2rem;
   }
 
   table {
@@ -175,6 +174,7 @@
     font-family: var(--sans-serif);
     font-size: var(--framework-font-size);
     border-collapse: collapse;
+    min-width: 55rem;
   }
 
   tr,
@@ -185,27 +185,123 @@
     text-align: left;
   }
 
-  tr {
+  tr:nth-child(odd) {
+    background-color: #f7f9fc;
   }
 
-  td,
-  th {
-    border-top: 1px solid;
-    padding: 0.5rem 0;
-  }
-
-  .expandable {
+  /* .expandable {
     border: 0;
     padding: 0;
   }
 
   .details {
     padding: 1rem;
+  } */
+
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    width: 100%;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 0.3rem 1.5rem rgba(0, 0, 0, 0.08),
+      0 0.5px 0 0 rgba(0, 0, 0, 0.1);
   }
 
   th {
-    position: sticky;
-    top: 0;
+    padding: 0.6rem var(--padding);
+  }
+
+  td {
+    padding: 1rem var(--padding);
+    vertical-align: top;
+  }
+
+  .region {
+    white-space: nowrap;
+  }
+
+  .link {
+    color: #4468AA;
+    font-size: var(--framework-font-size);
+    transition: opacity 100ms ease-out, color 100ms ease-out;
+    text-decoration: underline;
+  }
+
+  .link:active {
+    opacity: 0.6;
+    transition: none;
+  }
+
+  .link:hover {
+    color: #000;
+  }
+
+
+  .default {
+    display: none;
+  }
+
+  @media (width <= 60rem) {
+    .extra {
+      display: none;
+    }
+
+    .default {
+      display: inline;
+    }
+  }
+
+  td:first-child {
+    font-size: 1.25rem;
+  }
+
+  .data {
+    display: flex;
+    gap: 0.5rem;
+    text-wrap: nowrap;
+  }
+
+  .data + .data {
+    margin-top: 0.25rem;
+  }
+
+  .box {
+    position: relative;
+    top: -1px;
     background: #fff;
+    width: 2.2em;
+    z-index: 0;
+    font-family: monospace;
+    border-radius: 2px;
+    font-size: 0.9em;
+    padding: 0.1em 0.2em;
+    text-align: right;
+    color: #000
+  }
+
+  .rank .box {
+    background: rgba(158, 162, 173, calc(var(--rank) / 173));
+  }
+
+  .year1 .box {
+    background: rgba(50, 101, 147, calc(var(--change1y) / 40));
+  }
+
+  .year5 .box {
+    background: rgba(50, 101, 147, calc(var(--change5y) / 40));
+  }
+
+  .year1.negative .box {
+    background: rgba(196, 61, 81, calc(var(--change1y) / 40));
+  }
+
+  .year5.negative .box {
+    background: rgba(196, 61, 81, calc(var(--change5y) / 40));
   }
 </style>

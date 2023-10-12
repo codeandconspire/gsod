@@ -174,7 +174,7 @@
       width: calc(100% + (var(--page-gutter) * 2));
       margin-left: calc(var(--page-gutter) * -1);
       background: #fff;
-      box-shadow: 0 0.3rem 1.5rem rgba(0, 0, 0, 0.1),
+      box-shadow: 0 0.3rem 1.5rem rgba(0, 0, 0, 0.08),
         0 0.5px 0 0 rgba(0, 0, 0, 0.1);
       margin-bottom: var(--margin);
       user-select: none;
