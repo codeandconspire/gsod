@@ -82,6 +82,7 @@
     padding: 0 var(--page-gutter);
     margin-bottom: clamp(1rem, var(--page-gutter), 2.25rem);
     margin-top: -100svh;
+    z-index: 1;
   }
 
   .hero.has-menu {
