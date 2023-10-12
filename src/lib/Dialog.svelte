@@ -72,6 +72,7 @@
     top: 0;
     z-index: 2;
     animation: fade-in 400ms forwards cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 3;
   }
 
   @keyframes fade-in {
@@ -131,7 +132,7 @@
 
   @media (width <= 40rem) {
     .container {
-      padding: var(--page-gutter);
+      padding: 0;
     }
 
     .main {
