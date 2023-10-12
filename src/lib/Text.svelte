@@ -4,6 +4,8 @@
   const bindings = new WeakMap()
 
   const HEADING_REG = /h(\d)/
+  const LINK_REG = /<(https?:\/\/.+?)>/g
+
   const OFFSET = Symbol('offset')
 
   export function setOffset(offset) {
@@ -21,6 +23,21 @@
       .filter((block) => block._type === 'block')
       .flatMap((block) => block.children.map((child) => child.text))
       .join(' ')
+  }
+
+  function format(string) {
+    if (LINK_REG.test(string)) {
+      return format(string.replace(LINK_REG, '\0$1\0')).replace(
+        /\0(.+?)\0/,
+        '&lt;<a href="$1" rel="noopener noreferrer" target="_blank">$1</a>&gt;'
+      )
+    }
+    return string
+      .replace(/\n/g, '<br />')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
   }
 </script>
 
@@ -169,7 +186,7 @@
             {/if}
           {/if}
         {:else}
-          {@html block.text.replace(/\n/g, '<br />')}
+          {@html format(block.text)}
         {/if}
       {/if}
     </slot>
