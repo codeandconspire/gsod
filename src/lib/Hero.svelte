@@ -8,7 +8,6 @@
 
   function onintersect(index) {
     return () => {
-      console.log('hej')
       inview = index
     }
   }

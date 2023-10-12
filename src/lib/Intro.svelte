@@ -7,13 +7,11 @@
   export let simple = false
   export let back = null
 
-  let bottom
-
   $: heading = `h${1 + getOffset()}`
 </script>
 
 <header class="intro" class:simple class:has-menu={$$slots.menu}>
-  {#if simple}
+  {#if !simple}
     {#if image}
       <div class="graphic">
         <img alt="" {...image} class="image" />
@@ -50,7 +48,6 @@
     </div>
   </div>
 </header>
-<div id="intro-bottom" class="bottom" bind:this={bottom} />
 
 <style>
   .intro {
@@ -194,11 +191,5 @@
     .subheading {
       line-height: 1.2;
     }
-  }
-
-  .skip {
-    grid-row: 3;
-    display: flex;
-    justify-content: center;
   }
 </style>
