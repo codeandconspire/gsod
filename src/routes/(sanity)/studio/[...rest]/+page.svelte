@@ -4,6 +4,7 @@
     DocumentIcon,
     HomeIcon,
     CaseIcon,
+    InfoOutlineIcon,
     CogIcon
   } from '@sanity/icons'
   import { StudioProvider, StudioLayout, defineConfig } from 'sanity'
@@ -98,6 +99,9 @@
                 S.documentTypeListItem('case')
                   .title('Case Studies')
                   .icon(CaseIcon),
+                S.documentTypeListItem('box')
+                  .title('Information Box')
+                  .icon(InfoOutlineIcon),
                 S.documentTypeListItem('page').title('Pages').icon(DocumentIcon)
               ])
           }

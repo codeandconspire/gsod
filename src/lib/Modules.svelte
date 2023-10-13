@@ -212,7 +212,7 @@
                   heading={item.title}
                   subheading={item.subheading}
                   link={href
-                    ? { label: item.link.label || 'Show more' }
+                    ? { label: item.link.label || 'Read more' }
                     : null}>
                   <Image
                     slot="image"
@@ -227,7 +227,7 @@
                   heading={item.title}
                   subheading={item.subheading}
                   link={href
-                    ? { label: item.link.label || 'Show more' }
+                    ? { label: item.link.label || 'Read more' }
                     : null} />
               {/if}
             </Tilt>

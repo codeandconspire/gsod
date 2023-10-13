@@ -89,7 +89,7 @@
   .html :global(h3),
   .html :global(.h3) {
     font-size: clamp(1.5rem, 3vw, 1.75rem);
-    margin: calc(var(--space-medium) - var(--space-small)) 0 var(--space-small);
+    margin: 1.5em 0 0.75em;
     line-height: 1.23;
   }
 
@@ -142,7 +142,7 @@
     display: flex;
     align-items: baseline;
     gap: 0.75rem;
-    margin: 0.75em 0;
+    margin: 0.5em 0;
     text-wrap: balance;
   }
 

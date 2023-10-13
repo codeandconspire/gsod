@@ -26,7 +26,9 @@
   resolver(function (doc) {
     switch (doc?._type) {
       case 'case':
-        return `${resolve(chapter)}/${doc.slug.current}`
+        return `${resolve(chapter)}/case/${doc.slug.current}`
+      case 'box':
+        return `${resolve(chapter)}/box/${doc.slug.current}`
       default:
         return null
     }

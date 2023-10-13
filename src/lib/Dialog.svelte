@@ -51,9 +51,7 @@
           <slot name="image" />
         </div>
       {/if}
-      <Theme primary="#000" secondary="#000" dark="#000">
-        <slot />
-      </Theme>
+      <slot />
     </div>
     <button
       tabindex="-1"
@@ -84,12 +82,12 @@
 
   @keyframes fade-in {
     from {
-      background: rgba(255, 255, 255, 0);
+      background: rgba(0, 0, 0, 0);
       backdrop-filter: blur(0px);
     }
     to {
-      background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(7px);
+      background: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
     }
   }
 
@@ -133,10 +131,11 @@
     position: relative;
     z-index: 1;
     overflow: hidden;
-    color: var(--theme-text-color);
-    background: var(--theme-primary-color);
+    background: #fff;
     border-radius: var(--border-radius);
     animation: slide-in 400ms forwards cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 0.3rem 3rem rgba(0, 0, 0, 0.05),
+      0 0.5px 0 0 rgba(0, 0, 0, 0.1);
   }
 
   @media (width <= 40rem) {

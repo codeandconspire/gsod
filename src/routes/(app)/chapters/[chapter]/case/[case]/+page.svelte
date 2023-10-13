@@ -8,7 +8,7 @@
   import Theme from '$lib/Theme.svelte'
   import Image from '$lib/Image.svelte'
   import Html from '$lib/Html.svelte'
-  import Page from '../+page.svelte'
+  import Page from '../../+page.svelte'
 
   export let data
 
@@ -51,6 +51,7 @@
     letter-spacing: -0.005em;
     line-height: 1.15;
     margin: 0 0 0.75em;
+    white-space: balance;
   }
 
   .title {

@@ -60,7 +60,8 @@ export default defineType({
                     { type: 'cover' },
                     { type: 'chapter' },
                     { type: 'page' },
-                    { type: 'case' }
+                    { type: 'case' },
+                    { type: 'box' }
                   ]
                 },
                 {
