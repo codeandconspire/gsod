@@ -10,8 +10,8 @@
   /** @type {string} */
   export let dark
 
-  $: text = luma(primary) > 180 ? '#000' : '#fff'
-  $: selection = hexToRgb(primary)
+  $: text = primary && luma(primary) > 180 ? '#000' : '#fff'
+  $: selection = primary ? hexToRgb(primary) : null
 </script>
 
 <div
