@@ -196,6 +196,14 @@
     font-weight: normal;
   }
 
+  .field::selection {
+    background-color: rgba(98, 163, 191, 0.25);
+  }
+
+  .field:focus-visible {
+    outline: 2px solid #326593;
+  }
+
   /* Checkbox */
 
   .check {

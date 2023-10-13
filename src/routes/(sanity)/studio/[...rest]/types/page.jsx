@@ -33,6 +33,12 @@ export default defineType({
       group: 'main'
     },
     {
+      name: 'subheading',
+      type: 'text',
+      title: 'Subheading',
+      group: 'main'
+    },
+    {
       name: 'description',
       title: 'Description',
       type: 'array',

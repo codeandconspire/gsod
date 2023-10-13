@@ -43,10 +43,18 @@
       items.set(filtered)
     }
     const sorted = [...$items].sort((a, b) => {
-      if (a[$order].rank < b[$order].rank) {
-        return -$direction
-      } else if (a[$order].rank > b[$order].rank) {
-        return $direction
+      if ($order === 'name') {
+        if (a[$order] < b[$order]) {
+          return -$direction
+        } else if (a[$order] > b[$order]) {
+          return $direction
+        }
+      } else {
+        if (a[$order].rank - b[$order].rank) {
+          return -$direction
+        } else if (b[$order].rank - a[$order].rank) {
+          return $direction
+        }
       }
       return 0
     })
@@ -55,20 +63,26 @@
 </script>
 
 <div class="ranking">
-  <div class="search">
-    <input
-      bind:value={query}
-      type="text"
-      id="table-search"
-      placeholder="Search" />
+  <div class="intro">
+    <div class="search">
+      <input
+        bind:value={query}
+        type="text"
+        id="table-search"
+        placeholder="Search for country or region" />
+    </div>
   </div>
   <table>
     <thead>
-      <th on:click={() => setSort('name')}>Name</th>
-      <th on:click={() => setSort('representation')}>Representation</th>
-      <th on:click={() => setSort('rights')}>Rights</th>
-      <th on:click={() => setSort('law')}>Rule of Law</th>
-      <th on:click={() => setSort('participation')}>Participation</th>
+      <th on:click={() => setSort('name')} style="width: 35%">Name</th>
+      <th on:click={() => setSort('representation')} style="width: 17.5%">
+        Representation
+      </th>
+      <th on:click={() => setSort('rights')} style="width: 17.5%">Rights</th>
+      <th on:click={() => setSort('law')} style="width: 17.5%">Rule of Law</th>
+      <th on:click={() => setSort('participation')} style="width: 17.5%">
+        Participation
+      </th>
     </thead>
     <tbody>
       {#each $items as item, index}
@@ -83,8 +97,7 @@
             .replaceAll('east-germany', 'germany')}
           <tr on:click={() => toggle(index)}>
             <td>
-              <strong>{item.name}</strong>
-              ,
+              <strong>{item.name},</strong>
               <span class="region">{item.region}</span>
               <br />
               <a
@@ -229,16 +242,54 @@
   .ranking {
     --padding: min(calc(var(--page-gutter) / 2), 5vw);
 
-    margin: var(--space-large) 0;
+    margin: var(--space-small) 0;
     color: #11253e;
     width: 100%;
   }
 
-  .search {
-    background: #fff;
+  .intro {
     position: relative;
     z-index: 2;
-    padding: 0 var(--padding) 2rem;
+    background: #fff;
+  }
+
+  .search {
+    padding: 0 var(--page-gutter) var(--space-medium);
+    margin: 0 auto;
+  }
+
+  @media (width > 70rem) {
+    .search {
+      max-width: calc(var(--text-width) + (var(--page-gutter) * 2));
+    }
+  }
+
+  .search input {
+    font-family: var(--sans-serif);
+    border: 1px solid #797f87;
+    width: 50%;
+    background: #f7f9fc;
+    color: #000;
+    border-radius: 0.5rem;
+    height: 3rem;
+    padding: 0 3rem 0 1.25rem;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .search input::placeholder {
+    opacity: 1;
+    color: inherit;
+    font-weight: normal;
+  }
+
+  .search input::selection {
+    background-color: rgba(98, 163, 191, 0.25);
+  }
+
+  .search input:focus-visible {
+    outline: 2px solid #326593;
+    outline-offset: -1px;
   }
 
   table {
@@ -292,6 +343,22 @@
   td {
     padding: 1rem var(--padding);
     vertical-align: top;
+  }
+
+  td:first-child {
+    padding-left: var(--page-gutter);
+  }
+
+  th:first-child {
+    padding-left: var(--page-gutter);
+  }
+
+  td:last-child {
+    padding-right: var(--page-gutter);
+  }
+
+  th:last-child {
+    padding-right: var(--page-gutter);
   }
 
   .region {
