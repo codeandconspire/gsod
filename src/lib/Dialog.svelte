@@ -138,7 +138,7 @@
     .main {
       --padding: 2rem;
 
-      height: 100%;
+      min-height: 100%;
       border-radius: 0;
     }
   }

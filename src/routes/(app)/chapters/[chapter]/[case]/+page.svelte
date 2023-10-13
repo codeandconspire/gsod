@@ -18,27 +18,29 @@
   setOffset(1)
 </script>
 
-<Theme
-  primary={data.chapter.primaryColor}
-  secondary={data.chapter.secondaryColor}
-  dark={data.chapter.darkColor}>
-  <Dialog open href={resolve(data.chapter)}>
-    <Image
-      slot="image"
-      image={data.case.image}
-      width={900}
-      variants={[300, 600, 900]} />
-    <div class="case">
-      <h1 class="heading">
-        Case Study: <strong class="title">{asText(data.case.title)}</strong>
-      </h1>
-      <Html class="description">
-        <strong><Text content={data.case.description} /></strong>
-      </Html>
-      <Modules modules={data.case.modules} />
-    </div>
-  </Dialog>
-</Theme>
+<div class="ontop">
+  <Theme
+    primary={data.chapter.primaryColor}
+    secondary={data.chapter.secondaryColor}
+    dark={data.chapter.darkColor}>
+    <Dialog open href={resolve(data.chapter)}>
+      <Image
+        slot="image"
+        image={data.case.image}
+        width={900}
+        variants={[300, 600, 900]} />
+      <div class="case">
+        <h1 class="heading">
+          Case Study: <strong class="title">{asText(data.case.title)}</strong>
+        </h1>
+        <Html class="description">
+          <strong><Text content={data.case.description} /></strong>
+        </Html>
+        <Modules modules={data.case.modules} />
+      </div>
+    </Dialog>
+  </Theme>
+</div>
 
 <Page {data} />
 
@@ -59,5 +61,10 @@
     --text-width: 100%;
 
     margin-bottom: 1em;
+  }
+
+  .ontop {
+    position: relative;
+    z-index: 2;
   }
 </style>
