@@ -90,7 +90,7 @@
   .html :global(.h3) {
     font-size: clamp(1.5rem, 3vw, 1.75rem);
     margin: calc(var(--space-medium) - var(--space-small)) 0 var(--space-small);
-    line-height: 1.25;
+    line-height: 1.23;
   }
 
   .html :global(h3:first-child),

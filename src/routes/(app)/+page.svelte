@@ -105,7 +105,7 @@
 
   {#if cover.downloads?.length}
     <div class="u-container">
-      <Details heading="Download the report">
+      <Details heading="Download the Report">
         <div class="downloads">
           {#each cover.downloads as download}
             <a href={download.file.asset.url} download class="download">
@@ -118,7 +118,7 @@
                   variants={[200, 400, 600]} />
               {/if}
               <Html class="description">
-                <h3 class="h4 label">{download.label}</h3>
+                <h3 class="h3 label">{download.label}</h3>
                 {#if download.description}
                   <p>{download.description}</p>
                 {/if}
@@ -262,25 +262,39 @@
     display: flex;
     flex-direction: column;
     gap: clamp(1rem, 5vw, 2rem);
-    margin-top: clamp(1rem, 5vw, 2rem);
   }
 
   .download {
     display: flex;
     gap: clamp(1rem, 5vw, 2rem);
+    align-items: flex-start;
+    transition: opacity 100ms ease-out;
+    margin-top: 1rem;
+  }
+
+  .download:active {
+    opacity: 0.7;
+    transition: none;
   }
 
   .download :global(.thumbnail) {
-    width: 10rem;
-    padding: 0.5rem;
+    width: clamp(5rem, 10vw, 8rem);
+    height: auto;
     user-select: none;
-    background: #f8f8f8;
-    border-radius: var(--border-radius);
+    box-shadow: 0 0.3rem 1.25rem rgba(0, 0, 0, 0.08),
+      0 1px 0 0 rgba(0, 0, 0, 0.1);
+    flex: 0 0 auto;
+  }
+
+  .download :global(.label) {
+    text-wrap: balance;
+    max-width: 20em;
+    margin: 0 0 0.5em !important;
   }
 
   .download:hover :global(.label) {
     text-decoration: underline;
-    text-decoration-thickness: 2px;
+    text-decoration-thickness: 1.5px;
   }
 
   .download :global(.description) {
