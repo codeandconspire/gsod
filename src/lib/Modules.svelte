@@ -18,7 +18,7 @@
   export let modules = []
 
   /** @type {string?} */
-  export let current
+  export let current = null
 
   const headings = new Map()
   const scrolltracker = (node, key) => {

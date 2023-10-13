@@ -51,6 +51,7 @@
   export let plain = false
 
   const figures = getContext(figure.FIGURES)
+  const shortcode = getContext('SHORTCODE')
 
   // The Sanity PortableText format is a flat array of blocks which needs
   // processing to collect list items and preserve markDef references
@@ -158,7 +159,7 @@
               <a
                 class="anchor"
                 id="anchor-{def._key}"
-                href="#{footnotes.anchor(def._key)}"
+                href="#footnote-{def._key}"
                 on:click|preventDefault={() => {
                   footnotes.select(def)
                 }}>
@@ -169,13 +170,16 @@
               {@const index = $figures.findIndex((figure) => figure === id)}
               {@const text =
                 index > -1
-                  ? block.text.replace(/\[X\]/gi, index + 1)
+                  ? block.text.replace(
+                      /\[X\]/gi,
+                      `${shortcode ? `${shortcode}.` : ''}${index + 1}`
+                    )
                   : block.text}
               <a
                 href="#{id}"
                 on:click|preventDefault={() =>
                   document.getElementById(id)?.scrollIntoView({
-                    block: 'nearest',
+                    block: 'center',
                     behavior: 'smooth'
                   })}>
                 <svelte:self content={[{ ...block, text, marks }]} />

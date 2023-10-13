@@ -56,6 +56,12 @@ export default defineType({
       }
     },
     {
+      name: 'shortcode',
+      type: 'string',
+      title: 'Shortcode',
+      group: 'main'
+    },
+    {
       name: 'shortname',
       type: 'string',
       title: 'Shortname',

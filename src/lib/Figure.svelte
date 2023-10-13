@@ -25,8 +25,10 @@
   /** @type {string?} */
   export let id
 
-  let index
   const figures = getContext(FIGURES)
+  const shortcode = getContext('SHORTCODE')
+
+  let index
   if (id) {
     $figures = [...$figures, id]
     index = $figures.length
@@ -45,7 +47,9 @@
         <Html size="small">
           <div
             class="description"
-            data-prefix={index ? `Figure ${index}: ` : ''}>
+            data-prefix={index
+              ? `Figure ${shortcode ? `${shortcode}.` : ''}${index}: `
+              : ''}>
             <slot name="description" />
           </div>
           <div class="source">

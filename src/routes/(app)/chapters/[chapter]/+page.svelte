@@ -1,4 +1,5 @@
 <script>
+  import { setContext } from 'svelte'
   import { page } from '$app/stores'
 
   import { resolver, resolve } from '$lib/sanity.js'
@@ -15,6 +16,19 @@
 
   let current
   let open = false
+
+  $: chapter = data.chapter
+  $: menu = chapter.cover.menu.map(function each(item) {
+    const { link, label } = item
+    const href = resolve(link)
+    const children = item.children?.map(each)
+    const active =
+      $page.url.pathname === href ||
+      children?.some((child) => $page.url.pathname === child.href)
+    return { href, label, active, children }
+  })
+
+  $: setContext('SHORTCODE', chapter?.shortcode)
 
   const reset = () => {
     footnotes.reset()
@@ -41,17 +55,6 @@
     open = false
     event.preventDefault()
   }
-
-  $: chapter = data.chapter
-  $: menu = chapter.cover.menu.map(function each(item) {
-    const { link, label } = item
-    const href = resolve(link)
-    const children = item.children?.map(each)
-    const active =
-      $page.url.pathname === href ||
-      children?.some((child) => $page.url.pathname === child.href)
-    return { href, label, active, children }
-  })
 </script>
 
 {#key chapter._id}
@@ -59,6 +62,8 @@
     primary={chapter.primaryColor}
     secondary={chapter.secondaryColor}
     dark={chapter.darkColor}>
+    <slot />
+
     <Intro simple={chapter.simplify} back={resolve(chapter.cover)}>
       <Menu slot="menu" items={menu} color={chapter.simplify} />
       <span slot="heading">{chapter.title}</span>

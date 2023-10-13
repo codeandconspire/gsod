@@ -6,10 +6,6 @@
 
   export const selected = writable(null)
 
-  export function anchor(key) {
-    return `footnote-${key}`
-  }
-
   export function select(footnote) {
     selected.set(footnote)
   }
@@ -71,7 +67,7 @@
             on:click|preventDefault={onshare(asText(_selected.content))}
             href={$page.url.href.replace(
               /(#.+)|$/,
-              `#${anchor(_selected._key)}`
+              `#anchor-${_selected._key}`
             )}>
             <svg viewBox="0 -960 960 960" class="icon">
               <path
@@ -96,8 +92,7 @@
 {:else}
   <ul>
     {#each byName as item}
-      {@const id = anchor(item._key)}
-      <li {id} class="note">
+      <li id="footnote-{item.key}" class="note">
         <div class="content">
           <Html>
             <Text content={item.content} />
@@ -106,7 +101,7 @@
             <a
               title="Share"
               class="action"
-              href={$page.url.href.replace(/(#.+)|$/, `#${id}`)}>
+              href={$page.url.href.replace(/(#.+)|$/, `#anchor-${item._key}`)}>
               <svg viewBox="0 -960 960 960" class="icon">
                 <path
                   d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z" />
