@@ -12,6 +12,15 @@ export async function load({ request }) {
   const cover = await client.fetch(
     `*[_type == "cover" && slug.current == $slug][0]{
       ...,
+      downloads[]{
+        ...,
+        file{
+          asset->
+        },
+        thumbnail{
+          asset->
+        }
+      },
       featuredChapter{
         ...,
         link->{

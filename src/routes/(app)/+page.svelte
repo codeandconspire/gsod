@@ -2,9 +2,12 @@
   import { page } from '$app/stores'
 
   import { intersection } from '$lib/intersection.js'
+  import Details from '$lib/Details.svelte'
   import { resolve } from '$lib/sanity.js'
+  import Image from '$lib/Image.svelte'
   import Theme from '$lib/Theme.svelte'
   import Text from '$lib/Text.svelte'
+  import Html from '$lib/Html.svelte'
   import Menu from '$lib/Menu.svelte'
   import Hero from '$lib/Hero.svelte'
   import Card from '$lib/Card.svelte'
@@ -99,6 +102,33 @@
       {/each}
     </div>
   </div>
+
+  {#if cover.downloads?.length}
+    <div class="u-container">
+      <Details heading="Download the report">
+        <div class="downloads">
+          {#each cover.downloads as download}
+            <a href={download.file.asset.url} download class="download">
+              {#if download.thumbnail}
+                <Image
+                  class="thumbnail"
+                  alt={download.label}
+                  image={download.thumbnail}
+                  sizes="10rem"
+                  variants={[200, 400, 600]} />
+              {/if}
+              <Html class="description">
+                <h3 class="h4 label">{download.label}</h3>
+                {#if download.description}
+                  <p>{download.description}</p>
+                {/if}
+              </Html>
+            </a>
+          {/each}
+        </div>
+      </Details>
+    </div>
+  {/if}
 </Theme>
 
 <style>
@@ -117,6 +147,8 @@
     font-size: clamp(1.25rem, 10vw, 2.3rem);
     line-height: 1.25;
   }
+
+  /** Featured chapter */
 
   .feature {
     display: flex;
@@ -215,10 +247,43 @@
     background: #fff;
   }
 
+  /** Chapters grid */
+
   .items {
     margin-top: 3rem;
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  }
+
+  /** Downloads */
+
+  .downloads {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 5vw, 2rem);
+    margin-top: clamp(1rem, 5vw, 2rem);
+  }
+
+  .download {
+    display: flex;
+    gap: clamp(1rem, 5vw, 2rem);
+  }
+
+  .download :global(.thumbnail) {
+    width: 10rem;
+    padding: 0.5rem;
+    user-select: none;
+    background: #f8f8f8;
+    border-radius: var(--border-radius);
+  }
+
+  .download:hover :global(.label) {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  .download :global(.description) {
+    flex: 1 1 auto;
   }
 </style>

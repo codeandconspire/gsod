@@ -9,8 +9,6 @@
 
   export let data
 
-  console.log(data)
-
   $: ranking = data.countries
   $: menu = ranking.cover.menu.map(function each(item) {
     const { link, label } = item

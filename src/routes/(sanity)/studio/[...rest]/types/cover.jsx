@@ -1,4 +1,4 @@
-import { LinkIcon } from '@sanity/icons'
+import { LinkIcon, DownloadIcon } from '@sanity/icons'
 import { defineType } from 'sanity'
 
 import Color from '../components/Color.jsx'
@@ -113,6 +113,41 @@ export default defineType({
       components: {
         input: Color
       }
+    },
+    {
+      name: 'downloads',
+      type: 'array',
+      title: 'Downloads',
+      group: 'main',
+      of: [
+        {
+          type: 'object',
+          title: 'Item',
+          icon: DownloadIcon,
+          fields: [
+            {
+              name: 'label',
+              type: 'string',
+              title: 'Label'
+            },
+            {
+              name: 'description',
+              type: 'text',
+              title: 'Description'
+            },
+            {
+              type: 'file',
+              name: 'file',
+              title: 'File'
+            },
+            {
+              type: 'image',
+              name: 'thumbnail',
+              title: 'Thumbnail'
+            }
+          ]
+        }
+      ]
     },
     {
       name: 'highlights',
