@@ -13,7 +13,6 @@ export async function load({ request }) {
   const countries = await client.fetch(
     `*[_type == "page" && slug.current == $slug][0]{
       ...,
-      },
       "cover": *[_type == "cover" && slug.current == "2022"][0]{
         _type,
         slug,

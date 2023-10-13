@@ -9,8 +9,8 @@ export async function load({ params, request }) {
     preview: url.searchParams.has('preview'),
     token: SANITY_API_TOKEN
   })
-  const countries = await client.fetch(
-    `*[_type == "page" && slug.current == $slug][0]{
+  const chapter = await client.fetch(
+    `*[_type == "chapter" && slug.current == $slug][0]{
       ...,
       modules[]{
         ...,
@@ -173,6 +173,6 @@ export async function load({ params, request }) {
     }`,
     { slug: params.chapter }
   )
-  if (!countries) throw error(404, 'Page not found')
-  return { countries }
+  if (!chapter) throw error(404, 'Page not found')
+  return { chapter }
 }
