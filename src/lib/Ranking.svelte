@@ -1,6 +1,5 @@
 <script>
   import { writable } from 'svelte/store'
-  import { slide } from 'svelte/transition'
   import { countries } from '$lib/countries'
 
   let query = ''
@@ -106,7 +105,7 @@
               )}; --change5y: {item.representation.change_5y.replace('-', '')}">
               <div class="data rank">
                 <span class="box">{item.representation.rank}</span>
-                 Ranking
+                Ranking
               </div>
               <!-- <div class="data score">
                 Score: {(+item.representation.score).toFixed(2)}
@@ -136,7 +135,7 @@
               )}; --change5y: {item.rights.change_5y.replace('-', '')}">
               <div class="data rank">
                 <span class="box">{item.rights.rank}</span>
-                 Ranking
+                Ranking
               </div>
               <!-- <div class="data score">
                 Score: {(+item.rights.score).toFixed(2)}
@@ -166,7 +165,7 @@
               )}; --change5y: {item.law.change_5y.replace('-', '')}">
               <div class="data rank">
                 <span class="box">{item.law.rank}</span>
-                 Ranking
+                Ranking
               </div>
               <!-- <div class="data score">
                 Score: {(+item.law.score).toFixed(2)}
@@ -197,7 +196,7 @@
               )}; --change5y: {item.participation.change_5y.replace('-', '')}">
               <div class="data rank">
                 <span class="box">{item.participation.rank}</span>
-                 Ranking
+                Ranking
               </div>
               <!-- <div class="data score">
                 Score: {(+item.participation.score).toFixed(2)}

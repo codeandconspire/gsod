@@ -9,7 +9,8 @@ export async function load({ request }) {
     preview: url.searchParams.has('preview'),
     token: SANITY_API_TOKEN
   })
-  const ranking = await client.fetch(
+
+  const countries = await client.fetch(
     `*[_type == "page" && slug.current == $slug][0]{
       ...,
       },
@@ -32,8 +33,8 @@ export async function load({ request }) {
         }
       }
     }`,
-    { slug: 'country-rankings' }
+    { slug: 'countries' }
   )
-  if (!ranking) throw error(404, 'Chapter not found')
-  return { ranking }
+  if (!countries) throw error(404, 'Country page not found')
+  return { countries }
 }

@@ -248,13 +248,6 @@
     display: block;
   }
 
-  .icon {
-    width: 3rem;
-    height: 3rem;
-    padding: 0.5rem;
-    margin: -0.5rem;
-  }
-
   @media (width > 80rem) {
     .menu:is(:is(.open, :target), :not(:is(.open, :target)))
       .toggle:is(.open, .close) {

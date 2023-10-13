@@ -156,12 +156,6 @@
     grid-column: span 2;
   }
 
-  .icon {
-    width: 2rem;
-    height: 2rem;
-    margin: 0 0.5rem 0 -0.1rem;
-  }
-
   .items {
     font-family: var(--sans-serif);
     font-size: var(--framework-font-size);
