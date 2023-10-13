@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from 'svelte'
+
   import Figure, * as figure from '$lib/Figure.svelte'
   import Footnotes from '$lib/Footnotes.svelte'
   import MegaList from '$lib/MegaList.svelte'
@@ -14,12 +16,47 @@
   import Text from '$lib/Text.svelte'
 
   export let modules = []
+
+  /** @type {string?} */
+  export let current
+
+  const headings = new Map()
+  const scrolltracker = (node, key) => {
+    headings.set(node, { key })
+  }
+
+  let scrollY
+  let scrollHeight
+  const onscroll = () => {
+    for (const [, details] of headings) {
+      if (details.top < scrollY + scrollHeight) current = details.key
+      else break
+    }
+  }
+
+  const measure = () => {
+    for (const [node, details] of headings) {
+      details.top = node.getBoundingClientRect().top + scrollY
+    }
+  }
+
+  onMount(() => {
+    measure()
+    onscroll()
+  })
 </script>
+
+<svelte:window
+  bind:scrollY
+  bind:innerHeight={scrollHeight}
+  on:scroll={onscroll}
+  on:resize={measure} />
 
 {#each modules as module}
   <div class="module module-{module._type}">
     {#if module._type === 'divider'}
       <div
+        id="module-{module._key}"
         class="divider"
         class:visible={module.visible}
         class:small={module.size === 'small'}
@@ -27,20 +64,23 @@
         class:large={module.size === 'large'} />
     {:else if module._type === 'heading'}
       <div class="divider large visible" />
-      <div class="contain">
+      <div
+        class="contain"
+        id="module-{module._key}"
+        use:scrolltracker={module._key}>
         <Html size="large">
           <Text content={module.content} />
         </Html>
       </div>
     {:else if module._type === 'richText'}
-      <div class="contain">
+      <div class="contain" id="module-{module._key}">
         <Html>
           <Text content={module.content} />
         </Html>
       </div>
     {:else if module._type === 'megaList'}
       {@const { link, content } = module}
-      <div class="contain">
+      <div class="contain" id="module-{module._key}">
         {#if link}
           <Theme
             primary={link?.document?.primaryColor}
@@ -65,7 +105,7 @@
     {:else if module._type === 'teaser'}
       {@const { title, description, flip, image, content, link } = module}
       {@const href = resolve(link.document)}
-      <div class="uncontain">
+      <div class="uncontain" id="module-{module._key}">
         <Theme
           primary={link.document.primaryColor}
           secondary={link.document.secondaryColor}
@@ -92,18 +132,20 @@
     {:else if module._type === 'button'}
       {@const { link } = module}
       {@const href = resolve(link.document)}
-      {#if link.document}
-        <Theme
-          primary={link.document.primaryColor}
-          secondary={link.document.secondaryColor}
-          dark={link.document.darkColor}>
+      <div id="module-{module._key}">
+        {#if link.document}
+          <Theme
+            primary={link.document.primaryColor}
+            secondary={link.document.secondaryColor}
+            dark={link.document.darkColor}>
+            <Button {href}>{link.label}</Button>
+          </Theme>
+        {:else}
           <Button {href}>{link.label}</Button>
-        </Theme>
-      {:else}
-        <Button {href}>{link.label}</Button>
-      {/if}
+        {/if}
+      </div>
     {:else if module._type === 'figure'}
-      <div class={module.fill ? 'unwrap' : ''}>
+      <div class={module.fill ? 'unwrap' : ''} id="module-{module._key}">
         <Figure fill={module.fill} id={figure.anchor(module._key)}>
           {#if module.image}
             <img alt={module.image.alt || ''} src={module.image.asset.url} />
@@ -135,55 +177,63 @@
         </Figure>
       </div>
     {:else if module._type === 'footnotes'}
-      <Details heading={module.heading || 'References'}>
-        <div class="contain">
-          <Html>
-            <Footnotes />
-          </Html>
-        </div>
-      </Details>
+      <div id="module-{module._key}">
+        <Details heading={module.heading || 'References'}>
+          <div class="contain">
+            <Html>
+              <Footnotes />
+            </Html>
+          </div>
+        </Details>
+      </div>
     {:else if module._type === 'accordion'}
-      <Details heading={module.title || 'Details'}>
-        <div class="contain">
-          <Html>
-            <Text content={module.content} />
-          </Html>
-        </div>
-      </Details>
+      <div id="module-{module._key}">
+        <Details heading={module.title || 'Details'}>
+          <div class="contain">
+            <Html>
+              <Text content={module.content} />
+            </Html>
+          </div>
+        </Details>
+      </div>
     {:else if module._type === 'blurbs'}
-      {#each module.items as item}
-        {@const href = resolve(item.link.document)}
-        {#if href}
-          <Tilt
-            {href}
-            data-sveltekit-noscroll
-            data-sveltekit-replacestate
-            let:hover>
-            {#if item.link.document.image}
-              <Card
-                {hover}
-                heading={item.title}
-                subheading={item.subheading}
-                link={href ? { label: item.link.label || 'Show more' } : null}>
-                <Image
-                  slot="image"
-                  image={item.link.document.image}
-                  width={300}
-                  variants={[300, 600, 900]}
-                  sizes="(min-width: 40rem) 50vw, (min-width: 60rem) 33vw" />
-              </Card>
-            {:else}
-              <Card
-                {hover}
-                heading={item.title}
-                subheading={item.subheading}
-                link={href
-                  ? { label: item.link.label || 'Show more' }
-                  : null} />
-            {/if}
-          </Tilt>
-        {/if}
-      {/each}
+      <div id="module-{module._key}">
+        {#each module.items as item}
+          {@const href = resolve(item.link.document)}
+          {#if href}
+            <Tilt
+              {href}
+              data-sveltekit-noscroll
+              data-sveltekit-replacestate
+              let:hover>
+              {#if item.link.document.image}
+                <Card
+                  {hover}
+                  heading={item.title}
+                  subheading={item.subheading}
+                  link={href
+                    ? { label: item.link.label || 'Show more' }
+                    : null}>
+                  <Image
+                    slot="image"
+                    image={item.link.document.image}
+                    width={300}
+                    variants={[300, 600, 900]}
+                    sizes="(min-width: 40rem) 50vw, (min-width: 60rem) 33vw" />
+                </Card>
+              {:else}
+                <Card
+                  {hover}
+                  heading={item.title}
+                  subheading={item.subheading}
+                  link={href
+                    ? { label: item.link.label || 'Show more' }
+                    : null} />
+              {/if}
+            </Tilt>
+          {/if}
+        {/each}
+      </div>
     {/if}
   </div>
 {/each}

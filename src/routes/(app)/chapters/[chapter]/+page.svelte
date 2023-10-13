@@ -13,6 +13,7 @@
 
   export let data
 
+  let current
   let open = false
 
   const reset = () => {
@@ -51,100 +52,99 @@
   })
 </script>
 
-<Theme
-  primary={chapter.primaryColor}
-  secondary={chapter.secondaryColor}
-  dark={chapter.darkColor}>
-  <Intro simple={chapter.simplify} back={resolve(chapter.cover)}>
-    <Menu slot="menu" items={menu} color={chapter.simplify} />
-    <span slot="heading">{chapter.title}</span>
-    <span slot="subheading">
-      {chapter.subheading ? chapter.subheading : ''}
-    </span>
-    <div slot="portrait">
-      {#if chapter.authorImage}
-        <Image
-          image={chapter.authorImage}
-          variants={[64, 128, 192]}
-          sizes="4rem" />
-      {/if}
-    </div>
-    <div slot="author">
-      {#if chapter.author && chapter.authorTitle}
-        <strong>{chapter.author}</strong>
-        <br />
-        <span>{chapter.authorTitle}</span>
-      {/if}
-    </div>
-  </Intro>
+{#key chapter._id}
+  <Theme
+    primary={chapter.primaryColor}
+    secondary={chapter.secondaryColor}
+    dark={chapter.darkColor}>
+    <Intro simple={chapter.simplify} back={resolve(chapter.cover)}>
+      <Menu slot="menu" items={menu} color={chapter.simplify} />
+      <span slot="heading">{chapter.title}</span>
+      <span slot="subheading">
+        {chapter.subheading ? chapter.subheading : ''}
+      </span>
+      <div slot="portrait">
+        {#if chapter.authorImage}
+          <Image
+            image={chapter.authorImage}
+            variants={[64, 128, 192]}
+            sizes="4rem" />
+        {/if}
+      </div>
+      <div slot="author">
+        {#if chapter.author && chapter.authorTitle}
+          <strong>{chapter.author}</strong>
+          <br />
+          <span>{chapter.authorTitle}</span>
+        {/if}
+      </div>
+    </Intro>
 
-  <div class="content">
-    <nav class="aside toc" class:open id="toc">
-      <!-- svelte-ignore a11y-invalid-attribute -->
-      {#if !chapter.hidetoc}
-        <a
-          href="#"
-          class="toggle close"
-          aria-controls="toc"
-          on:click|preventDefault={() => {
-            open = false
-          }}>
-          <svg height="18.8884" width="18.8733">
-            <path
-              d="m.375211 18.5122c.509293.4976 1.368269.4912 1.853189.0063l7.20892-7.2089 7.20468 7.2068c.4934.4934 1.3514.5009 1.8511-.0063.4997-.5093.5018-1.3481.0084-1.8436l-7.2047-7.21642 7.2047-7.2047c.4934-.49335.5009-1.341784-.0084-1.841467-.5093-.509293-1.3577-.511402-1.8511-.008437l-7.20468 7.204704-7.20892-7.206813c-.48492-.492419-1.353506-.510466-1.853189.008437-.497574.509293-.491246 1.356546-.006328 1.841466l7.208917 7.20681-7.208917 7.22062c-.484918.4828-.500856 1.3418.006328 1.8415z"
-              fill="currentcolor" />
-          </svg>
-        </a>
-        <a
-          href="#toc"
-          class="toggle open"
-          on:click|preventDefault={() => {
-            open = true
-          }}>
-          <svg height="17.7056" width="24.1638">
-            <path d="m0 0h24.1638v17.7056h-24.1638z" opacity="0" />
-            <g fill="currentcolor">
+    <div class="content">
+      <nav class="aside toc" class:open id="toc">
+        <!-- svelte-ignore a11y-invalid-attribute -->
+        {#if !chapter.hidetoc}
+          <a
+            href="#"
+            class="toggle close"
+            aria-controls="toc"
+            on:click|preventDefault={() => {
+              open = false
+            }}>
+            <svg height="18.8884" width="18.8733">
               <path
-                d="m7.12873 17.1644h15.91927c.6201 0 1.1158-.484 1.1158-1.1062 0-.6298-.4936-1.1159-1.1158-1.1159h-15.91927c-.62976 0-1.11585.484-1.11585 1.1159 0 .6201.48398 1.1062 1.11585 1.1062z" />
-              <path
-                d="m1.64741 17.7056c.91313 0 1.64953-.7439 1.64953-1.6474 0-.9131-.7364-1.6474-1.64953-1.6474-.911007 0-1.64741.7343-1.64741 1.6474 0 .9035.736403 1.6474 1.64741 1.6474z" />
-              <path
-                d="m7.12873 9.97451h15.91927c.6201 0 1.1158-.49359 1.1158-1.11585 0-.62015-.4936-1.10624-1.1158-1.10624h-15.91927c-.62976 0-1.11585.48398-1.11585 1.10624 0 .62015.48398 1.11585 1.11585 1.11585z" />
-              <path
-                d="m1.64741 10.5082c.91313 0 1.64953-.73642 1.64953-1.64954s-.7364-1.64741-1.64953-1.64741c-.911007 0-1.64741.73429-1.64741 1.64741s.736403 1.64954 1.64741 1.64954z" />
-              <path
-                d="m7.12873 2.77499h15.91927c.6201 0 1.1158-.48399 1.1158-1.10625 0-.62765-.4936-1.115849-1.1158-1.115849h-15.91927c-.62976 0-1.11585.483979-1.11585 1.115849 0 .62016.48398 1.10625 1.11585 1.10625z" />
-              <path
-                d="m1.64741 3.30866c.91313 0 1.64953-.73641 1.64953-1.63992 0-.911009-.7364-1.6474118-1.64953-1.6474118-.911007 0-1.64741.7364028-1.64741 1.6474118 0 .90351.736403 1.63992 1.64741 1.63992z" />
-            </g>
-          </svg>
-          <span>Table of Contents</span>
-        </a>
-        <ol class="items">
-          {#each chapter.modules as module}
-            {#if module._type === 'richText' || module._type === 'heading'}
-              {@const heading = module.content.find(
-                (block) => block.style === 'h2'
-              )}
-              {#if heading}
+                d="m.375211 18.5122c.509293.4976 1.368269.4912 1.853189.0063l7.20892-7.2089 7.20468 7.2068c.4934.4934 1.3514.5009 1.8511-.0063.4997-.5093.5018-1.3481.0084-1.8436l-7.2047-7.21642 7.2047-7.2047c.4934-.49335.5009-1.341784-.0084-1.841467-.5093-.509293-1.3577-.511402-1.8511-.008437l-7.20468 7.204704-7.20892-7.206813c-.48492-.492419-1.353506-.510466-1.853189.008437-.497574.509293-.491246 1.356546-.006328 1.841466l7.208917 7.20681-7.208917 7.22062c-.484918.4828-.500856 1.3418.006328 1.8415z"
+                fill="currentcolor" />
+            </svg>
+          </a>
+          <a
+            href="#toc"
+            class="toggle open"
+            on:click|preventDefault={() => {
+              open = true
+            }}>
+            <svg height="17.7056" width="24.1638">
+              <path d="m0 0h24.1638v17.7056h-24.1638z" opacity="0" />
+              <g fill="currentcolor">
+                <path
+                  d="m7.12873 17.1644h15.91927c.6201 0 1.1158-.484 1.1158-1.1062 0-.6298-.4936-1.1159-1.1158-1.1159h-15.91927c-.62976 0-1.11585.484-1.11585 1.1159 0 .6201.48398 1.1062 1.11585 1.1062z" />
+                <path
+                  d="m1.64741 17.7056c.91313 0 1.64953-.7439 1.64953-1.6474 0-.9131-.7364-1.6474-1.64953-1.6474-.911007 0-1.64741.7343-1.64741 1.6474 0 .9035.736403 1.6474 1.64741 1.6474z" />
+                <path
+                  d="m7.12873 9.97451h15.91927c.6201 0 1.1158-.49359 1.1158-1.11585 0-.62015-.4936-1.10624-1.1158-1.10624h-15.91927c-.62976 0-1.11585.48398-1.11585 1.10624 0 .62015.48398 1.11585 1.11585 1.11585z" />
+                <path
+                  d="m1.64741 10.5082c.91313 0 1.64953-.73642 1.64953-1.64954s-.7364-1.64741-1.64953-1.64741c-.911007 0-1.64741.73429-1.64741 1.64741s.736403 1.64954 1.64741 1.64954z" />
+                <path
+                  d="m7.12873 2.77499h15.91927c.6201 0 1.1158-.48399 1.1158-1.10625 0-.62765-.4936-1.115849-1.1158-1.115849h-15.91927c-.62976 0-1.11585.483979-1.11585 1.115849 0 .62016.48398 1.10625 1.11585 1.10625z" />
+                <path
+                  d="m1.64741 3.30866c.91313 0 1.64953-.73641 1.64953-1.63992 0-.911009-.7364-1.6474118-1.64953-1.6474118-.911007 0-1.64741.7364028-1.64741 1.6474118 0 .90351.736403 1.63992 1.64741 1.63992z" />
+              </g>
+            </svg>
+            <span>Table of Contents</span>
+          </a>
+          <ol class="items">
+            {#each chapter.modules as module}
+              {#if module._type === 'heading'}
                 <li class="item">
                   <a
-                    href="{resolve(chapter)}#heading-{heading._key}"
+                    class="anchor"
+                    class:current={current === module._key}
+                    href="#module-{module._key}"
                     on:click={scroll}>
-                    {asText([heading])}
+                    {asText(module.content)}
                   </a>
                 </li>
               {/if}
-            {/if}
-          {/each}
-        </ol>
-      {/if}
-    </nav>
-    <div class="body">
-      <Modules modules={chapter.modules} />
+            {/each}
+          </ol>
+        {/if}
+      </nav>
+      <div class="body">
+        <Modules modules={chapter.modules} bind:current />
+      </div>
     </div>
-  </div>
-</Theme>
+  </Theme>
+{/key}
 
 <style>
   .content {
@@ -182,11 +182,15 @@
     gap: 1rem;
   }
 
-  .item a {
+  .anchor {
     transition: opacity 100ms ease-out;
   }
 
-  .item a:active {
+  .anchor.current {
+    font-weight: var(--sans-serif-bold);
+  }
+
+  .anchor:active {
     opacity: 0.5;
     transition: none;
   }
@@ -243,7 +247,7 @@
       padding-top: 1rem;
     }
 
-    .item a {
+    .anchor {
       padding: 0.5rem;
       margin: -0.5rem;
     }
