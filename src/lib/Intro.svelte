@@ -45,6 +45,16 @@
           <slot name="subheading" />
         </p>
       {/if}
+      <div class="author">
+        {#if $$slots.portrait}
+          <slot name="portrait" />
+        {/if}
+        {#if $$slots.author}
+          <div class="name">
+            <slot name="author" />
+          </div>
+        {/if}
+      </div>
     </div>
   </div>
 </header>
@@ -65,6 +75,7 @@
     background: transparent;
     color: var(--color-text);
     padding-bottom: 0;
+    margin-bottom: calc((clamp(3rem, 10vh, 7rem) * -1) + var(--space-small));
   }
 
   .intro.has-menu {
@@ -193,9 +204,33 @@
     text-wrap: balance;
   }
 
+  .subheading:global(:has(> *:empty)) {
+    display: none;
+  }
+
   @media (width > 40rem) {
     .subheading {
       line-height: 1.2;
     }
+  }
+
+  .author {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: var(--framework-font-size);
+  }
+
+  .author :global(img) {
+    border-radius: 50%;
+    width: clamp(3rem, 5vw, 4rem);
+  }
+
+  .author .name {
+    display: block;
+    position: relative;
+    top: -0.1rem;
+    max-width: 18em;
+    text-wrap: balance;
   }
 </style>

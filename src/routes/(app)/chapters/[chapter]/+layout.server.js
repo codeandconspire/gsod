@@ -12,6 +12,10 @@ export async function load({ params, request }) {
   const chapter = await client.fetch(
     `*[_type == "chapter" && slug.current == $slug][0]{
       ...,
+      authorImage{
+        ...,
+        asset->
+      },
       modules[]{
         ...,
         _type == 'blurbs' => {

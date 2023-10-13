@@ -7,6 +7,7 @@
   import { asText } from '$lib/Text.svelte'
   import Modules from '$lib/Modules.svelte'
   import Theme from '$lib/Theme.svelte'
+  import Image from '$lib/Image.svelte'
   import Intro from '$lib/Intro.svelte'
   import Menu from '$lib/Menu.svelte'
 
@@ -57,7 +58,24 @@
   <Intro simple={chapter.simplify} back={resolve(chapter.cover)}>
     <Menu slot="menu" items={menu} color={chapter.simplify} />
     <span slot="heading">{chapter.title}</span>
-    <span slot="subheading">{chapter.subheading}</span>
+    <span slot="subheading">
+      {chapter.subheading ? chapter.subheading : ''}
+    </span>
+    <div slot="portrait">
+      {#if chapter.authorImage}
+        <Image
+          image={chapter.authorImage}
+          variants={[64, 128, 192]}
+          sizes="4rem" />
+      {/if}
+    </div>
+    <div slot="author">
+      {#if chapter.author && chapter.authorTitle}
+        <strong>{chapter.author}</strong>
+        <br />
+        <span>{chapter.authorTitle}</span>
+      {/if}
+    </div>
   </Intro>
 
   <div class="content">

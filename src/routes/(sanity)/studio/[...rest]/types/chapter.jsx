@@ -64,7 +64,7 @@ export default defineType({
     },
     {
       name: 'title',
-      type: 'text',
+      type: 'string',
       title: 'Title',
       group: 'main'
     },
@@ -86,6 +86,24 @@ export default defineType({
           lists: []
         }
       ]
+    },
+    {
+      name: 'author',
+      title: 'Author Name',
+      type: 'string',
+      group: 'main'
+    },
+    {
+      name: 'authorTitle',
+      title: 'Author Title',
+      type: 'string',
+      group: 'main'
+    },
+    {
+      name: 'authorImage',
+      title: 'Author image',
+      type: 'image',
+      group: 'main'
     },
     {
       name: 'primaryColor',
