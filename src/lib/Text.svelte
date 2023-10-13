@@ -42,35 +42,31 @@
 </script>
 
 <script>
-  import { page } from '$app/stores'
-
-  import Footnotes, * as footnote from '$lib/Footnotes.svelte'
+  import * as footnotes from '$lib/Footnotes.svelte'
   import * as figure from '$lib/Figure.svelte'
   import { resolve } from '$lib/sanity.js'
 
-  export let plain = false
-
   /** @type {any[]}*/
   export let content
+  export let plain = false
 
-  const footnotes = footnote.all()
   const figures = getContext(figure.FIGURES)
-
-  let selected = null
-  const onopen = (def) => (event) => {
-    selected = def
-    event.preventDefault()
-  }
-  const onclose = (event) => {
-    selected = null
-    event.preventDefault()
-  }
 
   // The Sanity PortableText format is a flat array of blocks which needs
   // processing to collect list items and preserve markDef references
   $: blocks = content?.reduce(function compile(acc, block) {
     const { _key, children, marks, markDefs, listItem } = block
     const prev = acc.at(-1)
+
+    if (markDefs) {
+      for (const def of markDefs) {
+        if (def._type === 'footnote') {
+          footnotes.add(def)
+        } else if (def._type === 'figureReference') {
+          // figure.add(def)
+        }
+      }
+    }
 
     if (listItem) {
       // Create a faux child list item
@@ -159,12 +155,13 @@
                 <svelte:self content={[{ ...block, marks }]} />
               {/if}
             {:else if def?._type === 'footnote'}
-              {@const index = footnotes.push(def)}
               <a
                 class="anchor"
                 id="anchor-{def._key}"
-                href="#{footnote.anchor(def._key)}"
-                on:click={onopen(def)}>
+                href="#{footnotes.anchor(def._key)}"
+                on:click|preventDefault={() => {
+                  footnotes.select(def)
+                }}>
                 <svelte:self content={[{ ...block, marks }]} />
               </a>
             {:else if def?._type === 'figureReference'}
@@ -191,14 +188,6 @@
       {/if}
     </slot>
   {/each}
-{/if}
-
-{#if selected}
-  <Footnotes
-    selected
-    items={[selected]}
-    on:click={onclose}
-    share={$page.url.href.replace(/(#.+)|$/, `#anchor-${selected._key}`)} />
 {/if}
 
 <style>

@@ -1,6 +1,7 @@
 <script>
   import { page } from '$app/stores'
 
+  import Footnotes from '$lib/Footnotes.svelte'
   import { resolve } from '$lib/sanity.js'
   import Footer from '$lib/Footer.svelte'
 
@@ -20,6 +21,7 @@
 <div class="layout">
   <div class="content"><slot /></div>
   <Footer form={form?.signup} {groups} />
+  <Footnotes selection />
 </div>
 
 <style>

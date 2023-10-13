@@ -1,18 +1,26 @@
 <script context="module">
   import { setContext, getContext } from 'svelte'
+  import { get, writable } from 'svelte/store'
 
-  export const FOOTNOTES = Symbol('footnotes')
+  const FOOTNOTES = Symbol('footnotes')
+
+  export const selected = writable(null)
 
   export function anchor(key) {
     return `footnote-${key}`
   }
 
-  export function reset() {
-    setContext(FOOTNOTES, [])
+  export function select(footnote) {
+    selected.set(footnote)
   }
 
-  export function all() {
-    return getContext(FOOTNOTES) || []
+  export function reset() {
+    setContext(FOOTNOTES, writable(new Set()))
+  }
+
+  export function add(footnote) {
+    const footnotes = getContext(FOOTNOTES)
+    footnotes.set(new Set([...get(footnotes), footnote]))
   }
 </script>
 
@@ -22,75 +30,83 @@
   import Text, { asText } from '$lib/Text.svelte'
   import Html from '$lib/Html.svelte'
 
-  /** @type {string?}*/
-  export let share = null
-  export let selected = false
-  export let items = all()
+  export let selection = false
 
-  $: byName = items.slice().sort((a, b) => {
-    const aName = asText(a.content)?.replace(/^The /, '') || ''
-    const bName = asText(b.content)?.replace(/^The /, '') || ''
-    return aName < bName ? -1 : aName > bName ? 1 : 0
-  })
+  const footnotes = getContext(FOOTNOTES)
 
-  const onshare = (event) => {
-    const url = /** @type {string} */ (share)
+  $: _selected = $selected
+  $: byName = selection
+    ? []
+    : Array.from($footnotes).sort((a, b) => {
+        const aName = asText(a.content)?.replace(/^The /, '') || ''
+        const bName = asText(b.content)?.replace(/^The /, '') || ''
+        return aName < bName ? -1 : aName > bName ? 1 : 0
+      })
+
+  const onshare = (text) => (event) => {
+    const { href } = event.currentTarget
     if ('share' in navigator) {
-      navigator.share({ url, text: asText(items[0].content) })
-      event.preventDefault()
+      navigator.share({ url: href, text })
     } else if ('clipboard' in navigator) {
       const type = 'text/plain'
-      const blob = new Blob([url], { type })
+      const blob = new Blob([href], { type })
       const data = [new ClipboardItem({ [type]: blob })]
       // @ts-ignore
       navigator.clipboard.write(data)
-      event.preventDefault()
     }
   }
 </script>
 
-{#if selected}
-  {#each byName as item}
-    {@const id = anchor(item._key)}
-    <div {id} class="note selected">
+{#if selection}
+  {#if _selected}
+    <div class="note selected">
       <div class="content">
-        <Text content={item.content} />
+        <Html>
+          <Text content={_selected.content} />
+        </Html>
         <div class="actions">
           <a
-            href={share || $page.url.href.replace(/(#.+)|$/, `#${id}`)}
-            class="action"
             title="Share"
-            on:click|preventDefault={onshare}>
+            class="action"
+            on:click|preventDefault={onshare(asText(_selected.content))}
+            href={$page.url.href.replace(
+              /(#.+)|$/,
+              `#${anchor(_selected._key)}`
+            )}>
             <svg viewBox="0 -960 960 960" class="icon">
               <path
                 d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z" />
             </svg>
           </a>
-          <a href="#_" class="action" title="Close" on:click>
+          <button
+            class="action"
+            title="Close"
+            on:click|preventDefault={() => {
+              select(null)
+            }}>
             <svg viewBox="0 -960 960 960" class="icon">
               <path
                 d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     </div>
-  {/each}
+  {/if}
 {:else}
   <ul>
     {#each byName as item}
       {@const id = anchor(item._key)}
-      <li {id} class="note" class:selected>
+      <li {id} class="note">
         <div class="content">
           <Html>
             <Text content={item.content} />
           </Html>
           <div class="actions">
             <a
-              href={share || $page.url.href.replace(/(#.+)|$/, `#${id}`)}
-              class="action"
               title="Share"
-              on:click|preventDefault={onshare}>
+              class="action"
+              href={$page.url.href.replace(/(#.+)|$/, `#${id}`)}>
               <svg viewBox="0 -960 960 960" class="icon">
                 <path
                   d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z" />
@@ -112,6 +128,7 @@
 <style>
   .note {
     text-align: left;
+    font-family: var(--serif);
   }
 
   .note:is(:target, .selected) {
