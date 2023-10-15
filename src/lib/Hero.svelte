@@ -75,10 +75,7 @@
         <div class="body">
           <div class="content">
             <div class="subheading bump">
-              {slide.title}
-            </div>
-            <div class="subheading">
-              <Text content={slide.description} />
+              <Text content={slide.text} />
             </div>
           </div>
         </div>
@@ -178,7 +175,7 @@
     font-weight: var(--sans-serif-light);
     letter-spacing: -0.01em;
     max-width: 8em;
-    margin: -0.5em auto 0;
+    margin: -0.1em auto 0;
   }
 
   .heading :global(strong) {
@@ -194,7 +191,7 @@
     max-width: 25em;
   }
 
-  .primary .subheading {
+  .subheading {
     margin: 0 auto;
     text-align: center;
   }
@@ -206,11 +203,11 @@
   }
 
   .subheading.bump {
-    line-height: 1;
+    line-height: 1.15;
     font-weight: var(--sans-serif-heavy);
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
     letter-spacing: -0.005em;
-    margin: 0 0 -0.02em;
-    max-width: 15em;
+    margin: 0 auto -0.02em;
+    max-width: 16em;
   }
 </style>

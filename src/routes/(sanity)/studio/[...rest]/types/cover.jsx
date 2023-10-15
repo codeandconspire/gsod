@@ -161,14 +161,9 @@ export default defineType({
           title: 'Item',
           fields: [
             {
-              name: 'title',
-              type: 'string',
-              title: 'Title'
-            },
-            {
-              name: 'description',
+              name: 'text',
               type: 'array',
-              title: 'Description',
+              title: 'Text',
               of: [
                 {
                   type: 'block',

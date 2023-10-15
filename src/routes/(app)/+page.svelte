@@ -294,7 +294,7 @@
 
   .download:hover :global(.label) {
     text-decoration: underline;
-    text-decoration-thickness: 1.5px;
+    text-decoration-thickness: 1.5px !important;
   }
 
   .download :global(.description) {
