@@ -10,7 +10,7 @@ export async function load(event) {
     preview: url.searchParams.has('preview'),
     token: SANITY_API_TOKEN
   })
-  const _box = client.fetch(
+  const box = client.fetch(
     `*[_type == "box" && slug.current == $slug][0]{
         ...,
         modules[]{
@@ -156,6 +156,6 @@ export async function load(event) {
       }`,
     { slug: params.box }
   )
-  if (!_box) throw error(404, 'Box not found')
-  return { box: _box }
+  if (!box) throw error(404, 'Box not found')
+  return { box }
 }

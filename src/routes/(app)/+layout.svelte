@@ -21,7 +21,6 @@
 <div class="layout">
   <div class="content"><slot /></div>
   <Footer form={form?.signup} {groups} />
-  <Footnotes selection />
 </div>
 
 <style>

@@ -62,8 +62,6 @@
     primary={chapter.primaryColor}
     secondary={chapter.secondaryColor}
     dark={chapter.darkColor}>
-    <slot />
-
     <Intro simple={chapter.simplify} back={resolve(chapter.cover)}>
       <Menu slot="menu" items={menu} color={chapter.simplify} />
       <span slot="heading">{chapter.title}</span>

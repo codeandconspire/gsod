@@ -5,9 +5,10 @@
   import Modules from '$lib/Modules.svelte'
   import { resolve } from '$lib/sanity.js'
   import Dialog from '$lib/Dialog.svelte'
+  import Theme from '$lib/Theme.svelte'
   import Image from '$lib/Image.svelte'
-  import Html from '$lib/Html.svelte'
   import Page from '../../+page.svelte'
+  import Html from '$lib/Html.svelte'
 
   export let data
 
@@ -17,7 +18,10 @@
   setOffset(1)
 </script>
 
-<Page {data}>
+<Theme
+  primary={data.chapter.primaryColor}
+  secondary={data.chapter.secondaryColor}
+  dark={data.chapter.darkColor}>
   <Dialog open href={resolve(data.chapter)}>
     <Image
       slot="image"
@@ -34,7 +38,9 @@
       <Modules modules={data.case.modules} />
     </div>
   </Dialog>
-</Page>
+</Theme>
+
+<Page {data} />
 
 <style>
   .heading {
