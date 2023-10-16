@@ -2,11 +2,11 @@
   import { setContext } from 'svelte'
   import { page } from '$app/stores'
 
-  import { resolver, resolve } from '$lib/sanity.js'
   import * as footnotes from '$lib/Footnotes.svelte'
   import * as figure from '$lib/Figure.svelte'
   import { asText } from '$lib/Text.svelte'
   import Modules from '$lib/Modules.svelte'
+  import { resolve } from '$lib/sanity.js'
   import Theme from '$lib/Theme.svelte'
   import Image from '$lib/Image.svelte'
   import Intro from '$lib/Intro.svelte'
@@ -36,17 +36,6 @@
   }
 
   reset()
-
-  resolver(function (doc) {
-    switch (doc?._type) {
-      case 'case':
-        return `${resolve(chapter)}/case/${doc.slug.current}`
-      case 'box':
-        return `${resolve(chapter)}/box/${doc.slug.current}`
-      default:
-        return null
-    }
-  })
 
   function scroll(event) {
     const { hash } = new URL(event.currentTarget.href)
