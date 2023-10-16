@@ -41,7 +41,13 @@ export default defineType({
           name: 'document',
           type: 'reference',
           title: 'Document',
-          to: [{ type: 'chapter' }, { type: 'page' }]
+          to: [
+            { type: 'chapter' },
+            { type: 'page' },
+            { type: 'box' },
+            { type: 'case' },
+            { type: 'cover' }
+          ]
         }
       ]
     }

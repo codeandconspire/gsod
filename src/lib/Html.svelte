@@ -41,6 +41,10 @@
     margin: 1em 0;
   }
 
+  .html.small :global(p) {
+    margin: 0.5em 0;
+  }
+
   .html.large :global(p) {
     text-wrap: balance;
   }
@@ -100,14 +104,15 @@
 
   .html :global(h4),
   .html :global(.h4) {
-    font-size: inherit;
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: normal;
   }
 
   .html :global(h5),
   .html :global(.h5),
   .html :global(h6),
   .html :global(.h6) {
-    font-size: 1rem;
+    font-size: inherit;
     text-transform: uppercase;
     letter-spacing: 0.1em;
   }
@@ -117,13 +122,12 @@
   .html :global(blockquote) {
     display: flex;
     gap: 0.25em;
-    color: var(--theme-primary-color);
+    color: var(--theme-dark-color);
     font-family: var(--sans-serif);
     line-height: 1.3;
     letter-spacing: 0;
     margin: 1em 0;
     text-wrap: balance;
-    font-weight: 700;
     font-size: clamp(1.5rem, 3vw, 1.75rem);
   }
 

@@ -20,7 +20,13 @@ export default defineType({
       name: 'reference',
       title: 'Link',
       type: 'reference',
-      to: [{ type: 'page' }, { type: 'chapter' }, { type: 'cover' }]
+      to: [
+        { type: 'chapter' },
+        { type: 'page' },
+        { type: 'box' },
+        { type: 'case' },
+        { type: 'cover' }
+      ]
     }
   ]
 })

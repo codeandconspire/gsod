@@ -157,7 +157,9 @@
             {#if module.description}
               <Text content={module.description} let:block>
                 {#if block.style === 'normal'}
-                  <Text content={block.children} />
+                  <p>
+                    <Text content={block.children} />
+                  </p>
                 {:else}
                   <Text content={block} />
                 {/if}
@@ -168,7 +170,9 @@
             {#if module.source}
               <Text content={module.source} let:block>
                 {#if block.style === 'normal'}
-                  <Text content={block.children} />
+                  <p>
+                    <Text content={block.children} />
+                  </p>
                 {:else}
                   <Text content={block} />
                 {/if}

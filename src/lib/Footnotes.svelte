@@ -57,7 +57,7 @@
   {#if _selected}
     <div class="note selected">
       <div class="content">
-        <Html>
+        <Html size="small">
           <Text content={_selected.content} />
         </Html>
         <div class="actions">

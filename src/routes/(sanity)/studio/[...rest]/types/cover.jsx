@@ -257,7 +257,13 @@ export default defineType({
               name: 'link',
               type: 'reference',
               title: 'Link',
-              to: [{ type: 'page' }, { type: 'cover' }, { type: 'chapter' }]
+              to: [
+                { type: 'chapter' },
+                { type: 'page' },
+                { type: 'box' },
+                { type: 'case' },
+                { type: 'cover' }
+              ]
             },
             {
               name: 'children',

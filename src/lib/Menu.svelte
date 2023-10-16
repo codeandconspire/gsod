@@ -321,6 +321,8 @@
     width: 1.2em;
     margin: 0 -0.4em 0 -0.1em;
     height: auto;
+    position: relative;
+    top: 1px;
   }
 
   .children {

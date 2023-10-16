@@ -34,7 +34,7 @@
     letter-spacing: -0.005em;
     line-height: 1.15;
     margin: 0 0 0.75em;
-    white-space: balance;
+    text-wrap: balance;
     color: var(--theme-primary-color);
   }
 

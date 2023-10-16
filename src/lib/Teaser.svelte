@@ -64,6 +64,10 @@
     width: 100%;
   }
 
+  .content :global(p) {
+    text-wrap: balance;
+  }
+
   @media (width > 60rem) {
     .teaser.flip .content {
       order: -2;
