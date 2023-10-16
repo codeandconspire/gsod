@@ -12,8 +12,16 @@
     setContext(FIGURES, writable([]))
   }
 
-  export function all() {
-    return get(getContext(FIGURES))
+  export function find(id) {
+    const figures = get(getContext(FIGURES))
+    const item = figures.find((item) => item.id === id)
+    if (!item) return null
+    let index = 0
+    for (const _item of figures) {
+      if (_item.id === id) return { ...item, index }
+      if (_item.label === item.label) index++
+    }
+    return null
   }
 </script>
 
@@ -21,6 +29,7 @@
   import Html from '$lib/Html.svelte'
 
   export let fill = false
+  export let label = 'Figure'
 
   /** @type {string?} */
   export let id
@@ -30,12 +39,12 @@
 
   let index
   if (id) {
-    $figures = [...$figures, id]
-    index = $figures.length
+    $figures = [...$figures, { id, label }]
+    index = find(id).index
   }
 </script>
 
-<figure class="figure" class:fill {id}>
+<figure class="figure" class:fill id={anchor(id)}>
   <div class="main">
     <div class:contain={fill}>
       <slot />
@@ -47,8 +56,8 @@
         <Html size="small">
           <div
             class="description"
-            data-prefix={index
-              ? `Figure ${shortcode ? `${shortcode}.` : ''}${index}: `
+            data-prefix={index != null
+              ? `${label} ${shortcode ? `${shortcode}.` : ''}${index + 1}: `
               : ''}>
             <slot name="description" />
           </div>

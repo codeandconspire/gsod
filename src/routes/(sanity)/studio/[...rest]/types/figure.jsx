@@ -47,6 +47,16 @@ export default defineType({
       ]
     },
     {
+      name: 'label',
+      type: 'string',
+      title: 'Label',
+      initialValue: 'Figure',
+      description: 'The label to use for the figure, used for numbering',
+      options: {
+        list: ['Figure', 'Table']
+      }
+    },
+    {
       name: 'fill',
       type: 'boolean',
       title: 'Fill',

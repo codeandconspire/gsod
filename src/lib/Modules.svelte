@@ -147,7 +147,7 @@
       </div>
     {:else if module._type === 'figure'}
       <div class={module.fill ? 'unwrap' : ''} id="module-{module._key}">
-        <Figure fill={module.fill} id={figure.anchor(module._key)}>
+        <Figure fill={module.fill} id={module._key} label={module.group}>
           {#if module.image}
             <img alt={module.image.alt || ''} src={module.image.asset.url} />
           {:else if module.embed?.content}

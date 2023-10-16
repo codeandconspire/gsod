@@ -50,7 +50,6 @@
   export let content
   export let plain = false
 
-  const figures = getContext(figure.FIGURES)
   const shortcode = getContext('SHORTCODE')
 
   // The Sanity PortableText format is a flat array of blocks which needs
@@ -165,14 +164,13 @@
               </a>
             {:else if def?._type === 'figureReference'}
               {@const id = figure.anchor(def.figure)}
-              {@const index = $figures.findIndex((figure) => figure === id)}
-              {@const text =
-                index > -1
-                  ? block.text.replace(
-                      /\[X\]/gi,
-                      `${shortcode ? `${shortcode}.` : ''}${index + 1}`
-                    )
-                  : block.text}
+              {@const item = figure.find(def.figure)}
+              {@const text = item
+                ? block.text.replace(
+                    /\[X\]/gi,
+                    `${shortcode ? `${shortcode}.` : ''}${item.index + 1}`
+                  )
+                : block.text}
               <a
                 href="#{id}"
                 on:click|preventDefault={() =>
