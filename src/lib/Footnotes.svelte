@@ -131,7 +131,7 @@
     padding: 1rem 5rem 1rem var(--page-gutter);
     position: fixed;
     inset: auto 0 0;
-    z-index: 1;
+    z-index: 3;
     box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.025),
       0 -0.8rem 1.4rem rgba(0, 0, 0, 0.035);
     animation: slide-in 400ms forwards cubic-bezier(0.25, 1, 0.5, 1);

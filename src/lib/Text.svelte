@@ -63,8 +63,6 @@
       for (const def of markDefs) {
         if (def._type === 'footnote') {
           footnotes.add(def)
-        } else if (def._type === 'figureReference') {
-          // figure.add(def)
         }
       }
     }

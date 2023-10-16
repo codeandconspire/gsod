@@ -80,24 +80,25 @@
       </div>
     {:else if module._type === 'megaList'}
       {@const { link, content } = module}
+      {@const items = content
+        .filter((block) => block.listItem)
+        .map((block) => ({ ...block, listItem: false }))}
       <div class="contain" id="module-{module._key}">
         {#if link}
           <Theme
             primary={link?.document?.primaryColor}
             secondary={link?.document?.secondaryColor}
             dark={link?.document?.darkColor}>
-            <MegaList
-              items={content.filter((block) => block.listItem)}
-              let:item>
+            <MegaList {items} let:item>
               <Html>
-                <Text content={item.children} />
+                <Text content={[item]} />
               </Html>
             </MegaList>
           </Theme>
         {:else}
-          <MegaList items={content.filter((block) => block.listItem)} let:item>
+          <MegaList {items} let:item>
             <Html>
-              <Text content={item.children} />
+              <Text content={[item]} />
             </Html>
           </MegaList>
         {/if}
