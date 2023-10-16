@@ -1,12 +1,10 @@
 <script>
-  import Text, { setOffset, asText } from '$lib/Text.svelte'
+  import { setOffset, asText } from '$lib/Text.svelte'
   import * as footnotes from '$lib/Footnotes.svelte'
   import * as figure from '$lib/Figure.svelte'
   import Modules from '$lib/Modules.svelte'
   import { resolve } from '$lib/sanity.js'
   import Dialog from '$lib/Dialog.svelte'
-  import Theme from '$lib/Theme.svelte'
-  import Html from '$lib/Html.svelte'
   import Page from '../../+page.svelte'
 
   export let data
@@ -17,24 +15,17 @@
   setOffset(1)
 </script>
 
-<div class="ontop">
-  <Theme
-    primary={data.chapter.primaryColor}
-    secondary={data.chapter.secondaryColor}
-    dark={data.chapter.darkColor}>
-    <Dialog open href={resolve(data.chapter)}>
-      <div class="box">
-        <h1 class="heading">
-          {data.box.shortname}
-          <strong class="title">{asText(data.box.title)}</strong>
-        </h1>
-        <Modules modules={data.box.modules} />
-      </div>
-    </Dialog>
-  </Theme>
-</div>
-
-<Page {data} />
+<Page {data}>
+  <Dialog open href={resolve(data.chapter)}>
+    <div class="box">
+      <h1 class="heading">
+        {data.box.shortname}
+        <strong class="title">{asText(data.box.title)}</strong>
+      </h1>
+      <Modules modules={data.box.modules} />
+    </div>
+  </Dialog>
+</Page>
 
 <style>
   .heading {
@@ -50,10 +41,5 @@
   .title {
     font-weight: var(--sans-serif-heavy);
     color: var(--theme-dark-color);
-  }
-
-  .ontop {
-    position: relative;
-    z-index: 2;
   }
 </style>

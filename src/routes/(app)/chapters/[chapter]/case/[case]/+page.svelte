@@ -5,7 +5,6 @@
   import Modules from '$lib/Modules.svelte'
   import { resolve } from '$lib/sanity.js'
   import Dialog from '$lib/Dialog.svelte'
-  import Theme from '$lib/Theme.svelte'
   import Image from '$lib/Image.svelte'
   import Html from '$lib/Html.svelte'
   import Page from '../../+page.svelte'
@@ -55,10 +54,5 @@
     --text-width: 100%;
 
     margin-bottom: 1em;
-  }
-
-  .ontop {
-    position: relative;
-    z-index: 2;
   }
 </style>
