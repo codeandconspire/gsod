@@ -85,6 +85,8 @@
       </div>
     </Intro>
 
+    <slot />
+
     <div class="content">
       <nav class="aside toc" class:open id="toc">
         <!-- svelte-ignore a11y-invalid-attribute -->

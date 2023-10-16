@@ -1,7 +1,6 @@
 <script>
+  import { fly } from 'svelte/transition'
   import { goto } from '$app/navigation'
-
-  import Theme from '$lib/Theme.svelte'
 
   /** @type {HTMLDialogElement?} */
   export let dialog = null
@@ -16,6 +15,7 @@
     if (event.target === dialog) {
       if (href) goto(href, { noScroll: true, replaceState: true })
       else dialog?.close()
+      event.preventDefault()
     }
   }
 
@@ -29,9 +29,11 @@
 <dialog
   class="dialog"
   {open}
+  in:fly={{ y: '100%', duration: 300 }}
+  out:fly={{ y: '100%', duration: 300 }}
   bind:this={dialog}
-  on:close
-  on:click|preventDefault={click}>
+  on:click={click}
+  on:close>
   <div class="container">
     <div class="main" class:has-image={$$slots.image}>
       <svelte:element
@@ -133,7 +135,6 @@
     overflow: hidden;
     background: #fff;
     border-radius: var(--border-radius);
-    animation: slide-in 400ms forwards cubic-bezier(0.25, 1, 0.5, 1);
     box-shadow: 0 0.3rem 3rem rgba(0, 0, 0, 0.05),
       0 0.5px 0 0 rgba(0, 0, 0, 0.1);
   }
@@ -148,15 +149,6 @@
 
       min-height: 100%;
       border-radius: 0;
-    }
-  }
-
-  @keyframes slide-in {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
     }
   }
 
