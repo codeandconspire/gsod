@@ -7,11 +7,7 @@
     InfoOutlineIcon,
     CogIcon
   } from '@sanity/icons'
-  import { StudioProvider, StudioLayout, defineConfig } from 'sanity'
-  import { Iframe } from 'sanity-plugin-iframe-pane'
-  import { visionTool } from '@sanity/vision'
   import ReactDOM from 'react-dom/client'
-  import { deskTool } from 'sanity/desk'
   import { onMount } from 'svelte'
   import React from 'react'
 
@@ -30,6 +26,18 @@
   let node
 
   onMount(async function () {
+    const [
+      { StudioProvider, StudioLayout, defineConfig },
+      { visionTool },
+      { deskTool },
+      { Iframe }
+    ] = await Promise.all([
+      import('sanity'),
+      import('@sanity/vision'),
+      import('sanity/desk'),
+      import('sanity-plugin-iframe-pane')
+    ])
+
     const root = ReactDOM.createRoot(node)
 
     const config = defineConfig({
