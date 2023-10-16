@@ -41,32 +41,32 @@
     <nav class="menu">
       <ul>
         <li>
-          <a class="link" href="#example">Download as PDF</a>
+          <a class="link" href="/">Download as PDF</a>
         </li>
         <li>
-          <a class="link" href="#example">Acknowledgements</a>
+          <a class="link" href="/">Acknowledgements</a>
         </li>
         <li>
-          <a class="link" href="#example">Sources</a>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <a class="link" href="#example">About GSoD</a>
-        </li>
-        <li>
-          <a class="link" href="#example">About International IDEA</a>
-        </li>
-        <li>
-          <a class="link" href="#example">Other Publications</a>
+          <a class="link" href="/">Sources</a>
         </li>
       </ul>
       <ul>
         <li>
-          <a class="link" href="#example">Democracy Tracker</a>
+          <a class="link" href="/">About GSoD</a>
         </li>
         <li>
-          <a class="link" href="#example">Other links...</a>
+          <a class="link" href="/">About International IDEA</a>
+        </li>
+        <li>
+          <a class="link" href="/">Other Publications</a>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a class="link" href="/">Democracy Tracker</a>
+        </li>
+        <li>
+          <a class="link" href="/">Other links...</a>
         </li>
       </ul>
     </nav>

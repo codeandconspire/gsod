@@ -3,6 +3,8 @@ import { error } from '@sveltejs/kit'
 
 import { createClient } from '$lib/sanity.js'
 
+export const prerender = true
+
 export async function load(event) {
   const { params, request } = event
   const url = new URL(request.url)

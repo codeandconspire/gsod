@@ -128,9 +128,6 @@
     }
     selected = null
   }
-
-  const scrollintoview = (node) =>
-    node.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
 </script>
 
 <svelte:document on:click={onclickoutside} />
@@ -210,23 +207,27 @@
                 <svelte:self content={[{ ...block, marks }]} />
               </a>
             {:else if def?._type === 'figureReference'}
-              {@const id = figure.anchor(def.figure)}
-              {@const item = figure.find(def.figure)}
-              {@const text = item
-                ? block.text.replace(
-                    /\[X\]/gi,
-                    `${shortcode ? `${shortcode}.` : ''}${item.index + 1}`
-                  )
-                : block.text}
-              <a
-                href="#{id}"
-                on:click|preventDefault={() =>
-                  document.getElementById(id)?.scrollIntoView({
-                    block: 'center',
-                    behavior: 'smooth'
-                  })}>
-                <svelte:self content={[{ ...block, text, marks }]} />
-              </a>
+              {#if def.figure}
+                {@const id = figure.anchor(def.figure)}
+                {@const item = figure.find(def.figure)}
+                {@const text = item
+                  ? block.text.replace(
+                      /\[X\]/gi,
+                      `${shortcode ? `${shortcode}.` : ''}${item.index + 1}`
+                    )
+                  : block.text}
+                <a
+                  href="#{id}"
+                  on:click|preventDefault={() =>
+                    document.getElementById(id)?.scrollIntoView({
+                      block: 'center',
+                      behavior: 'smooth'
+                    })}>
+                  <svelte:self content={[{ ...block, text, marks }]} />
+                </a>
+              {:else}
+                {@html format(block.text)}
+              {/if}
             {/if}
           {/if}
         {:else}
@@ -241,7 +242,6 @@
   {#key selected._key}
     <div
       class="footnote"
-      use:scrollintoview
       in:fly={{ y: '100%', duration: 300 }}
       out:fly={{ y: '100%', duration: 300 }}>
       <Html>
