@@ -1,9 +1,11 @@
 <script>
   /** @type {string?}*/
   export let heading = null
+
+  export let open = false
 </script>
 
-<details class="details">
+<details class="details" {open}>
   <summary class="summary">
     <span class="heading">{heading}</span>
     <div class="marker" />

@@ -1,4 +1,5 @@
 <script>
+  import { browser } from '$app/environment'
   import { onMount } from 'svelte'
 
   import Figure, * as figure from '$lib/Figure.svelte'
@@ -183,7 +184,7 @@
       </div>
     {:else if module._type === 'footnotes'}
       <div id="module-{module._key}">
-        <Details heading={module.heading || 'References'}>
+        <Details heading={module.heading || 'References'} open={!browser}>
           <div class="contain">
             <Html>
               <Footnotes />
