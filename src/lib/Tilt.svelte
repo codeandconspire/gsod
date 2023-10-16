@@ -66,8 +66,8 @@
   style:--tilt-y={tiltY}
   style:--tilt-x={tiltX}
   style:--tilt-delay={delay}
-  style:--tilt-depth={tiltDepth.toFixed(2)}
   style:--tilt-duration={duration}
+  style:--tilt-depth={isNaN(tiltDepth) ? tiltDepth.toFixed(2) : null}
   bind:offsetWidth={width}
   bind:offsetHeight={height}
   on:mousemove={onmousemove}
