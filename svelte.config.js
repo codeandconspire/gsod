@@ -1,11 +1,7 @@
 import adapter from '@sveltejs/adapter-cloudflare'
 import preprocess from 'svelte-preprocess'
 
-const tagsRegex1 = /(>)[\s]*([<{])/g
-const tagsRegex2 = /({[/:][a-z]+})[\s]*([<{])/g
-const tagsRegex3 = /({[#:][a-z]+ .+?})[\s]*([<{])/g
-const tagsRegex4 = /([>}])[\s]+(<|{[/#:][a-z][^}]*})/g
-const tagsReplace = '$1$2'
+import { replacers } from './src/hooks.server.js'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -16,14 +12,7 @@ const config = {
     adapter: adapter()
   },
   preprocess: preprocess({
-    replace: [
-      // Remove whitespace between tags
-      // https://github.com/sveltejs/svelte/issues/189#issuecomment-1376746165
-      [tagsRegex1, tagsReplace],
-      [tagsRegex2, tagsReplace],
-      [tagsRegex3, tagsReplace],
-      [tagsRegex4, tagsReplace]
-    ]
+    replace: replacers
   })
 }
 
