@@ -42,4 +42,8 @@
     font-weight: var(--sans-serif-heavy);
     color: var(--theme-dark-color);
   }
+
+  .title::before {
+    content: ' ';
+  }
 </style>

@@ -339,6 +339,10 @@
     margin-top: var(--space-large);
   }
 
+  .module-footnotes {
+    margin-top: var(--space-medium);
+  }
+
   .module-footnotes + .module-footnotes,
   .module-footnotes + .module-accordion,
   .module-accordion + .module-footnotes,
