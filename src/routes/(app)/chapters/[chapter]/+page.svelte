@@ -3,7 +3,6 @@
   import { page } from '$app/stores'
 
   import * as footnotes from '$lib/Footnotes.svelte'
-  import * as figure from '$lib/Figure.svelte'
   import { asText } from '$lib/Text.svelte'
   import Modules from '$lib/Modules.svelte'
   import { resolve } from '$lib/sanity.js'
@@ -30,12 +29,7 @@
 
   $: setContext('SHORTCODE', chapter?.shortcode)
 
-  const reset = () => {
-    footnotes.reset()
-    figure.reset()
-  }
-
-  reset()
+  footnotes.reset()
 
   function scroll(event) {
     const { hash } = new URL(event.currentTarget.href)

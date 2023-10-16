@@ -1,27 +1,10 @@
 <script context="module">
-  import { setContext, getContext } from 'svelte'
-  import { writable, get } from 'svelte/store'
+  import { getContext } from 'svelte'
 
   export const FIGURES = Symbol('figures')
 
   export function anchor(key) {
     return `figure-${key}`
-  }
-
-  export function reset() {
-    setContext(FIGURES, writable([]))
-  }
-
-  export function find(id) {
-    const figures = get(getContext(FIGURES))
-    const item = figures.find((item) => item.id === id)
-    if (!item) return null
-    let index = 0
-    for (const _item of figures) {
-      if (_item.id === id) return { ...item, index }
-      if (_item.label === item.label) index++
-    }
-    return null
   }
 </script>
 
@@ -34,14 +17,11 @@
   /** @type {string?} */
   export let id
 
-  const figures = getContext(FIGURES)
+  const figures = getContext('FIGURES') || []
   const shortcode = getContext('SHORTCODE')
-
-  let index
-  if (id) {
-    $figures = [...$figures, { id, label }]
-    index = find(id).index
-  }
+  const item = figures.find((item) => item._key === id)
+  const ofType = figures.filter((figure) => figure.label === item.label)
+  const index = ofType.indexOf(item)
 </script>
 
 <figure class="figure" class:fill id={anchor(id)}>
@@ -61,19 +41,21 @@
               : ''}>
             <slot name="description" />
           </div>
-          <details class="source">
-            <summary class="summary">
-              <span>Source</span>
-              <svg class="chevron" viewBox="0 -960 960 960">
-                <path
-                  fill="currentcolor"
-                  d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z" />
-              </svg>
-            </summary>
-            <div class="body">
-              <slot name="source" />
-            </div>
-          </details>
+          {#if $$slots.source}
+            <details class="source">
+              <summary class="summary">
+                <span>Source</span>
+                <svg class="chevron" viewBox="0 -960 960 960">
+                  <path
+                    fill="currentcolor"
+                    d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z" />
+                </svg>
+              </summary>
+              <div class="body">
+                <slot name="source" />
+              </div>
+            </details>
+          {/if}
         </Html>
       </div>
     </figcaption>

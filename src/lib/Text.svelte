@@ -55,6 +55,7 @@
   export let plain = false
 
   const shortcode = getContext('SHORTCODE')
+  const figures = getContext('FIGURES') || []
 
   // The Sanity PortableText format is a flat array of blocks which needs
   // processing to collect list items and preserve markDef references
@@ -208,12 +209,16 @@
               </a>
             {:else if def?._type === 'figureReference'}
               {#if def.figure}
+                {@const item = figures.find((item) => item._key === def.figure)}
+                {@const ofType = figures.filter(
+                  ({ label }) => item.label === label
+                )}
+                {@const index = ofType.indexOf(item)}
                 {@const id = figure.anchor(def.figure)}
-                {@const item = figure.find(def.figure)}
                 {@const text = item
                   ? block.text.replace(
                       /\[X\]/gi,
-                      `${shortcode ? `${shortcode}.` : ''}${item.index + 1}`
+                      `${shortcode ? `${shortcode}.` : ''}${index + 1}`
                     )
                   : block.text}
                 <a

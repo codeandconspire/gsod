@@ -1,6 +1,6 @@
 <script>
+  import { onMount, setContext } from 'svelte'
   import { browser } from '$app/environment'
-  import { onMount } from 'svelte'
 
   import Footnotes from '$lib/Footnotes.svelte'
   import MegaList from '$lib/MegaList.svelte'
@@ -17,6 +17,11 @@
   import Text from '$lib/Text.svelte'
 
   export let modules = []
+
+  setContext(
+    'FIGURES',
+    modules.filter((module) => module._type === 'figure')
+  )
 
   /** @type {string?} */
   export let current = null

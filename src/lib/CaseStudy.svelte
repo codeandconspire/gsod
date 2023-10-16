@@ -1,7 +1,6 @@
 <script>
   import Text, { setOffset, asText } from '$lib/Text.svelte'
   import * as footnotes from '$lib/Footnotes.svelte'
-  import * as figure from '$lib/Figure.svelte'
   import Modules from '$lib/Modules.svelte'
   import { resolve } from '$lib/sanity.js'
   import Dialog from '$lib/Dialog.svelte'
@@ -11,7 +10,6 @@
   export let data
 
   footnotes.reset()
-  figure.reset()
 
   setOffset(-1)
 </script>
