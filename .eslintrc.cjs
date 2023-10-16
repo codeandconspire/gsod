@@ -13,6 +13,7 @@ module.exports = {
     node: true
   },
   rules: {
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+    'no-unused-vars': 'off'
   }
 }

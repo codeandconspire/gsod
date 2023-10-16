@@ -2,11 +2,11 @@
   import { browser } from '$app/environment'
   import { onMount } from 'svelte'
 
-  import Figure, * as figure from '$lib/Figure.svelte'
   import Footnotes from '$lib/Footnotes.svelte'
   import MegaList from '$lib/MegaList.svelte'
   import Details from '$lib/Details.svelte'
   import { resolve } from '$lib/sanity.js'
+  import Figure from '$lib/Figure.svelte'
   import Button from '$lib/Button.svelte'
   import Teaser from '$lib/Teaser.svelte'
   import Image from '$lib/Image.svelte'
@@ -18,7 +18,7 @@
 
   export let modules = []
 
-  /** @type {string?} */
+  /** @type {string?} */
   export let current = null
 
   const headings = new Map()
