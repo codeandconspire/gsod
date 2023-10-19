@@ -7,7 +7,14 @@
 
 <footer class="footer">
   <div class="main u-container">
-    <form class="form">
+    <form
+      class="form"
+      method="post"
+      target="_blank"
+      action="https://idea.us7.list-manage.com/subscribe/post">
+      <input type="hidden" name="u" value="cff338e1420e74122593d17fc" />
+      <input type="hidden" name="id" value="1ba6a7f450" />
+      <input type="hidden" name="gdpr[100321]" value="Y" />
       <h2 class="heading">
         Be notified about next year's Global State of Democracy Report
       </h2>
@@ -17,7 +24,7 @@
           <input
             class="field"
             type="email"
-            name="email"
+            name="MERGE0"
             id="footer-email"
             placeholder="Your email"
             bind:value={email} />
@@ -29,15 +36,6 @@
           <span class="u-hidden">Submit</span>
         </button>
       </div>
-      <label for="footer-opt-in">
-        <input
-          class="check"
-          checked
-          type="checkbox"
-          id="footer-opt-in"
-          name="opt-in" />
-        <span class="label">Receive news about our other projects</span>
-      </label>
     </form>
     <nav class="menu">
       {#each groups as children}
@@ -182,46 +180,6 @@
 
   .field:focus-visible {
     outline: 2px solid #326593;
-  }
-
-  /* Checkbox */
-
-  .check {
-    position: absolute;
-    width: 0;
-    height: 0;
-    opacity: 0;
-  }
-
-  .label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-wrap: nowrap;
-    cursor: pointer;
-  }
-
-  .check:focus-within + .label::before {
-    outline: 2px solid;
-  }
-
-  .label::before {
-    content: '';
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: -0.1rem;
-    width: 1.25rem;
-    height: 1.25rem;
-    background: #fff;
-    border-radius: 0.25rem;
-    color: #326593;
-    font-size: 1.1rem;
-    font-weight: bold;
-  }
-
-  .check:checked + .label::before {
-    content: '✓';
   }
 
   /* Menu */
