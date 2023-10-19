@@ -66,6 +66,7 @@ export default defineType({
         { type: 'divider' },
         { type: 'accordion' },
         { type: 'blurbs' },
+        { type: 'video' },
         { type: 'footnotes' }
       ]
     },

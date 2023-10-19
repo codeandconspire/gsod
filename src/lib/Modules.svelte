@@ -15,6 +15,7 @@
   import Card from '$lib/Card.svelte'
   import Html from '$lib/Html.svelte'
   import Text from '$lib/Text.svelte'
+  import Video from './Video.svelte'
 
   export let modules = []
 
@@ -245,6 +246,12 @@
           {/if}
         {/each}
       </div>
+    {:else if module._type === 'video'}
+      {#if module.video}
+        <div id="module-{module._key}">
+          <Video url={module.video} />
+        </div>
+      {/if}
     {/if}
   </div>
 {/each}
@@ -323,6 +330,11 @@
   }
 
   .module-figure {
+    margin-top: var(--space-medium);
+    margin-bottom: var(--space-medium);
+  }
+
+  .module-video {
     margin-top: var(--space-medium);
     margin-bottom: var(--space-medium);
   }
