@@ -247,8 +247,8 @@
   {#key selected._key}
     <div
       class="footnote"
-      in:fly={{ y: '100%', duration: 300 }}
-      out:fly={{ y: '100%', duration: 300 }}>
+      in:fly|global={{ y: '100%', duration: 300 }}
+      out:fly|global={{ y: '100%', duration: 300 }}>
       <Html>
         <svelte:self content={selected.content} />
       </Html>

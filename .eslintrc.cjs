@@ -1,11 +1,10 @@
 module.exports = {
   root: true,
-  extends: ['eslint:recommended', 'prettier', 'plugin:react/recommended'],
-  plugins: ['svelte3'],
-  overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
+  extends: ['eslint:recommended', 'plugin:svelte/recommended', 'prettier'],
   parserOptions: {
     sourceType: 'module',
-    ecmaVersion: 2020
+    ecmaVersion: 2020,
+    extraFileExtensions: ['.svelte']
   },
   env: {
     browser: true,
@@ -13,7 +12,7 @@ module.exports = {
     node: true
   },
   rules: {
-    'react/prop-types': 'off',
-    'no-unused-vars': 'off'
+    'no-unused-vars': 'off',
+    'svelte/no-at-html-tags': 'off'
   }
 }

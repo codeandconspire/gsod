@@ -57,6 +57,7 @@
 
 <svelte:element
   this={href ? 'a' : 'div'}
+  role={href ? 'link' : null}
   {href}
   {...$$restProps}
   on:click

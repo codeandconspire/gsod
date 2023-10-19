@@ -11,7 +11,7 @@
   /** @type {string?} */
   export let href
 
-  function click(event) {
+  function onclick(event) {
     if (event.target === dialog) {
       if (href) goto(href, { noScroll: true, replaceState: true })
       else dialog?.close()
@@ -25,19 +25,20 @@
   }
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 <dialog
   class="dialog"
   {open}
-  in:fly={{ y: '100%', duration: 300 }}
-  out:fly={{ y: '100%', duration: 300 }}
+  in:fly|global={{ y: '100%', duration: 300 }}
+  out:fly|global={{ y: '100%', duration: 300 }}
   bind:this={dialog}
-  on:click={click}
+  on:click={onclick}
   on:close>
   <div class="container">
     <div class="main" class:has-image={$$slots.image}>
       <svelte:element
         this={href ? 'a' : 'button'}
+        role={href ? 'link' : 'button'}
         {href}
         class="close"
         on:click|preventDefault={close}>

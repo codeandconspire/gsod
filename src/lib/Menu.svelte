@@ -80,6 +80,7 @@
         <li class="item" class:active>
           <svelte:element
             this={item.href && !active ? 'a' : 'span'}
+            role={item.href && !active ? 'link' : null}
             {href}
             class="anchor"
             class:active
