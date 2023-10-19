@@ -39,6 +39,16 @@ export default defineType({
           type: 'object',
           title: 'Link group',
           icon: LinkIcon,
+          preview: {
+            select: {
+              children: 'children'
+            },
+            prepare({ children }) {
+              return {
+                title: children.map((item) => item.label).join(', ')
+              }
+            }
+          },
           fields: [
             {
               name: 'children',
@@ -64,6 +74,11 @@ export default defineType({
                         { type: 'cover' },
                         { type: 'chapter' }
                       ]
+                    },
+                    {
+                      name: 'file',
+                      type: 'file',
+                      title: 'File'
                     }
                   ]
                 }

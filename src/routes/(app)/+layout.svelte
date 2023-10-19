@@ -7,13 +7,15 @@
   export let data
   export let form
 
-  $: groups = data.settings.footer?.groups?.map((group) => {
-    return group.links.map((item) => {
-      const { label, link } = item
-      const href = resolve(link)
-      const active = $page.url.pathname === href
-      return { href, label, active }
-    })
+  $: groups = data.settings.menu.map((group) => {
+    return group.children
+      .map((item) => {
+        const { label: text, link, file } = item
+        if (file) return { href: file?.asset.url, download: '', text }
+        const href = resolve(link)
+        return href ? { href, text } : null
+      })
+      .filter(Boolean)
   })
 </script>
 

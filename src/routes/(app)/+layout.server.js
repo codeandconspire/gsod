@@ -10,7 +10,24 @@ export function load({ request }) {
       preview: url.searchParams.has('preview'),
       token: SANITY_API_TOKEN
     })
-    const settings = client.fetch(`*[_type == "settings"][0]`)
+    const settings =
+      client.fetch(`*[_type == "settings" && _id == "settings"][0]{
+        featuredImage{
+          asset->
+        },
+        menu[]{
+          children[]{
+            label,
+            link->{
+              _type,
+              slug
+            },
+            file{
+              asset->
+            }
+          }
+        }
+      }`)
     return { settings }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)

@@ -1,5 +1,6 @@
 <script>
   export let form = null
+  export let groups = []
 
   $: email = form?.email
 </script>
@@ -39,36 +40,15 @@
       </label>
     </form>
     <nav class="menu">
-      <ul>
-        <li>
-          <a class="link" href="/">Download as PDF</a>
-        </li>
-        <li>
-          <a class="link" href="/">Acknowledgements</a>
-        </li>
-        <li>
-          <a class="link" href="/">Sources</a>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <a class="link" href="/">About GSoD</a>
-        </li>
-        <li>
-          <a class="link" href="/">About International IDEA</a>
-        </li>
-        <li>
-          <a class="link" href="/">Other Publications</a>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <a class="link" href="/">Democracy Tracker</a>
-        </li>
-        <li>
-          <a class="link" href="/">Other links...</a>
-        </li>
-      </ul>
+      {#each groups as children}
+        <ul>
+          {#each children as { text, href, ...attrs }}
+            <li>
+              <a class="link" {href} {...attrs}>{text}</a>
+            </li>
+          {/each}
+        </ul>
+      {/each}
     </nav>
     <div class="end">
       <div class="terms">
