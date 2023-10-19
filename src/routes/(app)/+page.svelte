@@ -66,11 +66,7 @@
           {/if}
           <div class="body">
             <h3 class="heading">
-              <Text content={feature.heading} let:block>
-                {#if block.style === 'normal'}
-                  <Text content={block.children} />
-                {/if}
-              </Text>
+              <Text content={feature.heading} />
             </h3>
             {#if feature.subheading}
               <div class="subheading">
