@@ -67,6 +67,7 @@
 
     position: relative;
     overflow: hidden;
+    contain: content;
     background: var(--theme-primary-color);
   }
 
