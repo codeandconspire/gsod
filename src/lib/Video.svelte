@@ -12,7 +12,7 @@
       const match = url.match(YOUTUBE_RE)
       if (!match) return null
       const [, id] = match
-      return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&showinfo=0`
+      return `https://www.youtube-nocookie.com/embed/${id}?vq=hd1080&modestbranding=1&rel=0&iv_load_policy=3`
     }
 
     if (VIMEO_RE.test(url)) {
@@ -42,12 +42,14 @@
     user-select: none;
     background: #f2f3f8;
     border-radius: var(--border-radius);
+    max-width: var(--text-width);
   }
 
   .video iframe {
-    width: calc(100% - 3rem);
-    height: calc(100% - 3rem);
+    width: 100%;
+    height: 100%;
     position: absolute;
-    inset: 1.5rem;
+    inset: 0;
+    border-radius: var(--border-radius);
   }
 </style>
