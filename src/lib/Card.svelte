@@ -58,7 +58,7 @@
 
   .card.has-image {
     color: #fff;
-    text-shadow: 0 0 0.6em rgba(0, 0, 0, 0.4);
+    text-shadow: 0 0 1.5em rgba(0, 0, 0, 0.4);
   }
 
   .card::before {
@@ -93,8 +93,8 @@
     background: linear-gradient(
       244deg,
       rgba(0, 0, 0, 0) 30%,
-      rgba(0, 0, 0, 0.1) 60%,
-      rgba(0, 0, 0, 0.25) 100%
+      rgba(0, 0, 0, 0.15) 60%,
+      rgba(0, 0, 0, 0.35) 100%
     );
   }
 

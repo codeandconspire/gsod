@@ -60,7 +60,7 @@
   on:resize={measure} />
 
 {#each modules as module}
-  <div class="module module-{module._type}">
+  <div class="module module-{module._type}" id="module-{module._key}">
     {#if module._type === 'divider'}
       <div
         id="module-{module._key}"
@@ -209,43 +209,41 @@
         </Details>
       </div>
     {:else if module._type === 'blurbs'}
-      <div id="module-{module._key}">
-        {#each module.items as item}
-          {@const href = resolve(item.link.document)}
-          {#if href}
-            <Tilt
-              {href}
-              data-sveltekit-noscroll
-              data-sveltekit-replacestate
-              let:hover>
-              {#if item.link.document.image}
-                <Card
-                  {hover}
-                  heading={item.title}
-                  subheading={item.subheading}
-                  link={href
-                    ? { label: item.link.label || 'Read more' }
-                    : null}>
-                  <Image
-                    slot="image"
-                    image={item.link.document.image}
-                    width={300}
-                    variants={[300, 600, 900]}
-                    sizes="(min-width: 40rem) 50vw, (min-width: 60rem) 33vw" />
-                </Card>
-              {:else}
-                <Card
-                  {hover}
-                  heading={item.title}
-                  subheading={item.subheading}
-                  link={href
-                    ? { label: item.link.label || 'Read more' }
-                    : null} />
-              {/if}
-            </Tilt>
-          {/if}
-        {/each}
-      </div>
+      {#each module.items as item}
+        {@const href = resolve(item.link.document)}
+        {#if href}
+          <Tilt
+            {href}
+            data-sveltekit-noscroll
+            data-sveltekit-replacestate
+            let:hover>
+            {#if item.link.document.image}
+              <Card
+                {hover}
+                heading={item.title}
+                subheading={item.subheading}
+                link={href
+                  ? { label: item.link.label || 'Read more' }
+                  : null}>
+                <Image
+                  slot="image"
+                  image={item.link.document.image}
+                  width={300}
+                  variants={[300, 600, 900]}
+                  sizes="(min-width: 40rem) 50vw, (min-width: 60rem) 33vw" />
+              </Card>
+            {:else}
+              <Card
+                {hover}
+                heading={item.title}
+                subheading={item.subheading}
+                link={href
+                  ? { label: item.link.label || 'Read more' }
+                  : null} />
+            {/if}
+          </Tilt>
+        {/if}
+      {/each}
     {:else if module._type === 'video'}
       {#if module.video}
         <div id="module-{module._key}">

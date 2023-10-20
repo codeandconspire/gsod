@@ -42,4 +42,8 @@
     text-align: left;
     font-family: var(--serif);
   }
+
+  .note:empty {
+    display: none;
+  }
 </style>
