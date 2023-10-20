@@ -16,7 +16,8 @@
       <input type="hidden" name="id" value="1ba6a7f450" />
       <input type="hidden" name="gdpr[100321]" value="Y" />
       <h2 class="heading">
-        Be notified about next year's Global State of Democracy Report
+        <strong>Stay up to date</strong>
+         with the latest changes in Democracy across the world
       </h2>
       <div class="control">
         <label for="footer-email">
@@ -40,9 +41,15 @@
     <nav class="menu">
       {#each groups as children}
         <ul>
-          {#each children as { text, href, ...attrs }}
+          {#each children as { text, href, external, ...attrs }}
             <li>
-              <a class="link" {href} {...attrs}>{text}</a>
+              <a
+                class="link"
+                {href}
+                {...attrs}
+                target={external ? '_blank' : null}>
+                {text}
+              </a>
             </li>
           {/each}
         </ul>
@@ -91,7 +98,7 @@
   @media (width > 70rem) {
     .main {
       display: grid;
-      grid-template-columns: 40% 1fr;
+      grid-template-columns: 30.6rem 1fr;
       grid-template-rows: 1fr auto;
       gap: 0 3rem;
     }
@@ -99,7 +106,7 @@
 
   @media (width > 80rem) {
     .main {
-      grid-template-columns: 36.5rem 1fr;
+      grid-template-columns: 30.6rem 1fr;
       gap: 0 6rem;
     }
   }
@@ -111,12 +118,18 @@
     margin-top: -4.3rem;
   }
 
+  @media (width > 70rem) {
+    .form {
+      padding: 3rem 3.3rem 2.5rem;
+      margin-top: -4.5rem;
+    }
+  }
+
   .heading {
     font-weight: var(--sans-serif-normal);
-    line-height: 1.3;
+    line-height: 1.25;
     font-size: clamp(1.5rem, 3vw, 1.75rem);
-    text-wrap: balance;
-    max-width: 28rem;
+    max-width: 13em;
   }
 
   /* Email input */
@@ -125,7 +138,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    max-width: 26.35rem;
+    max-width: 24rem;
     margin: 1.25rem 0 0.75rem;
   }
 
@@ -200,7 +213,7 @@
   .menu ul {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1.5rem;
   }
 
   .link:hover {
@@ -209,6 +222,9 @@
 
   .link {
     transition: opacity 100ms ease-out;
+    max-width: 10em;
+    display: block;
+    text-wrap: balance;
   }
 
   .link:active {

@@ -18,6 +18,7 @@ export function load({ request }) {
         menu[]{
           children[]{
             label,
+            url,
             link->{
               _type,
               slug

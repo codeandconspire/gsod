@@ -10,7 +10,8 @@
   $: groups = data.settings.menu.map((group) => {
     return group.children
       .map((item) => {
-        const { label: text, link, file } = item
+        const { label: text, link, url, file } = item
+        if (url) return { href: url, text, external: true }
         if (file) return { href: file?.asset.url, download: '', text }
         const href = resolve(link)
         return href ? { href, text } : null

@@ -68,7 +68,7 @@ export default defineType({
                     {
                       name: 'link',
                       type: 'reference',
-                      title: 'Link',
+                      title: 'Link to a page',
                       to: [
                         { type: 'page' },
                         { type: 'cover' },
@@ -76,9 +76,18 @@ export default defineType({
                       ]
                     },
                     {
+                      name: 'url',
+                      type: 'url',
+                      title: 'Link to external URL',
+                      validation: (Rule) =>
+                        Rule.uri({
+                          scheme: ['http', 'https', 'mailto', 'tel']
+                        })
+                    },
+                    {
                       name: 'file',
                       type: 'file',
-                      title: 'File'
+                      title: 'Link to a file'
                     }
                   ]
                 }
