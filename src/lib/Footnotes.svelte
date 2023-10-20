@@ -43,7 +43,8 @@
     font-family: var(--serif);
   }
 
-  .note:empty {
+  .note:empty,
+  .note:has(.html:empty) {
     display: none;
   }
 </style>

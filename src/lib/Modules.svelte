@@ -222,9 +222,7 @@
                 {hover}
                 heading={item.title}
                 subheading={item.subheading}
-                link={href
-                  ? { label: item.link.label || 'Read more' }
-                  : null}>
+                link={href ? { label: item.link.label || 'Read more' } : null}>
                 <Image
                   slot="image"
                   image={item.link.document.image}
