@@ -17,7 +17,7 @@
       <input type="hidden" name="gdpr[100321]" value="Y" />
       <h2 class="heading">
         <strong>Stay up to date</strong>
-         with the latest changes in Democracy across the world
+        with the latest changes in Democracy across the world
       </h2>
       <div class="control">
         <label for="footer-email">
