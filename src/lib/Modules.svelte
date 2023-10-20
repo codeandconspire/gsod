@@ -335,8 +335,8 @@
   }
 
   .module-video {
-    margin-top: var(--space-medium);
-    margin-bottom: var(--space-medium);
+    margin-top: var(--space-small);
+    margin-bottom: var(--space-small);
   }
 
   .module-megaList {

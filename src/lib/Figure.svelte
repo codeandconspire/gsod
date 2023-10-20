@@ -144,6 +144,10 @@
     .summary {
       justify-content: flex-end;
     }
+
+    .chevron {
+      margin-right: -0.2rem;
+    }
   }
 
   .summary:active {

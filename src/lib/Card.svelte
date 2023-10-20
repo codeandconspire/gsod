@@ -58,13 +58,13 @@
 
   .card.has-image {
     color: #fff;
-    text-shadow: 0 0 0.6em rgba(0, 0, 0, 0.6);
+    text-shadow: 0 0 0.6em rgba(0, 0, 0, 0.4);
   }
 
   .card::before {
     content: '';
     display: block;
-    padding-top: 65%;
+    padding-top: 60%;
   }
 
   .graphic {
@@ -102,7 +102,7 @@
     display: flex;
     flex-direction: column;
     gap: clamp(0.3rem, 0.8vw, 1.2rem);
-    padding: clamp(1.2rem, 2.5vw, 1.8rem);
+    padding: max(1.75rem, 5.5%);
     width: 100%;
     position: relative;
     transform: var(--tilt-foreground-transform);
