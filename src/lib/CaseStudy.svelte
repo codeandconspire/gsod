@@ -15,11 +15,13 @@
 </script>
 
 <Dialog open href={resolve(data.chapter)}>
-  <Image
-    slot="image"
-    image={data.case.image}
-    width={900}
-    variants={[300, 600, 900]} />
+  {#if data.case.image}
+    <Image
+      slot="image"
+      image={data.case.image}
+      width={900}
+      variants={[300, 600, 900]} />
+  {/if}
   <div class="case">
     <h1 class="heading">
       Case Study: <strong class="title">{asText(data.case.title)}</strong>
