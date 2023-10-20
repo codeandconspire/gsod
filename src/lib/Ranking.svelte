@@ -117,7 +117,9 @@
                 ''
               )}; --change5y: {item.representation.change_5y.replace('-', '')}">
               <div class="data rank">
-                <span class="box">{item.representation.rank}</span>
+                {#if item.representation.rank !== 'null'}
+                  <span class="box">{item.representation.rank}</span>
+                {/if}
                 Ranking
               </div>
               <!-- <div class="data score">
@@ -126,16 +128,20 @@
               <div
                 class="data year1"
                 class:negative={item.representation.change_1y.includes('-')}>
-                <span class="box">{item.representation.change_1y}</span>
-                Change
+                {#if item.representation.change_1y !== 'null'}
+                  <span class="box">{item.representation.change_1y}</span>
+                  Change
+                {/if}
                 <span class="default">(1y)</span>
                 <span class="extra">(1 year)</span>
               </div>
               <div
                 class="data year5"
                 class:negative={item.representation.change_5y.includes('-')}>
-                <span class="box">{item.representation.change_5y}</span>
-                Change
+                {#if item.representation.change_5y !== 'null'}
+                  <span class="box">{item.representation.change_5y}</span>
+                  Change
+                {/if}
                 <span class="default">(5y)</span>
                 <span class="extra">(5 year)</span>
               </div>
@@ -147,7 +153,9 @@
                 ''
               )}; --change5y: {item.rights.change_5y.replace('-', '')}">
               <div class="data rank">
-                <span class="box">{item.rights.rank}</span>
+                {#if item.rights.rank !== 'null'}
+                  <span class="box">{item.rights.rank}</span>
+                {/if}
                 Ranking
               </div>
               <!-- <div class="data score">
@@ -156,16 +164,20 @@
               <div
                 class="data year1"
                 class:negative={item.rights.change_1y.includes('-')}>
-                <span class="box">{item.rights.change_1y}</span>
-                Change
+                {#if item.rights.change_1y !== 'null'}
+                  <span class="box">{item.rights.change_1y}</span>
+                  Change
+                {/if}
                 <span class="default">(1y)</span>
                 <span class="extra">(1 year)</span>
               </div>
               <div
                 class="data year5"
                 class:negative={item.rights.change_5y.includes('-')}>
-                <span class="box">{item.rights.change_5y}</span>
-                Change
+                {#if item.rights.change_5y !== 'null'}
+                  <span class="box">{item.rights.change_5y}</span>
+                  Change
+                {/if}
                 <span class="default">(5y)</span>
                 <span class="extra">(5 year)</span>
               </div>
@@ -177,7 +189,9 @@
                 ''
               )}; --change5y: {item.law.change_5y.replace('-', '')}">
               <div class="data rank">
-                <span class="box">{item.law.rank}</span>
+                {#if item.law.rank !== 'null'}
+                  <span class="box">{item.law.rank}</span>
+                {/if}
                 Ranking
               </div>
               <!-- <div class="data score">
@@ -186,16 +200,20 @@
               <div
                 class="data year1"
                 class:negative={item.law.change_1y.includes('-')}>
-                <span class="box">{item.law.change_1y}</span>
-                Change
+                {#if item.law.change_1y !== 'null'}
+                  <span class="box">{item.law.change_1y}</span>
+                  Change
+                {/if}
                 <span class="default">(1y)</span>
                 <span class="extra">(1 year)</span>
               </div>
               <div
                 class="data year5"
                 class:negative={item.law.change_5y.includes('-')}>
-                <span class="box">{item.law.change_5y}</span>
-                Change
+                {#if item.law.change_5y !== 'null'}
+                  <span class="box">{item.law.change_5y}</span>
+                  Change
+                {/if}
                 <span class="default">(5y)</span>
                 <span class="extra">(5 year)</span>
               </div>
@@ -208,7 +226,9 @@
                 ''
               )}; --change5y: {item.participation.change_5y.replace('-', '')}">
               <div class="data rank">
-                <span class="box">{item.participation.rank}</span>
+                {#if item.participation.rank !== 'null'}
+                  <span class="box">{item.participation.rank}</span>
+                {/if}
                 Ranking
               </div>
               <!-- <div class="data score">
@@ -217,16 +237,20 @@
               <div
                 class="data year1"
                 class:negative={item.participation.change_1y.includes('-')}>
-                <span class="box">{item.participation.change_1y}</span>
-                Change
+                {#if item.participation.change_1y !== 'null'}
+                  <span class="box">{item.participation.change_1y}</span>
+                  Change
+                {/if}
                 <span class="default">(1y)</span>
                 <span class="extra">(1 year)</span>
               </div>
               <div
                 class="data year5"
                 class:negative={item.participation.change_5y.includes('-')}>
-                <span class="box">{item.participation.change_5y}</span>
-                Change
+                {#if item.participation.change_5y !== 'null'}
+                  <span class="box">{item.participation.change_5y}</span>
+                  Change
+                {/if}
                 <span class="default">(5y)</span>
                 <span class="extra">(5 year)</span>
               </div>
@@ -385,12 +409,20 @@
     display: none;
   }
 
+  .extra {
+    display: none;
+  }
+
+  .box ~ .extra {
+    display: inline;
+  }
+
   @media (width <= 60rem) {
-    .extra {
+    .box ~ .extra {
       display: none;
     }
 
-    .default {
+    .box ~ .default {
       display: inline;
     }
   }
