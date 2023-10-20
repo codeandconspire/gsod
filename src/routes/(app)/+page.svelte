@@ -205,7 +205,7 @@
     }
 
     .feature {
-      background-color: #41475A;
+      background-color: #41475a;
     }
 
     .feature .body {
