@@ -26,16 +26,12 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-<dialog
-  class="dialog"
-  {open}
-  in:fly|global={{ y: '100%', duration: 300 }}
-  out:fly|global={{ y: '100%', duration: 300 }}
-  bind:this={dialog}
-  on:click={onclick}
-  on:close>
+<dialog class="dialog" {open} bind:this={dialog} on:click={onclick} on:close>
   <div class="container">
-    <div class="main" class:has-image={$$slots.image}>
+    <div
+      class="main"
+      class:has-image={$$slots.image}
+      in:fly|global={{ y: '100%', duration: 300 }}>
       <svelte:element
         this={href ? 'a' : 'button'}
         role={href ? 'link' : 'button'}

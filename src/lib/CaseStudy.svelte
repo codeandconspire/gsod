@@ -15,17 +15,18 @@
 </script>
 
 <Dialog open href={resolve(data.chapter)}>
-  {#if data.case.image}
-    <Image
-      slot="image"
-      image={data.case.image}
-      width={900}
-      variants={[300, 600, 900]} />
-  {/if}
   <div class="case">
     <h1 class="heading">
       Case Study: <strong class="title">{asText(data.case.title)}</strong>
     </h1>
+    {#if data.case.image}
+      <Image
+        class="image"
+        slot="image"
+        image={data.case.image}
+        width={900}
+        variants={[300, 600, 900]} />
+    {/if}
     <Html class="description">
       <strong><Text content={data.case.description} /></strong>
     </Html>
@@ -41,15 +42,28 @@
     line-height: 1.15;
     margin: 0 0 0.75em;
     white-space: balance;
+    color: var(--theme-primary-color);
   }
 
   .title {
     font-weight: var(--sans-serif-heavy);
+    color: var(--theme-dark-color);
+  }
+
+  .title::before {
+    content: ' ';
   }
 
   .case :global(.description) {
     --text-width: 100%;
 
     margin-bottom: 1em;
+  }
+
+  .case :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin: 0 0 var(--space-small);
   }
 </style>

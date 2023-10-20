@@ -249,7 +249,7 @@
       class="footnote"
       in:fly|global={{ y: '100%', duration: 300 }}
       out:fly|global={{ y: '100%', duration: 300 }}>
-      <Html>
+      <Html size="small">
         <svelte:self content={selected.content} />
       </Html>
       <div class="actions">
