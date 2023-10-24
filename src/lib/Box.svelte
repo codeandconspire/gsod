@@ -18,7 +18,7 @@
       {data.box.shortname}
       <strong class="title">{asText(data.box.title)}</strong>
     </h1>
-    <Modules modules={data.box.modules} />
+    <Modules narrow modules={data.box.modules} />
   </div>
 </Dialog>
 

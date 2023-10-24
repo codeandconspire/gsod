@@ -2,10 +2,12 @@
   /** @type {string?}*/
   export let heading = null
 
+  export let small = false
+
   export let open = false
 </script>
 
-<details class="details" {open}>
+<details class="details" class:small {open}>
   <summary class="summary">
     <span class="heading">{heading}</span>
     <div class="marker" />
@@ -36,6 +38,16 @@
     line-height: 1.15;
     cursor: pointer;
     transition: opacity 100ms ease-out;
+  }
+
+  .small {
+    --icon-line-width: 2px;
+  }
+
+  .small .summary {
+    padding: 1.5rem 0;
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
+    font-weight: var(--sans-serif-bold);
   }
 
   .summary:active {

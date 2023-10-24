@@ -12,6 +12,7 @@
   import Html from '$lib/Html.svelte'
 
   export let fill = false
+  export let narrow = false
   export let label = 'Figure'
 
   /** @type {string?} */
@@ -24,7 +25,7 @@
   const index = ofType.indexOf(item)
 </script>
 
-<figure class="figure" class:fill id={anchor(id)}>
+<figure class="figure" class:fill class:narrow id={anchor(id)}>
   <div class="main">
     <div class:contain={fill}>
       <slot />
@@ -86,18 +87,18 @@
   }
 
   @media (width > 70rem) {
-    .figure:not(.fill) {
+    .figure:not(.fill):not(.narrow) {
       flex-direction: row;
       flex-wrap: nowrap;
       text-align: right;
     }
 
-    .figure:not(.fill) .main {
+    .figure:not(.fill):not(.narrow) .main {
       max-width: var(--text-width);
       flex: 0 0 auto;
     }
 
-    .figure:not(.fill) .caption {
+    .figure:not(.fill):not(.narrow) .caption {
       position: sticky;
       top: var(--sticky-top-margin);
     }
@@ -119,8 +120,12 @@
 
   .description::before {
     content: attr(data-prefix);
-    display: block;
     font-weight: bold;
+    margin-right: 0.35em;
+  }
+
+  .description :global(p:first-child) {
+    display: inline;
   }
 
   /* Source */
@@ -141,11 +146,11 @@
   }
 
   @media (width > 70rem) {
-    .summary {
+    .figure:not(.fill):not(.narrow) .summary {
       justify-content: flex-end;
     }
 
-    .chevron {
+    .figure:not(.fill):not(.narrow) .chevron {
       margin-right: -0.2rem;
     }
   }

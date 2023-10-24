@@ -20,17 +20,16 @@
       Case Study: <strong class="title">{asText(data.case.title)}</strong>
     </h1>
     {#if data.case.image}
-      <Image
-        class="image"
-        slot="image"
-        image={data.case.image}
-        width={900}
-        variants={[300, 600, 900]} />
+      <div class="banner">
+        <Image
+          class="image"
+          slot="image"
+          image={data.case.image}
+          width={900}
+          variants={[300, 600, 900]} />
+      </div>
     {/if}
-    <Html class="description">
-      <strong><Text content={data.case.description} /></strong>
-    </Html>
-    <Modules modules={data.case.modules} />
+    <Modules modules={data.case.modules} narrow />
   </div>
 </Dialog>
 
@@ -54,13 +53,7 @@
     content: ' ';
   }
 
-  .case :global(.description) {
-    --text-width: 100%;
-
-    margin-bottom: 1em;
-  }
-
-  .case :global(img) {
+  .banner :global(img) {
     width: 100%;
     height: auto;
     border-radius: var(--border-radius);

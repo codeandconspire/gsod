@@ -108,7 +108,7 @@
                   .title('Case Studies')
                   .icon(CaseIcon),
                 S.documentTypeListItem('box')
-                  .title('Information Box')
+                  .title('Information Boxes')
                   .icon(InfoOutlineIcon),
                 S.documentTypeListItem('page').title('Pages').icon(DocumentIcon)
               ])

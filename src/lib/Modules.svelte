@@ -18,6 +18,7 @@
   import Video from './Video.svelte'
 
   export let modules = []
+  export let narrow = false
 
   setContext(
     'FIGURES',
@@ -154,7 +155,11 @@
       </div>
     {:else if module._type === 'figure'}
       <div class={module.fill ? 'unwrap' : ''} id="module-{module._key}">
-        <Figure fill={module.fill} id={module._key} label={module.group}>
+        <Figure
+          fill={module.fill}
+          {narrow}
+          id={module._key}
+          label={module.group}>
           {#if module.image}
             <img alt={module.image.alt || ''} src={module.image.asset.url} />
           {:else if module.embed?.content}
@@ -190,7 +195,10 @@
       </div>
     {:else if module._type === 'footnotes'}
       <div id="module-{module._key}">
-        <Details heading={module.heading || 'References'} open={!browser}>
+        <Details
+          heading={module.heading || 'References'}
+          open={!browser}
+          small={narrow}>
           <div class="contain">
             <Html>
               <Footnotes />
@@ -200,7 +208,7 @@
       </div>
     {:else if module._type === 'accordion'}
       <div id="module-{module._key}">
-        <Details heading={module.title || 'Details'}>
+        <Details heading={module.title || 'Details'} small={narrow}>
           <div class="contain">
             <Html>
               <Text content={module.content} />
@@ -357,7 +365,8 @@
     margin-top: var(--space-large);
   }
 
-  .module-footnotes {
+  .module-footnotes,
+  .module-accordion {
     margin-top: var(--space-medium);
   }
 

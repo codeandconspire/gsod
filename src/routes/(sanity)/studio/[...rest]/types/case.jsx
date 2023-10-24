@@ -33,19 +33,6 @@ export default defineType({
       group: 'main'
     },
     {
-      name: 'description',
-      title: 'Description',
-      type: 'array',
-      group: 'main',
-      of: [
-        {
-          type: 'block',
-          styles: [],
-          lists: []
-        }
-      ]
-    },
-    {
       name: 'image',
       type: 'attributedImage'
     },

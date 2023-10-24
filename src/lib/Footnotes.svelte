@@ -30,7 +30,7 @@
 <ul>
   {#each byName as item}
     <li id="footnote-{item._key}" class="note">
-      <Html>
+      <Html size="small">
         <Text content={item.content} />
       </Html>
     </li>

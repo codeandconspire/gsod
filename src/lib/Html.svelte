@@ -146,7 +146,7 @@
     display: flex;
     align-items: baseline;
     gap: 0.75rem;
-    margin: 0.5em 0;
+    margin: 0.75rem 0;
     text-wrap: balance;
   }
 
