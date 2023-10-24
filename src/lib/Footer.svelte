@@ -17,17 +17,17 @@
       <input type="hidden" name="gdpr[100321]" value="Y" />
       <h2 class="heading">
         <strong>Stay up to date</strong>
-        with the latest changes in Democracy across the world
+        with the latest changes in democracy across the world
       </h2>
       <div class="control">
         <label for="footer-email">
-          <span class="u-hidden">Your email</span>
+          <span class="u-hidden">Enter you email address</span>
           <input
             class="field"
             type="email"
             name="MERGE0"
             id="footer-email"
-            placeholder="Your email"
+            placeholder="Your email address"
             bind:value={email} />
         </label>
         <button type="submit" class="submit">
@@ -183,7 +183,7 @@
 
   .field::placeholder {
     color: inherit;
-    opacity: 1;
+    opacity: 0.4;
     font-weight: normal;
   }
 
