@@ -1,13 +1,16 @@
 <script>
   import CaseStudy from '$lib/CaseStudy.svelte'
   import { setOffset } from '$lib/Text.svelte'
-  import Page from '../../+page.svelte'
+  import Chapter from '$lib/Chapter.svelte'
+  import Meta from '$lib/Meta.svelte'
 
   export let data
 
   setOffset(1)
 </script>
 
-<Page {data}>
+<Meta {...data.meta} />
+
+<Chapter {data}>
   <CaseStudy {data} />
-</Page>
+</Chapter>

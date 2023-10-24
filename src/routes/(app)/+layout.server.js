@@ -3,7 +3,7 @@ import { error } from '@sveltejs/kit'
 
 import { createClient } from '$lib/sanity.js'
 
-export function load({ request }) {
+export async function load({ request }) {
   const url = new URL(request.url)
   try {
     const client = createClient({
@@ -11,7 +11,8 @@ export function load({ request }) {
       token: SANITY_API_TOKEN
     })
     const settings =
-      client.fetch(`*[_type == "settings" && _id == "settings"][0]{
+      await client.fetch(`*[_type == "settings" && _id == "settings"][0]{
+        ...,
         featuredImage{
           asset->
         },
@@ -29,7 +30,14 @@ export function load({ request }) {
           }
         }
       }`)
-    return { settings }
+
+    const meta = {
+      title: settings.title,
+      description: settings.description,
+      image: settings.featuredImage
+    }
+
+    return { settings, meta }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
     throw error(500, message)

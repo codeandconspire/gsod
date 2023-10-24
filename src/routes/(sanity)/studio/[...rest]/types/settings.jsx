@@ -24,6 +24,16 @@ export default defineType({
   ],
   fields: [
     {
+      name: 'title',
+      type: 'string',
+      title: 'Site title'
+    },
+    {
+      name: 'description',
+      type: 'text',
+      title: 'Site description'
+    },
+    {
       name: 'featuredImage',
       title: 'Featured image',
       type: 'image'

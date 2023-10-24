@@ -23,6 +23,7 @@
       .filter((block) => block._type === 'block')
       .flatMap((block) => block.children.map((child) => child.text))
       .join(' ')
+      .trim()
   }
 
   function format(string) {

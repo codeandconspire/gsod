@@ -2,18 +2,26 @@ import { SANITY_API_TOKEN } from '$env/static/private'
 import { error } from '@sveltejs/kit'
 
 import { createClient } from '$lib/sanity.js'
+import { asText } from '$lib/Text.svelte'
 
 export const prerender = true
 
-export async function load({ params, request }) {
+export async function load({ params, request, parent }) {
   const url = new URL(request.url)
   const client = createClient({
     preview: url.searchParams.has('preview'),
     token: SANITY_API_TOKEN
   })
-  const chapter = await client.fetch(
-    `*[_type == "chapter" && slug.current == $slug][0]{
+
+  const [{ meta }, chapter] = await Promise.all([
+    parent(),
+    client.fetch(
+      `*[_type == "chapter" && slug.current == $slug][0]{
       ...,
+      featuredImage{
+        ...,
+        asset->
+      },
       authorImage{
         ...,
         asset->
@@ -177,8 +185,19 @@ export async function load({ params, request }) {
         }
       }
     }`,
-    { slug: params.chapter }
-  )
+      { slug: params.chapter }
+    )
+  ])
+
   if (!chapter) throw error(404, 'Page not found')
-  return { chapter }
+
+  return {
+    chapter,
+    meta: {
+      ...meta,
+      title: `${chapter.title.replace(/\s+/g, ' ')} – ${meta.title}`,
+      description: asText(chapter.description) || meta.description,
+      image: chapter.featuredImage || meta.image
+    }
+  }
 }

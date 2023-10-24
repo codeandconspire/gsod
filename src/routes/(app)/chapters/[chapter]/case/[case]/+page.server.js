@@ -2,20 +2,27 @@ import { SANITY_API_TOKEN } from '$env/static/private'
 import { error } from '@sveltejs/kit'
 
 import { createClient } from '$lib/sanity.js'
+import { asText } from '$lib/Text.svelte'
 
 export const prerender = true
 
-export async function load(event) {
-  const { params, request } = event
+export async function load({ params, request, parent }) {
   const url = new URL(request.url)
   const client = createClient({
     preview: url.searchParams.has('preview'),
     token: SANITY_API_TOKEN
   })
-  const _case = client.fetch(
-    `*[_type == "case" && slug.current == $slug][0]{
+
+  const [{ meta }, _case] = await Promise.all([
+    parent(),
+    client.fetch(
+      `*[_type == "case" && slug.current == $slug][0]{
         ...,
         image{
+          ...,
+          asset->
+        },
+        featuredImage{
           ...,
           asset->
         },
@@ -160,8 +167,27 @@ export async function load(event) {
           }
         }
       }`,
-    { slug: params.case }
-  )
+      { slug: params.case }
+    )
+  ])
+
   if (!_case) throw error(404, 'Case not found')
-  return { case: _case }
+  const richText = _case.modules.find((m) => m._type === 'richText')
+
+  // Find first paragaph that is not an em (used for author name)
+  const firstParagraph = richText.content.find(
+    (block) =>
+      block.style === 'normal' &&
+      (block.children.length > 1 || !block.children[0].marks.length)
+  )
+
+  return {
+    case: _case,
+    meta: {
+      ...meta,
+      title: `${_case.title.replace(/\s+/g, ' ')} – ${meta.title}`,
+      description: firstParagraph ? asText([firstParagraph]) : meta.description,
+      image: _case.featuredImage || _case.image || meta.image
+    }
+  }
 }

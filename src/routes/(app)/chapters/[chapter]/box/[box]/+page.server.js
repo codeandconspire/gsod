@@ -2,19 +2,26 @@ import { SANITY_API_TOKEN } from '$env/static/private'
 import { error } from '@sveltejs/kit'
 
 import { createClient } from '$lib/sanity.js'
+import { asText } from '$lib/Text.svelte'
 
 export const prerender = true
 
-export async function load(event) {
-  const { params, request } = event
+export async function load({ params, request, parent }) {
   const url = new URL(request.url)
   const client = createClient({
     preview: url.searchParams.has('preview'),
     token: SANITY_API_TOKEN
   })
-  const box = client.fetch(
-    `*[_type == "box" && slug.current == $slug][0]{
+
+  const [{ meta }, box] = await Promise.all([
+    parent(),
+    client.fetch(
+      `*[_type == "box" && slug.current == $slug][0]{
         ...,
+        featuredImage{
+          ...,
+          asset->
+        },
         modules[]{
           ...,
           _type == 'blurbs' => {
@@ -156,8 +163,23 @@ export async function load(event) {
           }
         }
       }`,
-    { slug: params.box }
-  )
+      { slug: params.box }
+    )
+  ])
+
   if (!box) throw error(404, 'Box not found')
-  return { box }
+  const richText = box.modules.find((m) => m._type === 'richText')
+
+  return {
+    box,
+    meta: {
+      ...meta,
+      title: `${box.title.replace(/\s+/g, ' ')} – ${meta.title}`,
+      description:
+        asText(box.description) ||
+        asText(richText?.content.slice(0, 1)) ||
+        meta.description,
+      image: box.featuredImage || meta.image
+    }
+  }
 }

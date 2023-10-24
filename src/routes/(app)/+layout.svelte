@@ -1,11 +1,8 @@
 <script>
-  import { page } from '$app/stores'
-
   import { resolve } from '$lib/sanity.js'
   import Footer from '$lib/Footer.svelte'
 
   export let data
-  export let form
 
   $: groups = data.settings.menu.map((group) => {
     return group.children
@@ -22,7 +19,7 @@
 
 <div class="layout">
   <div class="content"><slot /></div>
-  <Footer form={form?.signup} {groups} />
+  <Footer {groups} />
 </div>
 
 <style>

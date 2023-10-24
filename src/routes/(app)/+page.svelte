@@ -12,6 +12,7 @@
   import Hero from '$lib/Hero.svelte'
   import Card from '$lib/Card.svelte'
   import Tilt from '$lib/Tilt.svelte'
+  import Meta from '$lib/Meta.svelte'
 
   export let data
 
@@ -28,6 +29,8 @@
     return { href, label, active, children }
   })
 </script>
+
+<Meta {...data.meta} />
 
 <Theme
   primary={cover.primaryColor}

@@ -6,6 +6,7 @@
   import Theme from '$lib/Theme.svelte'
   import Intro from '$lib/Intro.svelte'
   import Menu from '$lib/Menu.svelte'
+  import Meta from '$lib/Meta.svelte'
 
   export let data
 
@@ -20,6 +21,8 @@
     return { href, label, active, children }
   })
 </script>
+
+<Meta {...data.meta} />
 
 <Theme primary="#62a3bf" secondary="#326593" dark="#1f5280">
   <Intro simple back={resolve(ranking.cover)}>
