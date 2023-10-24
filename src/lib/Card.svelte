@@ -26,7 +26,6 @@
       <h3 class="heading">
         {#if subheading}
           <span class="subheading">{subheading}</span>
-          <br />
         {/if}
         {heading}
       </h3>
@@ -113,7 +112,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
     font-size: clamp(1.5rem, 3vw, 1.75rem);
     font-weight: var(--sans-serif-heavy);
     text-wrap: balance;
