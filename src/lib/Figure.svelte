@@ -136,6 +136,10 @@
     margin-top: 0.5em;
   }
 
+  .source:has(.body:empty) {
+    display: none;
+  }
+
   .summary {
     display: flex;
     align-items: center;
