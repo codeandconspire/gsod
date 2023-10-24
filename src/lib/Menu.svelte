@@ -11,7 +11,7 @@
 
 <nav class="menu" class:open class:color id="menu">
   <div class="content">
-    <a href="/" class="home" rel="home">
+    <a href="https://www.idea.int/gsod/gsod" class="home" rel="home">
       <svg class="logo idea" fill="none" viewBox="0 0 114 93">
         <path
           fill="var(--menu-color, #0834BA)"
@@ -181,8 +181,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: min(1.4rem, 4vw);
+    gap: min(1.2rem, 4vw);
     margin-right: auto;
+    transition: opacity 100ms ease-out;
+  }
+
+  .home:active {
+    opacity: 0.6;
+    transition: none;
   }
 
   .divider {
@@ -192,12 +198,6 @@
 
   .logo {
     height: 3rem;
-    transition: opacity 100ms ease-out;
-  }
-
-  .logo:active {
-    opacity: 0.6;
-    transition: none;
   }
 
   .idea {
