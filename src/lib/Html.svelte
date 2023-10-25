@@ -15,6 +15,7 @@
     font-size: 1.125rem;
     line-height: 1.4;
     letter-spacing: -0.005em;
+    max-width: var(--text-width);
   }
 
   .html.small {
@@ -25,7 +26,6 @@
 
   .html.large {
     font-family: var(--sans-serif);
-    max-width: var(--text-width);
     font-weight: var(--sans-serif-normal);
     line-height: 1.3;
     font-size: clamp(1.25rem, 3vw, 1.75rem);

@@ -128,6 +128,15 @@
       </Details>
     </div>
   {/if}
+  {#if cover.acknowledgements?.length}
+    <div class="u-container" style="margin-top: -1px">
+      <Details heading="Acknowledgements">
+        <Html>
+          <Text content={cover.acknowledgements} />
+        </Html>
+      </Details>
+    </div>
+  {/if}
 </Theme>
 
 <style>

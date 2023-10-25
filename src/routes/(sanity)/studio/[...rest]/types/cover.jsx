@@ -150,6 +150,19 @@ export default defineType({
       ]
     },
     {
+      name: 'acknowledgements',
+      title: 'Acknowledgements',
+      type: 'array',
+      group: 'main',
+      of: [
+        {
+          type: 'block',
+          styles: [],
+          lists: []
+        }
+      ]
+    },
+    {
       name: 'highlights',
       title: 'Highlights',
       type: 'array',
