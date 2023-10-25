@@ -203,7 +203,8 @@
       z-index: 1;
     }
 
-    .toc:empty {
+    .toc:empty,
+    .toc:has(ol:empty) {
       display: none;
     }
 

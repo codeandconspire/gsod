@@ -289,7 +289,7 @@
     display: grid;
     gap: clamp(1.5rem, 10vw, 4rem);
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    margin: 2rem 0 var(--space-medium);
+    margin: var(--space-small) 0 var(--space-small);
   }
 
   /* Divider */

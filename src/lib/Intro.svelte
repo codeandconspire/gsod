@@ -75,7 +75,13 @@
     background: transparent;
     color: var(--color-text);
     padding-bottom: 0;
-    margin-bottom: calc((clamp(3rem, 10vh, 7rem) * -1) + var(--space-small));
+    margin-bottom: var(--space-small);
+  }
+
+  @media (width > 70rem) {
+    .simple {
+      margin-bottom: calc((clamp(3rem, 10vh, 7rem) * -1) + var(--space-small));
+    }
   }
 
   .intro.has-menu {
