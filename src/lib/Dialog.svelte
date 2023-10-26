@@ -31,7 +31,7 @@
     <div
       class="main"
       class:has-image={$$slots.image}
-      in:fly|global={{ y: '100%', duration: 300 }}>
+      in:fly|global={{ y: '10rem', duration: 300 }}>
       <svelte:element
         this={href ? 'a' : 'button'}
         role={href ? 'link' : 'button'}
@@ -85,7 +85,7 @@
     }
     to {
       background: rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
     }
   }
 
