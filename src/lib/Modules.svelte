@@ -168,28 +168,12 @@
           {/if}
           <svelte:fragment slot="description">
             {#if module.description}
-              <Text content={module.description} let:block>
-                {#if block.style === 'normal'}
-                  <p>
-                    <Text content={block.children} />
-                  </p>
-                {:else}
-                  <Text content={block} />
-                {/if}
-              </Text>
+              <Text content={module.description} />
             {/if}
           </svelte:fragment>
           <svelte:fragment slot="source">
             {#if module.source}
-              <Text content={module.source} let:block>
-                {#if block.style === 'normal'}
-                  <p>
-                    <Text content={block.children} />
-                  </p>
-                {:else}
-                  <Text content={block} />
-                {/if}
-              </Text>
+              <Text content={module.source} />
             {/if}
           </svelte:fragment>
         </Figure>

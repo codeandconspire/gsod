@@ -4,7 +4,7 @@
   const bindings = new WeakMap()
 
   const HEADING_REG = /h(\d)/
-  const LINK_REG = /<(https?:\/\/.+?)>/g
+  const LINK_REG = /<(https?:\/\/.+?)(\s*\(\1\))?>/g
 
   const OFFSET = Symbol('offset')
 
@@ -26,14 +26,17 @@
       .trim()
   }
 
-  function format(string) {
-    if (LINK_REG.test(string)) {
-      return format(string.replace(LINK_REG, '\0$1\0')).replace(
+  function format(value) {
+    if (LINK_REG.test(value)) {
+      // Replace links with null characters to preserve them during formatting
+      value = format(value.replace(LINK_REG, '\0$1\0'))
+      // Replace null characters with links
+      return value.replace(
         /\0(.+?)\0/,
         '&lt;<a href="$1" style="word-break: break-all;" rel="noopener noreferrer" target="_blank">$1</a>&gt;'
       )
     }
-    return string
+    return value
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;')
       .replace(/</g, '&lt;')
