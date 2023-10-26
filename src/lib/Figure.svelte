@@ -13,6 +13,7 @@
 
   export let fill = false
   export let narrow = false
+  export let bleed = false
   export let label = 'Figure'
 
   /** @type {string?} */
@@ -25,7 +26,7 @@
   const index = ofType.indexOf(item)
 </script>
 
-<figure class="figure" class:fill class:narrow id={anchor(id)}>
+<figure class="figure" class:fill class:narrow class:bleed id={anchor(id)}>
   <div class="main">
     <div class:contain={fill}>
       <slot />
@@ -76,14 +77,19 @@
   }
 
   .main {
-    background: #f2f3f8;
     padding: var(--page-gutter);
     user-select: none;
   }
 
   .figure:not(.fill) .main {
     border-radius: 0.5rem;
-    padding: 1.5rem;
+    padding: 1rem;
+    border: 1px solid #d7d9dd;
+  }
+
+  .figure.bleed .main {
+    border: 0;
+    padding: 0;
   }
 
   @media (width > 70rem) {
@@ -95,7 +101,7 @@
 
     .figure:not(.fill):not(.narrow) .main {
       max-width: var(--text-width);
-      flex: 0 0 auto;
+      flex: 0 0 100%;
     }
 
     .figure:not(.fill):not(.narrow) .caption {
@@ -107,6 +113,7 @@
   .figure :global(img) {
     display: block;
     width: 100%;
+    border-radius: 0.5rem;
   }
 
   .caption {

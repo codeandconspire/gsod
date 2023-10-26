@@ -154,12 +154,13 @@
         {/if}
       </div>
     {:else if module._type === 'figure'}
-      <div class={module.fill ? 'unwrap' : ''} id="module-{module._key}">
+      <div class:unwrap={module.fill} id="module-{module._key}">
         <Figure
           fill={module.fill}
+          bleed={module.bleed}
           {narrow}
           id={module._key}
-          label={module.group}>
+          label={module.label}>
           {#if module.image}
             <img alt={module.image.alt || ''} src={module.image.asset.url} />
           {:else if module.embed?.content}

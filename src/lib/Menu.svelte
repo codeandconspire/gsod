@@ -147,6 +147,18 @@
     --menu-color: var(--theme-text-color);
   }
 
+  .menu:is(:not(.open, :target, .color)) .fade-1 {
+    opacity: 0.7;
+  }
+
+  .menu:is(:not(.open, :target, .color)) .fade-2 {
+    opacity: 0.5;
+  }
+
+  .menu:is(:not(.open, :target, .color)) .fade-3 {
+    opacity: 0.2;
+  }
+
   @media (width <= 80rem) {
     .menu:is(.open, :target) {
       position: fixed;

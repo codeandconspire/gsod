@@ -64,6 +64,13 @@ export default defineType({
       description: 'Grow the figure to cover as much space as possible'
     },
     {
+      name: 'bleed',
+      type: 'boolean',
+      title: 'No padding',
+      initialValue: false,
+      description: 'Hide the gray outline, good for photos and pictures'
+    },
+    {
       name: 'description',
       type: 'array',
       title: 'Description',
