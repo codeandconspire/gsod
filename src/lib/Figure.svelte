@@ -96,6 +96,7 @@
     .figure:not(.fill):not(.narrow) {
       flex-direction: row;
       flex-wrap: nowrap;
+      align-items: flex-start;
       text-align: right;
     }
 
