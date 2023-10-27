@@ -169,7 +169,7 @@
   }
 
   .heading {
-    font-size: clamp(3.9rem, 16.5vw, 7rem);
+    font-size: clamp(3.9rem, 10.5vw, 7rem);
     text-align: center;
     line-height: 0.95;
     font-weight: var(--sans-serif-light);

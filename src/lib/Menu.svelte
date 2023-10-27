@@ -137,6 +137,7 @@
       on:click|preventDefault={() => {
         open = true
       }}>
+      <span class="label">Chapters</span>
       <svg width="21" height="16" viewBox="0 0 21 16" fill="none">
         <path
           d="M1.291 16H19.7091C20.4265 16 21 15.5644 21 15.0044C21 14.4375 20.4289 14 19.7091 14H1.291C0.56239 14 0 14.4356 0 15.0044C0 15.5625 0.559949 16 1.291 16Z"
@@ -213,7 +214,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: min(1.1rem, 4vw);
+    gap: min(1.1rem, 3.6vw);
     margin-right: auto;
   }
 
@@ -232,15 +233,17 @@
   }
 
   .logo {
-    height: 3rem;
-  }
-
-  .idea {
-    height: 3rem;
+    height: 2.5rem;
   }
 
   .mesh {
     display: none;
+  }
+
+  @media (width > 83rem) {
+    .logo {
+      height: 3rem;
+    }
   }
 
   .gsod {
@@ -262,9 +265,25 @@
   }
 
   .toggle {
+    position: relative;
     transition: opacity 100ms ease-out;
     padding: 0.5rem;
     margin: -0.5rem;
+  }
+
+  .label {
+    display: none;
+  }
+
+  @media (width > 30rem) {
+    .label {
+      position: absolute;
+      right: 110%;
+      display: block;
+      font-weight: bold;
+      font-size: 11.5px;
+      top: 26%;
+    }
   }
 
   .toggle:active {

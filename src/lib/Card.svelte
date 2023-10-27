@@ -112,11 +112,11 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0.5rem;
     font-size: clamp(1.5rem, 3vw, 1.75rem);
     font-weight: var(--sans-serif-heavy);
     text-wrap: balance;
-    line-height: 1.3;
+    line-height: 1.1;
   }
 
   .subheading {
