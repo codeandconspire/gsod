@@ -169,6 +169,11 @@
     user-select: none;
   }
 
+  .feature :global(blockquote::before) {
+    content: '“ ';
+    margin-left: -1.15ch;
+  }
+
   .feature::after {
     content: '';
     width: 100%;
@@ -231,7 +236,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 2rem;
-    padding: min(max(1.75rem, 5.5%), var(--page-gutter));
+    padding: max(max(1.75rem, 5.5%), var(--page-gutter));
     position: relative;
     color: #fff;
     line-height: 1.25;
