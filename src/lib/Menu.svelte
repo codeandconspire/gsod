@@ -180,7 +180,7 @@
     opacity: 0.2;
   }
 
-  @media (width <= 80rem) {
+  @media (width <= 75rem) {
     .menu:is(.open, :target) {
       position: fixed;
       inset: 0;
@@ -202,7 +202,7 @@
     font-family: var(--sans-serif);
   }
 
-  @media (width <= 80rem) {
+  @media (width <= 75rem) {
     .menu:is(.open, :target) .content {
       flex-wrap: wrap;
       padding: clamp(1rem, var(--page-gutter), 2.25rem) var(--page-gutter);
@@ -243,6 +243,10 @@
   @media (width > 83rem) {
     .logo {
       height: 3rem;
+    }
+
+    .gsod {
+      height: 2.8rem;
     }
   }
 
@@ -303,7 +307,7 @@
     display: block;
   }
 
-  @media (width > 80rem) {
+  @media (width > 75rem) {
     .menu:is(:is(.open, :target), :not(:is(.open, :target)))
       .toggle:is(.open, .close) {
       display: none;
@@ -313,10 +317,10 @@
   .items {
     display: flex;
     flex-direction: column;
-    gap: clamp(1.3rem, 2vw, 2rem);
+    gap: clamp(1rem, 1.8vw, 1.6rem);
   }
 
-  @media (width <= 80rem) {
+  @media (width <= 75rem) {
     .items {
       flex-direction: column;
       gap: 1.25rem;
@@ -330,7 +334,7 @@
     }
   }
 
-  @media (width > 80rem) {
+  @media (width > 75rem) {
     .items {
       flex-direction: row;
     }
@@ -358,7 +362,7 @@
     text-decoration: underline;
   }
 
-  @media (width > 80rem) {
+  @media (width > 75rem) {
     .anchor {
       white-space: nowrap;
     }
@@ -389,7 +393,7 @@
     gap: 0.5rem;
   }
 
-  @media (width <= 80rem) {
+  @media (width <= 75rem) {
     .parent + .children {
       display: none;
     }
@@ -413,7 +417,7 @@
     }
   }
 
-  @media (width > 80rem) {
+  @media (width > 75rem) {
     .children {
       display: none;
       min-width: 12rem;
