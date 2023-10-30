@@ -169,11 +169,6 @@
     user-select: none;
   }
 
-  .feature :global(blockquote::before) {
-    content: '“ ';
-    margin-left: -1.15ch;
-  }
-
   .feature::after {
     content: '';
     width: 100%;

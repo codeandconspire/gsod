@@ -120,8 +120,6 @@
   /* Quotes */
 
   .html :global(blockquote) {
-    display: flex;
-    gap: 0.25em;
     color: var(--theme-dark-color);
     font-family: var(--sans-serif);
     line-height: 1.3;
@@ -133,6 +131,10 @@
 
   .html :global(blockquote::before) {
     content: '“';
+  }
+
+  .html :global(blockquote::after) {
+    content: '”';
   }
 
   /* Lists */
