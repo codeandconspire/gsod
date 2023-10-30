@@ -268,6 +268,30 @@
     }
   }
 
+  @media (width > 75rem) {
+    .mesh {
+      display: none;
+    }
+
+    .gsod {
+      transform: translateX(-38%);
+
+      /* Pull in menu close button */
+      margin-right: -5rem; /* 1 */
+    }
+  }
+
+  @media (width > 80rem) {
+    .mesh {
+      display: initial;
+    }
+
+    .gsod {
+      transform: translateX(-1%);
+      margin-right: 0;
+    }
+  }
+
   .toggle {
     position: relative;
     transition: opacity 100ms ease-out;
