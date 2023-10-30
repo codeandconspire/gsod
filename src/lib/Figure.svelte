@@ -33,33 +33,31 @@
     </div>
   </div>
   {#if $$slots.description || $$slots.source}
-    <figcaption class:contain={fill}>
-      <div class="caption">
-        <Html size="small">
-          <div
-            class="description"
-            data-prefix={index != null
-              ? `${label} ${shortcode ? `${shortcode}.` : ''}${index + 1} `
-              : ''}>
-            <slot name="description" />
-          </div>
-          {#if $$slots.source}
-            <details class="source">
-              <summary class="summary">
-                <span>Source</span>
-                <svg class="chevron" viewBox="0 -960 960 960">
-                  <path
-                    fill="currentcolor"
-                    d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z" />
-                </svg>
-              </summary>
-              <div class="body">
-                <slot name="source" />
-              </div>
-            </details>
-          {/if}
-        </Html>
-      </div>
+    <figcaption class:contain={fill} class="caption">
+      <Html size="small">
+        <div
+          class="description"
+          data-prefix={index != null
+            ? `${label} ${shortcode ? `${shortcode}.` : ''}${index + 1} `
+            : ''}>
+          <slot name="description" />
+        </div>
+        {#if $$slots.source}
+          <details class="source">
+            <summary class="summary">
+              <span>Source</span>
+              <svg class="chevron" viewBox="0 -960 960 960">
+                <path
+                  fill="currentcolor"
+                  d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z" />
+              </svg>
+            </summary>
+            <div class="body">
+              <slot name="source" />
+            </div>
+          </details>
+        {/if}
+      </Html>
     </figcaption>
   {/if}
 </figure>
