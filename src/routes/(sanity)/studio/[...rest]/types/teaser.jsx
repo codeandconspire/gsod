@@ -1,5 +1,9 @@
 import { defineType } from 'sanity'
 import React from 'react'
+import figureReference from './figure-reference.jsx'
+import internalLink from './internal-link.jsx'
+import externalLink from './external-link.jsx'
+import footnote from './footnote.jsx'
 
 export default defineType({
   name: 'teaser',
@@ -34,8 +38,18 @@ export default defineType({
     },
     {
       name: 'description',
-      type: 'text',
-      title: 'Description'
+      type: 'array',
+      title: 'Description',
+      of: [
+        {
+          type: 'block',
+          styles: [],
+          lists: [],
+          marks: {
+            annotations: [internalLink, externalLink, footnote, figureReference]
+          }
+        }
+      ]
     },
     {
       name: 'content',

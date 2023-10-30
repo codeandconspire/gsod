@@ -94,6 +94,35 @@ export async function load({ params, request, parent }) {
           }
         },
         _type == "teaser" => {
+          description[]{
+            ...,
+            markDefs[]{
+              ...,
+              _type == "internalLink" => {
+                ...,
+                reference->{
+                  _type,
+                  slug
+                }
+              },
+              _type == "footnote" => {
+                ...,
+                content[]{
+                  ...,
+                  markDefs[]{
+                    ...,
+                    _type == "internalLink" => {
+                      ...,
+                      reference->{
+                        _type,
+                        slug
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
           image{
             ...,
             asset->

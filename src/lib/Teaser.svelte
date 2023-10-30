@@ -4,9 +4,6 @@
 
   export let flip = false
 
-  /** @type {string?} */
-  export let description = null
-
   /** @type {({ href: string } & { [key: string]: any })?} */
   export let link = null
 </script>
@@ -17,8 +14,12 @@
   </div>
   <div class="content">
     <h2 class="heading">{heading}</h2>
-    {#if description}<p class="description">{description}</p>{/if}
-    <slot />
+    {#if $$slots.description}
+      <div class="description">
+        <slot name="description" />
+      </div>
+    {/if}
+    <slot name="text" />
     {#if link}
       {@const { label, href, ...attrs } = link}
       <Button {...attrs} {href}>

@@ -294,7 +294,7 @@
   .external {
     display: inline-flex;
     align-items: flex-start;
-    gap: 0.25em;
+    gap: 0.05em;
   }
 
   .icon {
@@ -321,6 +321,7 @@
   @media (width > 45rem) {
     .footnote {
       width: calc(var(--text-width) - 2rem);
+      color: #000;
       max-width: 36rem;
       margin: 0 auto;
       padding: 1rem 4.5rem 1rem 1.5rem;

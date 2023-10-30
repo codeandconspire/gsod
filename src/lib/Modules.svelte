@@ -121,7 +121,6 @@
           dark={link.document.darkColor}>
           <Teaser
             heading={title}
-            {description}
             {flip}
             link={href ? { href, label: link.label } : null}>
             <img
@@ -132,9 +131,14 @@
               srcset={[300, 500, 600]
                 .map((size) => `${image.asset.url}?w=${size} ${size}w`)
                 .join(',')} />
-            <Html>
-              <Text {content} />
-            </Html>
+            <svelte:fragment slot="description">
+              <Text content={description} />
+            </svelte:fragment>
+            <svelte:fragment slot="text">
+              <Html>
+                <Text {content} />
+              </Html>
+            </svelte:fragment>
           </Teaser>
         </Theme>
       </div>
