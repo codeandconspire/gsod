@@ -45,6 +45,11 @@
           <slot name="subheading" />
         </p>
       {/if}
+      {#if $$slots.extra}
+        <div class="subheading">
+          <slot name="extra" />
+        </div>
+      {/if}
       <div class="author">
         {#if $$slots.portrait}
           <slot name="portrait" />

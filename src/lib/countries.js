@@ -52,25 +52,33 @@ export function countries() {
           score: item[3],
           rank: item[4],
           change_1y: item[5],
-          change_5y: item[6]
+          change_5y: item[6],
+          rank_2021: Math.abs(item[4] - item[5]),
+          rank_2017: Math.abs(item[4] - item[6])
         },
         rights: {
           score: item[7],
           rank: item[8],
           change_1y: item[9],
-          change_5y: item[10]
+          change_5y: item[10],
+          rank_2021: Math.abs(item[8] - item[9]),
+          rank_2017: Math.abs(item[8] - item[10])
         },
         law: {
           score: item[11],
           rank: item[12],
           change_1y: item[13],
-          change_5y: item[14]
+          change_5y: item[14],
+          rank_2021: Math.abs(item[12] - item[13]),
+          rank_2017: Math.abs(item[12] - item[14])
         },
         participation: {
           score: item[15],
           rank: item[16],
           change_1y: item[17],
-          change_5y: item[18]
+          change_5y: item[18],
+          rank_2021: Math.abs(item[16] - item[17]),
+          rank_2017: Math.abs(item[16] - item[18])
         }
       }
     })
