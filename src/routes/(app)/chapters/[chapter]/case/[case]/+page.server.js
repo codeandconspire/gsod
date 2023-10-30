@@ -18,6 +18,15 @@ export async function load({ params, request, parent }) {
     client.fetch(
       `*[_type == "case" && slug.current == $slug][0]{
         ...,
+        downloads[]{
+          ...,
+          file{
+            asset->
+          },
+          thumbnail{
+            asset->
+          }
+        },
         image{
           ...,
           asset->

@@ -287,7 +287,7 @@
     transition: none;
   }
 
-  /** Chapters grid */
+  /* Chapters grid */
 
   .items {
     margin-top: clamp(2rem, 4vw, 3rem);
@@ -296,7 +296,7 @@
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   }
 
-  /** Downloads */
+  /* Downloads */
 
   .downloads {
     display: flex;
@@ -339,5 +339,6 @@
 
   .download :global(.description) {
     flex: 1 1 auto;
+    font-family: var(--sans-serif);
   }
 </style>

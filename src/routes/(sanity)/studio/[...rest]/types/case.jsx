@@ -1,4 +1,5 @@
 import { defineType } from 'sanity'
+import { DownloadIcon } from '@sanity/icons'
 
 export default defineType({
   name: 'case',
@@ -55,6 +56,41 @@ export default defineType({
         { type: 'blurbs' },
         { type: 'video' },
         { type: 'footnotes' }
+      ]
+    },
+    {
+      name: 'downloads',
+      type: 'array',
+      title: 'Downloads',
+      group: 'main',
+      of: [
+        {
+          type: 'object',
+          title: 'Item',
+          icon: DownloadIcon,
+          fields: [
+            {
+              name: 'label',
+              type: 'string',
+              title: 'Label'
+            },
+            {
+              name: 'description',
+              type: 'text',
+              title: 'Description'
+            },
+            {
+              type: 'file',
+              name: 'file',
+              title: 'File'
+            },
+            {
+              type: 'image',
+              name: 'thumbnail',
+              title: 'Thumbnail'
+            }
+          ]
+        }
       ]
     },
     {
