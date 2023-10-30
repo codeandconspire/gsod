@@ -709,20 +709,6 @@
     color: #000;
   }
 
-  .default {
-    display: none;
-  }
-
-  .data {
-    display: flex;
-    gap: 0.5rem;
-    text-wrap: nowrap;
-  }
-
-  .data + .data {
-    margin-top: 0.25rem;
-  }
-
   .box {
     position: relative;
     top: -1px;
