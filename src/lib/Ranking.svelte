@@ -9,7 +9,7 @@
 
   // default sorting
   const col = writable('rank')
-  let panel = 'participation'
+  let panel = 'representation'
   let reverse = writable(true)
 
   function sort(key) {
@@ -72,11 +72,6 @@
       <span class="label">Rankings</span>
       <div class="nav">
         <button
-          class:selected={panel === 'participation'}
-          on:click={() => (panel = 'participation')}>
-          Participation
-        </button>
-        <button
           class:selected={panel === 'representation'}
           on:click={() => (panel = 'representation')}>
           Representation
@@ -91,101 +86,13 @@
           on:click={() => (panel = 'law')}>
           Rule of Law
         </button>
+        <button
+          class:selected={panel === 'participation'}
+          on:click={() => (panel = 'participation')}>
+          Participation
+        </button>
       </div>
     </div>
-  </div>
-  <div class="panel {panel === 'participation' ? 'visible' : ''}">
-    <table>
-      <thead>
-        <th on:click={() => sort('name')} style="width: 28%">Name</th>
-        <th on:click={() => sort('score')} style="width: 12%">Score</th>
-        <th on:click={() => sort('rank')} style="width: 12%">
-          Ranking
-          <br />
-          2022
-        </th>
-        <th on:click={() => sort('change_1y')} style="width: 12%">
-          Change
-          <br />
-          2021→2022
-        </th>
-        <th on:click={() => sort('rank_2021')} style="width: 12%">
-          Ranking
-          <br />
-          2021
-        </th>
-        <th on:click={() => sort('change_5y')} style="width: 12%">
-          Change
-          <br />
-          2017→2022
-        </th>
-        <th on:click={() => sort('rank_2017')} style="width: 12%">
-          Ranking
-          <br />
-          2017
-        </th>
-      </thead>
-      <tbody>
-        {#each $items as item, index}
-          {@const slug = item.name
-            .toLowerCase()
-            .replaceAll(' ', '-')
-            .replaceAll('-of-the-', '-')
-            .replaceAll('north-korea', 'democratic-peoples-republic-korea')
-            .replaceAll('south-korea', 'republic-korea')
-            .replaceAll('united-states', 'united-states-america')
-            .replaceAll('east-germany', 'germany')}
-          <tr>
-            <td>
-              <a
-                class="country"
-                title="View country profile"
-                href="https://www.idea.int/democracytracker/country/{slug}"
-                target="_blank"
-                rel="noopener">
-                {item.name}
-              </a>
-              ,
-              <span class="region">{item.region}</span>
-            </td>
-            <td>
-              <span class="box">
-                {(+item.participation.score).toFixed(3)}
-              </span>
-            </td>
-            <td>
-              <span class="box">
-                {item.participation.rank}
-              </span>
-            </td>
-            <td>
-              <span
-                class="box"
-                class:negative={item.participation.change_1y.includes('-')}>
-                {item.participation.change_1y}
-              </span>
-            </td>
-            <td>
-              <span class="box">
-                {item.participation.rank_2021}
-              </span>
-            </td>
-            <td>
-              <span
-                class="box"
-                class:negative={item.participation.change_5y.includes('-')}>
-                {item.participation.change_5y}
-              </span>
-            </td>
-            <td>
-              <span class="box">
-                {item.participation.rank_2017}
-              </span>
-            </td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
   </div>
   <div class="panel {panel === 'representation' ? 'visible' : ''}">
     <table>
@@ -193,29 +100,24 @@
         <th on:click={() => sort('name')} style="width: 28%">Name</th>
         <th on:click={() => sort('score')} style="width: 12%">Score</th>
         <th on:click={() => sort('rank')} style="width: 12%">
-          Ranking
-          <br />
+          Ranking <br />
           2022
         </th>
-        <th on:click={() => sort('change_1y')} style="width: 12%">
-          Change
-          <br />
-          2021→2022
-        </th>
         <th on:click={() => sort('rank_2021')} style="width: 12%">
-          Ranking
-          <br />
+          Ranking <br />
           2021
         </th>
-        <th on:click={() => sort('change_5y')} style="width: 12%">
-          Change
-          <br />
-          2017→2022
+        <th on:click={() => sort('change_1y')} style="width: 12%">
+          Change <br />
+          2021→2022
         </th>
         <th on:click={() => sort('rank_2017')} style="width: 12%">
-          Ranking
-          <br />
+          Ranking <br />
           2017
+        </th>
+        <th on:click={() => sort('change_5y')} style="width: 12%">
+          Change <br />
+          2017→2022
         </th>
       </thead>
       <tbody>
@@ -238,7 +140,6 @@
                 rel="noopener">
                 {item.name}
               </a>
-              ,
               <span class="region">{item.region}</span>
             </td>
             <td>
@@ -252,6 +153,11 @@
               </span>
             </td>
             <td>
+              <span class="box">
+                {item.representation.rank_2021}
+              </span>
+            </td>
+            <td>
               <span
                 class="box"
                 class:negative={item.representation.change_1y.includes('-')}>
@@ -260,19 +166,16 @@
             </td>
             <td>
               <span class="box">
-                {item.representation.rank_2021}
+                {item.representation.rank_2017}
               </span>
             </td>
             <td>
               <span
                 class="box"
                 class:negative={item.representation.change_5y.includes('-')}>
-                {item.representation.change_5y}
-              </span>
-            </td>
-            <td>
-              <span class="box">
-                {item.representation.rank_2017}
+                {item.representation.change_5y === 'null'
+                  ? '–'
+                  : item.representation.change_5y}
               </span>
             </td>
           </tr>
@@ -286,29 +189,24 @@
         <th on:click={() => sort('name')} style="width: 28%">Name</th>
         <th on:click={() => sort('score')} style="width: 12%">Score</th>
         <th on:click={() => sort('rank')} style="width: 12%">
-          Ranking
-          <br />
+          Ranking <br />
           2022
         </th>
-        <th on:click={() => sort('change_1y')} style="width: 12%">
-          Change
-          <br />
-          2021→2022
-        </th>
         <th on:click={() => sort('rank_2021')} style="width: 12%">
-          Ranking
-          <br />
+          Ranking <br />
           2021
         </th>
-        <th on:click={() => sort('change_5y')} style="width: 12%">
-          Change
-          <br />
-          2017→2022
+        <th on:click={() => sort('change_1y')} style="width: 12%">
+          Change <br />
+          2021→2022
         </th>
         <th on:click={() => sort('rank_2017')} style="width: 12%">
-          Ranking
-          <br />
+          Ranking <br />
           2017
+        </th>
+        <th on:click={() => sort('change_5y')} style="width: 12%">
+          Change <br />
+          2017→2022
         </th>
       </thead>
       <tbody>
@@ -331,7 +229,6 @@
                 rel="noopener">
                 {item.name}
               </a>
-              ,
               <span class="region">{item.region}</span>
             </td>
             <td>
@@ -345,6 +242,11 @@
               </span>
             </td>
             <td>
+              <span class="box">
+                {item.rights.rank_2021}
+              </span>
+            </td>
+            <td>
               <span
                 class="box"
                 class:negative={item.rights.change_1y.includes('-')}>
@@ -353,7 +255,7 @@
             </td>
             <td>
               <span class="box">
-                {item.rights.rank_2021}
+                {item.rights.rank_2017}
               </span>
             </td>
             <td>
@@ -361,11 +263,6 @@
                 class="box"
                 class:negative={item.rights.change_5y.includes('-')}>
                 {item.rights.change_5y}
-              </span>
-            </td>
-            <td>
-              <span class="box">
-                {item.rights.rank_2017}
               </span>
             </td>
           </tr>
@@ -379,29 +276,24 @@
         <th on:click={() => sort('name')} style="width: 28%">Name</th>
         <th on:click={() => sort('score')} style="width: 12%">Score</th>
         <th on:click={() => sort('rank')} style="width: 12%">
-          Ranking
-          <br />
+          Ranking <br />
           2022
         </th>
-        <th on:click={() => sort('change_1y')} style="width: 12%">
-          Change
-          <br />
-          2021→2022
-        </th>
         <th on:click={() => sort('rank_2021')} style="width: 12%">
-          Ranking
-          <br />
+          Ranking <br />
           2021
         </th>
-        <th on:click={() => sort('change_5y')} style="width: 12%">
-          Change
-          <br />
-          2017→2022
+        <th on:click={() => sort('change_1y')} style="width: 12%">
+          Change <br />
+          2021→2022
         </th>
         <th on:click={() => sort('rank_2017')} style="width: 12%">
-          Ranking
-          <br />
+          Ranking <br />
           2017
+        </th>
+        <th on:click={() => sort('change_5y')} style="width: 12%">
+          Change <br />
+          2017→2022
         </th>
       </thead>
       <tbody>
@@ -424,7 +316,6 @@
                 rel="noopener">
                 {item.name}
               </a>
-              ,
               <span class="region">{item.region}</span>
             </td>
             <td>
@@ -438,6 +329,11 @@
               </span>
             </td>
             <td>
+              <span class="box">
+                {item.law.rank_2021}
+              </span>
+            </td>
+            <td>
               <span
                 class="box"
                 class:negative={item.law.change_1y.includes('-')}>
@@ -446,7 +342,7 @@
             </td>
             <td>
               <span class="box">
-                {item.law.rank_2021}
+                {item.law.rank_2017}
               </span>
             </td>
             <td>
@@ -456,9 +352,91 @@
                 {item.law.change_5y}
               </span>
             </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
+  <div class="panel {panel === 'participation' ? 'visible' : ''}">
+    <table>
+      <thead>
+        <th on:click={() => sort('name')} style="width: 28%">Name</th>
+        <th on:click={() => sort('score')} style="width: 12%">Score</th>
+        <th on:click={() => sort('rank')} style="width: 12%">
+          Ranking <br />
+          2022
+        </th>
+        <th on:click={() => sort('rank_2021')} style="width: 12%">
+          Ranking <br />
+          2021
+        </th>
+        <th on:click={() => sort('change_1y')} style="width: 12%">
+          Change <br />
+          2021→2022
+        </th>
+        <th on:click={() => sort('rank_2017')} style="width: 12%">
+          Ranking <br />
+          2017
+        </th>
+        <th on:click={() => sort('change_5y')} style="width: 12%">
+          Change <br />
+          2017→2022
+        </th>
+      </thead>
+      <tbody>
+        {#each $items as item, index}
+          {@const slug = item.name
+            .toLowerCase()
+            .replaceAll(' ', '-')
+            .replaceAll('-of-the-', '-')
+            .replaceAll('north-korea', 'democratic-peoples-republic-korea')
+            .replaceAll('south-korea', 'republic-korea')
+            .replaceAll('united-states', 'united-states-america')
+            .replaceAll('east-germany', 'germany')}
+          <tr>
+            <td>
+              <a
+                class="country"
+                title="View country profile"
+                href="https://www.idea.int/democracytracker/country/{slug}"
+                target="_blank"
+                rel="noopener">
+                {item.name}
+              </a>
+              <span class="region">{item.region}</span>
+            </td>
             <td>
               <span class="box">
-                {item.law.rank_2017}
+                {(+item.participation.score).toFixed(3)}
+              </span>
+            </td>
+            <td>
+              <span class="box">
+                {item.participation.rank}
+              </span>
+            </td>
+            <td>
+              <span class="box">
+                {item.participation.rank_2021}
+              </span>
+            </td>
+            <td>
+              <span
+                class="box"
+                class:negative={item.participation.change_1y.includes('-')}>
+                {item.participation.change_1y}
+              </span>
+            </td>
+            <td>
+              <span class="box">
+                {item.participation.rank_2017}
+              </span>
+            </td>
+            <td>
+              <span
+                class="box"
+                class:negative={item.participation.change_5y.includes('-')}>
+                {item.participation.change_5y}
               </span>
             </td>
           </tr>
@@ -697,7 +675,7 @@
     font-size: var(--framework-font-size);
     transition: opacity 100ms ease-out, color 100ms ease-out;
     text-decoration: underline;
-    margin-right: 0.1em;
+    margin-right: 0.75em;
   }
 
   .country:active {

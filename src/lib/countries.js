@@ -76,9 +76,11 @@ export function countries() {
           score: item[15],
           rank: item[16],
           change_1y: item[17],
-          change_5y: item[18],
+          change_5y: item[18] === 'null' ? '' : item[18],
           rank_2021: Math.abs(item[16] - item[17]),
           rank_2017: Math.abs(item[16] - item[18])
+            ? Math.abs(item[16] - item[18])
+            : ''
         }
       }
     })
