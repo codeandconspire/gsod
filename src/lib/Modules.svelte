@@ -128,7 +128,7 @@
               alt={image.alt || ''}
               src={image.asset.url}
               sizes="(min-width: 40rem) 40rem"
-              srcset={[300, 500, 600]
+              srcset={[600, 900, 1200]
                 .map((size) => `${image.asset.url}?w=${size} ${size}w`)
                 .join(',')} />
             <svelte:fragment slot="description">
