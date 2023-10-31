@@ -156,6 +156,7 @@
     margin: -0.5rem;
     margin-left: -0.85rem;
     transition: opacity 100ms ease-out;
+    user-select: none;
   }
 
   .back:active {

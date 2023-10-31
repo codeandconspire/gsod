@@ -46,7 +46,6 @@
       </p>
       <p>
         <a href="/chapters/methodology">Read more about the methodology</a>
-        .
       </p>
     </Html>
   </Intro>

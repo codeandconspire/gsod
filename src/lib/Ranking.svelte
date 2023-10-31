@@ -558,7 +558,7 @@
     user-select: text;
   }
 
-  .ranking::selection {
+  .ranking ::selection {
     background-color: rgba(98, 163, 191, 0.25);
   }
 
@@ -763,7 +763,7 @@
     left: calc(var(--padding) - 1rem);
     top: 0.2em;
     opacity: 0.2;
-    transform: rotate(180deg) translateY(-0.45em);
+    transform: rotate(180deg) translateY(-0.38em);
   }
 
   th.active::after {
