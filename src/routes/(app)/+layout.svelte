@@ -17,6 +17,20 @@
   })
 </script>
 
+<svelte:head>
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-Y8FMHP9XTC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || []
+    function gtag() {
+      dataLayer.push(arguments)
+    }
+    gtag('js', new Date())
+    gtag('config', 'G-Y8FMHP9XTC')
+  </script>
+</svelte:head>
+
 <div class="layout">
   <div class="content"><slot /></div>
   <Footer {groups} />
