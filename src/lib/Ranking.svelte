@@ -11,8 +11,10 @@
   const col = writable('rank')
   let panel = 'representation'
   let reverse = writable(true)
+  let active = 'representation-rank'
 
   function sort(key) {
+    active = `${panel}-${key}`
     if ($col === key) {
       reverse.set(!$reverse)
     } else {
@@ -60,7 +62,7 @@
   }
 </script>
 
-<div class="ranking">
+<div class="ranking" class:reverse={$reverse}>
   <div class="intro">
     <div class="search">
       <span class="label">Search</span>
@@ -97,25 +99,50 @@
   <div class="panel {panel === 'representation' ? 'visible' : ''}">
     <table>
       <thead>
-        <th on:click={() => sort('name')} style="width: 28%">Name</th>
-        <th on:click={() => sort('score')} style="width: 12%">Score</th>
-        <th on:click={() => sort('rank')} style="width: 12%">
+        <th
+          on:click={() => sort('name')}
+          class:active={active === 'representation-name'}
+          style="width: 28%">
+          Name
+        </th>
+        <th
+          on:click={() => sort('score')}
+          class:active={active === 'representation-score'}
+          style="width: 12%">
+          Score
+        </th>
+        <th
+          on:click={() => sort('rank')}
+          class:active={active === 'representation-rank'}
+          style="width: 12%">
           Ranking <br />
           2022
         </th>
-        <th on:click={() => sort('rank_2021')} style="width: 12%">
+        <th
+          on:click={() => sort('rank_2021')}
+          class:active={active === 'representation-rank_2021'}
+          style="width: 12%">
           Ranking <br />
           2021
         </th>
-        <th on:click={() => sort('change_1y')} style="width: 12%">
+        <th
+          on:click={() => sort('change_1y')}
+          class:active={active === 'representation-change_1y'}
+          style="width: 12%">
           Change <br />
           2021→2022
         </th>
-        <th on:click={() => sort('rank_2017')} style="width: 12%">
+        <th
+          on:click={() => sort('rank_2017')}
+          class:active={active === 'representation-rank_2017'}
+          style="width: 12%">
           Ranking <br />
           2017
         </th>
-        <th on:click={() => sort('change_5y')} style="width: 12%">
+        <th
+          on:click={() => sort('change_5y')}
+          class:active={active === 'representation-change_5y'}
+          style="width: 12%">
           Change <br />
           2017→2022
         </th>
@@ -186,25 +213,50 @@
   <div class="panel {panel === 'rights' ? 'visible' : ''}">
     <table>
       <thead>
-        <th on:click={() => sort('name')} style="width: 28%">Name</th>
-        <th on:click={() => sort('score')} style="width: 12%">Score</th>
-        <th on:click={() => sort('rank')} style="width: 12%">
+        <th
+          on:click={() => sort('name')}
+          class:active={active === 'rights-name'}
+          style="width: 28%">
+          Name
+        </th>
+        <th
+          on:click={() => sort('score')}
+          class:active={active === 'rights-score'}
+          style="width: 12%">
+          Score
+        </th>
+        <th
+          on:click={() => sort('rank')}
+          class:active={active === 'rights-rank'}
+          style="width: 12%">
           Ranking <br />
           2022
         </th>
-        <th on:click={() => sort('rank_2021')} style="width: 12%">
+        <th
+          on:click={() => sort('rank_2021')}
+          class:active={active === 'rights-rank_2021'}
+          style="width: 12%">
           Ranking <br />
           2021
         </th>
-        <th on:click={() => sort('change_1y')} style="width: 12%">
+        <th
+          on:click={() => sort('change_1y')}
+          class:active={active === 'rights-change_1y'}
+          style="width: 12%">
           Change <br />
           2021→2022
         </th>
-        <th on:click={() => sort('rank_2017')} style="width: 12%">
+        <th
+          on:click={() => sort('rank_2017')}
+          class:active={active === 'rights-rank_2017'}
+          style="width: 12%">
           Ranking <br />
           2017
         </th>
-        <th on:click={() => sort('change_5y')} style="width: 12%">
+        <th
+          on:click={() => sort('change_5y')}
+          class:active={active === 'rights-change_5y'}
+          style="width: 12%">
           Change <br />
           2017→2022
         </th>
@@ -273,25 +325,50 @@
   <div class="panel {panel === 'law' ? 'visible' : ''}">
     <table>
       <thead>
-        <th on:click={() => sort('name')} style="width: 28%">Name</th>
-        <th on:click={() => sort('score')} style="width: 12%">Score</th>
-        <th on:click={() => sort('rank')} style="width: 12%">
+        <th
+          on:click={() => sort('name')}
+          class:active={active === 'law-name'}
+          style="width: 28%">
+          Name
+        </th>
+        <th
+          on:click={() => sort('score')}
+          class:active={active === 'law-score'}
+          style="width: 12%">
+          Score
+        </th>
+        <th
+          on:click={() => sort('rank')}
+          class:active={active === 'law-rank'}
+          style="width: 12%">
           Ranking <br />
           2022
         </th>
-        <th on:click={() => sort('rank_2021')} style="width: 12%">
+        <th
+          on:click={() => sort('rank_2021')}
+          class:active={active === 'law-rank_2021'}
+          style="width: 12%">
           Ranking <br />
           2021
         </th>
-        <th on:click={() => sort('change_1y')} style="width: 12%">
+        <th
+          on:click={() => sort('change_1y')}
+          class:active={active === 'law-change_1y'}
+          style="width: 12%">
           Change <br />
           2021→2022
         </th>
-        <th on:click={() => sort('rank_2017')} style="width: 12%">
+        <th
+          on:click={() => sort('rank_2017')}
+          class:active={active === 'law-rank_2017'}
+          style="width: 12%">
           Ranking <br />
           2017
         </th>
-        <th on:click={() => sort('change_5y')} style="width: 12%">
+        <th
+          on:click={() => sort('change_5y')}
+          class:active={active === 'law-change_5y'}
+          style="width: 12%">
           Change <br />
           2017→2022
         </th>
@@ -360,25 +437,50 @@
   <div class="panel {panel === 'participation' ? 'visible' : ''}">
     <table>
       <thead>
-        <th on:click={() => sort('name')} style="width: 28%">Name</th>
-        <th on:click={() => sort('score')} style="width: 12%">Score</th>
-        <th on:click={() => sort('rank')} style="width: 12%">
+        <th
+          on:click={() => sort('name')}
+          class:active={active === 'participation-name'}
+          style="width: 28%">
+          Name
+        </th>
+        <th
+          on:click={() => sort('score')}
+          class:active={active === 'participation-score'}
+          style="width: 12%">
+          Score
+        </th>
+        <th
+          on:click={() => sort('rank')}
+          class:active={active === 'participation-rank'}
+          style="width: 12%">
           Ranking <br />
           2022
         </th>
-        <th on:click={() => sort('rank_2021')} style="width: 12%">
+        <th
+          on:click={() => sort('rank_2021')}
+          class:active={active === 'participation-rank_2021'}
+          style="width: 12%">
           Ranking <br />
           2021
         </th>
-        <th on:click={() => sort('change_1y')} style="width: 12%">
+        <th
+          on:click={() => sort('change_1y')}
+          class:active={active === 'participation-change_1y'}
+          style="width: 12%">
           Change <br />
           2021→2022
         </th>
-        <th on:click={() => sort('rank_2017')} style="width: 12%">
+        <th
+          on:click={() => sort('rank_2017')}
+          class:active={active === 'participation-rank_2017'}
+          style="width: 12%">
           Ranking <br />
           2017
         </th>
-        <th on:click={() => sort('change_5y')} style="width: 12%">
+        <th
+          on:click={() => sort('change_5y')}
+          class:active={active === 'participation-change_5y'}
+          style="width: 12%">
           Change <br />
           2017→2022
         </th>
@@ -628,7 +730,6 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    font-weight: bold;
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.03em;
@@ -642,6 +743,40 @@
   th {
     padding: 0.3rem var(--padding);
     line-height: 1.1;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  th.active {
+    font-weight: bold;
+  }
+
+  th::after {
+    content: '';
+    width: 0;
+    height: 0;
+    display: block;
+    border: 0.5em solid black;
+    border-width: 0.5em 0.4em 0.5em 0.4em;
+    border-color: transparent transparent #000 transparent;
+    position: absolute;
+    left: calc(var(--padding) - 1rem);
+    top: 0.2em;
+    opacity: 0.2;
+    transform: rotate(180deg) translateY(-0.45em);
+  }
+
+  th.active::after {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reverse th.active::after {
+    transform: rotate(180deg) translateY(-0.38em);
+  }
+
+  th:first-child::after {
+    left: calc(var(--page-gutter) - 1rem);
   }
 
   td {
